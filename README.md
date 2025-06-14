@@ -58,57 +58,6 @@ elmoradar-website/
 6. **Videos** - YouTube Content-Integration
 7. **Kontakt** - Social Media Links und Kontaktmöglichkeiten
 
-## 🔧 Installation & Setup
-
-1. **Repository klonen oder Dateien herunterladen**
-2. **Assets vorbereiten** - Logos und Bilder in `/assets/` Ordner platzieren:
-   - `logo.png` - Haupt-Logo (empfohlen: 256x256px)
-   - `plane.png` - Flugzeug-Icon für Animationen
-   - `nordfly.png` - Partner-Logo
-   - `munichairways.jpg` - Partner-Logo
-
-3. **Links anpassen** - Social Media und externe Links in `index.html` aktualisieren:
-   ```html
-   <!-- Beispiel: Twitch Link -->
-   <a href="https://twitch.tv/DEIN_USERNAME">
-   
-   <!-- Beispiel: YouTube Links -->
-   <a href="https://www.youtube.com/@DEIN_KANAL">
-   ```
-
-4. **Content personalisieren**:
-   - Stats-Zahlen anpassen
-   - PC-Spezifikationen aktualisieren
-   - Partner-Informationen bearbeiten
-   - YouTube-Videos einbetten
-
-5. **Website deployen** - auf Webserver hochladen oder Hosting-Service nutzen
-
-## 🎥 YouTube Integration
-
-Videos können einfach durch Ersetzen der Video-ID eingebettet werden:
-
-```html
-<iframe 
-    src="https://www.youtube-nocookie.com/embed/DEINE_VIDEO_ID?rel=0&modestbranding=1&showinfo=0"
-    title="Video Titel">
-</iframe>
-```
-
-## 🏷️ Anpassungen
-
-### Stats aktualisieren
-```html
-<div class="text-3xl md:text-4xl font-bold text-red-400 stats-counter">1.8K</div>
-<div class="text-gray-400 mt-2">Flugstunden</div>
-```
-
-### PC-Specs bearbeiten
-Jede Komponente hat eine eigene Karte mit Icon, Name und Spezifikation.
-
-### Partner hinzufügen
-Neue Partner können durch Kopieren einer bestehenden Partner-Karte hinzugefügt werden.
-
 ## 🌐 Browser-Kompatibilität
 
 - **Chrome/Edge** - Vollständig unterstützt
@@ -137,7 +86,3 @@ Made by atzock
 Bei Fragen oder Problemen:
 - Kontakt über die Social Media Links auf der Website
 - Issues im Repository erstellen (falls verfügbar)
-
----
-
-**Tipp**: Für beste Performance sollten alle Bilder im WebP-Format und unter 500KB sein. Die Website ist für VATSIM-Piloten und Aviation-Enthusiasten optimiert! ✈️
