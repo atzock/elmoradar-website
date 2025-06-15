@@ -30,7 +30,9 @@ elmoradar-website/
 │   ├── plane.png          # Flugzeug-Icon für Animationen
 │   ├── nordfly.png        # Nordfly Partner Logo
 │   └── munichairways.jpg  # MunichAirways Partner Logo
+├── ToDo.md                # ToDo Liste
 └── README.md              # Diese Datei
+
 ```
 
 ## 🎨 Design-Features
