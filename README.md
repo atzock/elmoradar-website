@@ -56,8 +56,8 @@ elmoradar-website/
 2. **Stats** - Flugstatistiken (Flugstunden, VATSIM Flüge, etc.)
 3. **Über mich** - Persönliche Vorstellung und Expertise
 4. **PC Specs** - Hardware-Spezifikationen für MSFS
-5. **Partner** - Virtuelle Airlines und Kooperationen
-6. **Videos** - YouTube Content-Integration
+5. **Settings** - elmoradar`s MSFS Settings
+6. **Partner** - Virtuelle Airlines und Kooperationen
 7. **Kontakt** - Social Media Links und Kontaktmöglichkeiten
 
 ## 🌐 Browser-Kompatibilität
