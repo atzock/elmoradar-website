@@ -34,3 +34,30 @@ window.addEventListener('scroll', () => {
         }
     });
 });
+
+// Live Checker
+    const clientId = 'by1hsoqycfhct1fei90z2146fy3ctd';
+    const accessToken = 'YOUR_TWITCH_ACCESS_TOKEN'; // Bitti nicht doxxi... pls
+    const userLogin = 'elmoradar';
+
+    async function checkIfLive() {
+        const response = await fetch(`https://api.twitch.tv/helix/streams?user_login=${userLogin}`, {
+            headers: {
+                'Client-ID': clientId,
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+
+        const data = await response.json();
+        const isLive = data.data && data.data.length > 0;
+
+        const liveStatusDiv = document.getElementById('liveStatus');
+
+        if (isLive) {
+            liveStatusDiv.classList.remove('hidden');
+        } else {
+            liveStatusDiv.classList.add('hidden');
+        }
+    }
+
+    checkIfLive();
