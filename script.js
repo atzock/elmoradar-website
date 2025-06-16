@@ -35,29 +35,33 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Live Checker
-    const clientId = 'by1hsoqycfhct1fei90z2146fy3ctd';
-    const accessToken = 'YOUR_TWITCH_ACCESS_TOKEN'; // Bitti nicht doxxi... pls
-    const userLogin = 'elmoradar';
+// Aktuelle YouTube Video
+  const apiKey = 'YOUR_API_KEY'; // replace with your actual API key
+  const channelId = 'YOUR_CHANNEL_ID'; // replace with the actual channel ID
+  const maxResults = 2; // number of videos to show
 
-    async function checkIfLive() {
-        const response = await fetch(`https://api.twitch.tv/helix/streams?user_login=${userLogin}`, {
-            headers: {
-                'Client-ID': clientId,
-                'Authorization': `Bearer ${accessToken}`
-            }
-        });
+  async function loadLatestVideos() {
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet,id&order=date&maxResults=${maxResults}`);
+    const data = await res.json();
 
-        const data = await response.json();
-        const isLive = data.data && data.data.length > 0;
+    const video1 = document.getElementById('video1');
+    data.items.forEach(item => {
+      if (item.id.kind === 'youtube#video') {
+        const videoId = item.id.videoId;
+        const videoEl = document.createElement('div');
+        videoEl.className = 'bg-gray-900/50 rounded-xl p-8 border border-gray-700';
+        videoEl.innerHTML = `
+          <div class="w-full h-[300px]">
+            <iframe class="w-full h-full rounded-lg"
+              src="https://www.youtube.com/embed/${videoId}"
+              frameborder="0"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+        `;
+        videoGrid.appendChild(videoEl);
+      }
+    });
+  }
 
-        const liveStatusDiv = document.getElementById('liveStatus');
-
-        if (isLive) {
-            liveStatusDiv.classList.remove('hidden');
-        } else {
-            liveStatusDiv.classList.add('hidden');
-        }
-    }
-
-    checkIfLive();
+  loadLatestVideos();

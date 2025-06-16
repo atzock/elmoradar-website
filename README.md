@@ -1,4 +1,5 @@
 # elmoradar Website
+# OUTDATED!!!
 
 Eine moderne, responsive Website für den Microsoft Flight Simulator & VATSIM Streamer elmoradar aus Berlin.
 
