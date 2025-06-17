@@ -1,0 +1,4 @@
+        <div class="absolute top-40 right-20 w-16 h-16 bg-red-500/20 rounded-full animate-float" style="animation-delay: 2s;"></div>
+
+
+        <div class="absolute bottom-40 left-1/4 w-12 h-12 bg-orange-500/20 rounded-full animate-float" style="animation-delay: 4s;"></div>
