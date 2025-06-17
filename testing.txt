@@ -2,3 +2,40 @@
 
 
         <div class="absolute bottom-40 left-1/4 w-12 h-12 bg-orange-500/20 rounded-full animate-float" style="animation-delay: 4s;"></div>
+
+    <section id="youtube" class="py-20 bg-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
+                    YouTube VODs
+                </h2>
+                <p class="text-xl text-gray-400">Hier findest du eines Auswahl aus YouTube VODs</p>
+            </div>
+        
+        
+            <div class="grid lg:grid-cols-2 gap-6">
+                <!-- Video 1 -->
+                <div id="video1" class="bg-gray-900/50 rounded-xl p-8 border border-gray-700">
+                    <div class="w-full" style="height: 300px;">
+                        <iframe class="w-full h-full rounded-lg"
+                            src="https://www.youtube.com/embed/O-wnGXWXwY0"
+                            title="YouTube video player"
+                            frameborder="0"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+                <!-- Video 2 -->
+                <div id="video2" class="bg-gray-900/50 rounded-xl p-8 border border-gray-700">
+                    <div class="w-full" style="height: 300px;">
+                        <iframe class="w-full h-full rounded-lg"
+                            src="https://www.youtube.com/embed/-ZV9TUgVJto"
+                            title="YouTube video player"
+                            frameborder="0"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
