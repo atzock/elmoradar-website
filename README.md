@@ -4,7 +4,7 @@ A modern, responsive website for elmoradar - a Microsoft Flight Simulator & VATS
 
 ## 🛩️ About
 
-This website showcases elmoradar's flight simulation content, featuring:
+This website showcases elmoradar's content, featuring:
 - Live streaming on Twitch
 - VATSIM flights and ATC communication
 - Professional aviation content
