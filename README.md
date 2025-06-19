@@ -18,26 +18,6 @@ This website showcases elmoradar's content, featuring:
 - **Performance Optimized**: Fast loading with efficient CSS and minimal JavaScript
 - **Accessibility**: Semantic HTML structure and proper contrast ratios
 
-## 📁 Project Structure
-
-```
-elmoradar-website/
-├── index.html          # Main homepage
-├── settings.html       # Gaming settings page
-├── script.js          # JavaScript functionality
-├── README.md          # This file
-└── assets/            # Static assets
-    ├── logo.png       # Main logo
-    ├── navigraph.jpg  # Partner logos
-    ├── aerosoft.png
-    ├── orbx.png
-    ├── nordfly.png
-    ├── munichairways.jpg
-    └── icons/         # Social media icons
-        ├── tiktok.png
-        └── email-icon.png
-```
-
 ## 🛠️ Tech Stack
 
 - **HTML5**: Semantic markup
@@ -57,7 +37,7 @@ elmoradar-website/
 5. **YouTube VODs**: Embedded video content
 6. **PC Specs**: Detailed hardware specifications
 7. **Partners**: Sponsors and virtual airlines
-8. **Contact**: Social media links and contact information
+8. **Imprint**: Legal information, website credits, and contact details
 9. **Footer**: Copyright and credits
 
 ### Settings Page (`settings.html`)
