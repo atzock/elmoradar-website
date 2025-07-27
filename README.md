@@ -1,151 +1,141 @@
-# elmoradar Website
+# elmoradar Website 🛩️
 
-A modern, responsive website for elmoradar - a Microsoft Flight Simulator & VATSIM streamer based in Berlin.
+The official website for **elmoradar** - a Microsoft Flight Simulator and VATSIM streaming channel based in Berlin.
 
-## 🛩️ About
+## 🎯 About
 
-This website showcases elmoradar's content, featuring:
-- Live streaming on Twitch
-- VATSIM flights and ATC communication
-- Professional aviation content
-- YouTube VODs and highlights
+This is a modern, responsive website showcasing elmoradar's aviation content, featuring:
+- Live flight tracking and streaming
+- VATSIM professional ATC content
+- Aviation community engagement
+- Flight statistics and achievements
 
-## 🚀 Features
+## ✨ Features
 
-- **Responsive Design**: Mobile-first approach with Tailwind CSS
-- **Modern UI**: Dark theme with aviation-inspired red/orange gradients
-- **Interactive Elements**: Hover effects, animations, and smooth transitions
-- **Performance Optimized**: Fast loading with efficient CSS and minimal JavaScript
-- **Accessibility**: Semantic HTML structure and proper contrast ratios
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- **Modern UI**: Built with Tailwind CSS and custom animations
+- **Live Status**: Real-time streaming indicators
+- **Statistics Dashboard**: Flight hours, VATSIM flights, airports visited
+- **Social Integration**: Links to Twitch, YouTube, and social media
+- **German Language**: Tailored for German-speaking aviation community
 
-## 🛠️ Tech Stack
+## 🛠️ Technology Stack
 
-- **HTML5**: Semantic markup
-- **CSS3**: Modern styling with custom properties
-- **Tailwind CSS**: Utility-first CSS framework (via CDN)
-- **JavaScript**: Vanilla JS for interactions
-- **Google Fonts**: Inter font family
-- **YouTube API**: Embedded video content
+- **HTML5**: Semantic markup structure
+- **CSS3**: Custom animations and Tailwind CSS framework
+- **JavaScript**: Interactive navigation and smooth scrolling
+- **Fonts**: Inter font family from Google Fonts
+- **Icons**: Custom aviation-themed iconography
 
-## 📱 Sections
+## 📁 Project Structure
 
-### Homepage (`index.html`)
-1. **Navigation**: Sticky header with smooth scrolling
-2. **Hero Section**: Eye-catching intro with live status indicator
-3. **Statistics**: Flight hours, VATSIM flights, airports visited
-4. **About**: Personal introduction and aircraft preferences
-5. **YouTube VODs**: Embedded video content
-6. **PC Specs**: Detailed hardware specifications
-7. **Partners**: Sponsors and virtual airlines
-8. **Imprint**: Legal information, website credits, and contact details
-9. **Footer**: Copyright and credits
+```
+elmoradar-website/
+├── index.html          # Main homepage
+├── settings.html       # Settings/configuration page
+├── impressum.html      # Legal information (German requirement)
+├── script.js          # JavaScript functionality
+├── README.md          # Project documentation
+├── ToDo.md            # Development tasks
+└── assets/            # Media files
+    ├── logo.webp       # Main logo
+    ├── *.webp          # Partner/sponsor logos
+    ├── elmos/          # Profile images
+    └── icons/          # UI icons
+```
 
-### Settings Page (`settings.html`)
-- Gaming configuration details
-- Control settings
-- Hardware setup information
-
-## 🎨 Design System
-
-### Colors
-- **Primary**: Red (#dc2626) to Orange (#f97316) gradients
-- **Background**: Dark gray (#111827, #1f2937)
-- **Text**: White (#ffffff) and light gray (#d1d5db)
-- **Accents**: Various colors for different sections
-
-### Typography
-- **Font Family**: Inter (Google Fonts)
-- **Weights**: 300, 400, 500, 600, 700, 800
-- **Hierarchy**: Clear distinction between headings and body text
-
-### Components
-- **Cards**: Hover effects with subtle shadows
-- **Buttons**: Gradient backgrounds with hover states
-- **Icons**: SVG icons and partner logos
-- **Animations**: Floating elements and pulse effects
-
-## 🚁 Key Animations
-
-- **Float Animation**: Subtle floating motion for background elements
-- **Pulse Effect**: Live indicator animation
-- **Hover Transforms**: Card lift effects and icon scaling
-- **Gradient Text**: Animated background clips for headings
-
-## 📊 Statistics Display
-
-Current showcase metrics:
-- **1.8K** Flight Hours
-- **450+** VATSIM Flights
-- **75+** Airports Visited
-- **C1** VATSIM Rating
-
-## 🤝 Partners & Airlines
-
-### Partners
-- **Navigraph**: Flight planning and charts
-- **Aerosoft**: Flight simulation software
-- **Orbx**: Scenery and airports
-
-### Virtual Airlines
-- **Hermann Cargo**: Cargo operations
-- **Nordfly**: Regional airline
-- **München Airways**: German virtual airline
-
-## 💻 PC Specifications
-
-### Hardware Setup
-- **CPU**: AMD Ryzen 7 7800X3D (8C/16T, 4.20-5.00GHz)
-- **GPU**: NVIDIA GeForce RTX 4070
-- **Motherboard**: MSI B650 Gaming Plus (AM5)
-- **RAM**: 64GB DDR5 (4x 16GB modules)
-- **Storage**: Lexar M.2 2TB + Samsung 2TB SSD
-- **Cooling**: be quiet! Pure Rock 2 + ARCTIC P12 PWM
-
-## 🔗 Social Links
-
-- **Twitch**: [twitch.tv/elmoradar](https://twitch.tv/elmoradar)
-- **YouTube Main**: [@elmoradar](https://www.youtube.com/@elmoradar)
-- **YouTube VODs**: [@elmoradarVODs](https://www.youtube.com/@elmoradarVODs)
-- **TikTok**: [@elmo_radar](https://tiktok.com/@elmo_radar)
-- **Discord**: [discord.gg/elmoradar](https://discord.gg/elmoradar)
-- **Email**: elmoradar@gmail.com
-
-## 🛠️ Development
+## 🚀 Getting Started
 
 ### Prerequisites
-- Modern web browser
-- Text editor/IDE
-- Local web server (optional)
+- A modern web browser
+- Local web server (optional, for development)
 
-### Setup
-1. Clone or download the repository
-2. Open `index.html` in a web browser
-3. For development, use a local server (Live Server, Python's http.server, etc.)
+### Installation
 
-### File Editing
-- **HTML**: Main structure in `index.html` and `settings.html`
-- **Styling**: Custom CSS in `<style>` tags, Tailwind classes for utilities
-- **Interactions**: JavaScript in `script.js`
-- **Assets**: Images and icons in `/assets/` directory
+1. Clone the repository:
+```bash
+git clone https://github.com/atzock/elmoradar-website.git
+cd elmoradar-website
+```
 
-### Customization
-- Update content in HTML files
-- Modify colors in CSS custom properties
-- Add new sections following existing patterns
-- Replace partner logos and links as needed
+2. Open `index.html` in your web browser or serve with a local server:
+```bash
+# Using Python
+python -m http.server 8000
 
-## 📄 License
+# Using Node.js (if you have http-server installed)
+npx http-server
 
-© 2025 elmoradar. All rights reserved.
+# Using PHP
+php -S localhost:8000
+```
 
-## 👨‍💻 Credits
+3. Navigate to `http://localhost:8000` in your browser
 
-- **Website Design & Development**: atzock
-- **Content & Branding**: elmoradar
-- **Fonts**: Google Fonts (Inter)
-- **Icons**: Custom SVG icons and partner logos
-- **Framework**: Tailwind CSS
+## 🎨 Customization
 
-## 📞 Support
+### Colors
+The website uses a red-orange aviation theme:
+- Primary Red: `#dc2626`
+- Dark Red: `#991b1b`
+- Orange Accent: `#f97316`
 
-For technical issues or questions about the website, contact the development team or reach out through the social media channels listed above.
+### Fonts
+- Primary: Inter (Google Fonts)
+- Fallback: System sans-serif
+
+### Statistics
+Update the stats in `index.html` around line 125:
+```html
+<div class="text-3xl md:text-4xl font-bold text-red-400 stats-counter">1.8K</div>
+<div class="text-gray-400 mt-2">Flugstunden</div>
+```
+
+## 📱 Responsive Breakpoints
+
+- Mobile: < 768px
+- Tablet: 768px - 1024px
+- Desktop: > 1024px
+
+## 🔗 External Links
+
+- **Twitch**: [twitch.tv/elmoradar](https://twitch.tv/elmoradar)
+- **YouTube**: [@elmoradarVODs](https://www.youtube.com/@elmoradarVODs)
+- **VATSIM**: Professional ATC network integration
+
+## 📄 Legal
+
+- Includes German "Impressum" page for legal compliance
+- User selection disabled for content protection
+- Responsive design follows accessibility guidelines
+
+## 🚧 Development
+
+### To-Do Items
+- [ ] Set up hosting solution
+- [ ] Fix email icon display
+- [ ] Additional feature implementations
+
+### Contributing
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/new-feature`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature/new-feature`)
+5. Create a Pull Request
+
+## 📞 Contact
+
+For questions about the website or elmoradar content:
+- **Stream**: [Twitch - elmoradar](https://twitch.tv/elmoradar)
+- **Archive**: [YouTube - elmoradar VODs](https://www.youtube.com/@elmoradarVODs)
+
+## 📊 Stats Overview
+
+- **Flight Hours**: 1,800+
+- **VATSIM Flights**: 450+
+- **Airports Visited**: 75+
+- **VATSIM Rating**: C1
+
+---
+
+*Built with ❤️ for the aviation community | © 2025 elmoradar*
