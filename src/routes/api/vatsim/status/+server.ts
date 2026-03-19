@@ -14,13 +14,18 @@ type VatsimPilot = {
 	altitude?: number;
 };
 
+type VatsimController = {
+	cid?: number;
+	callsign: string;
+};
+
 type VatsimDataResponse = {
 	general?: {
 		version?: number;
 		reload?: string;
 	};
 	pilots?: VatsimPilot[];
-	controllers?: unknown[];
+	controllers?: VatsimController[];
 	atis?: unknown[];
 };
 
@@ -60,23 +65,47 @@ async function fetchJson<T>(url: string): Promise<T> {
 }
 
 export const GET: RequestHandler = async ({ url }) => {
-	const callsign = url.searchParams.get('callsign')?.toUpperCase() ?? 'EDDB_DEP';
+	const requestedCallsign = url.searchParams.get('callsign')?.toUpperCase() ?? null;
+	const requestedMemberIdRaw = url.searchParams.get('memberId');
+	const requestedMemberId = requestedMemberIdRaw ? Number(requestedMemberIdRaw) : null;
+
+	if (requestedMemberIdRaw && (requestedMemberId === null || !Number.isInteger(requestedMemberId) || requestedMemberId <= 0)) {
+		return json(
+			{
+				error: 'Query parameter memberId must be a positive integer'
+			},
+			{ status: 400 }
+		);
+	}
+
+	const fallbackCallsign = requestedCallsign ?? 'EDDB_DEP';
 
 	try {
 		const data = await fetchJson<VatsimDataResponse>(VATSIM_DATA_URL);
 		const pilots = data.pilots ?? [];
-		const pilot = pilots.find((entry) => entry.callsign?.toUpperCase() === callsign);
+		const controllers = data.controllers ?? [];
+		const pilot = requestedMemberId
+			? pilots.find((entry) => entry.cid === requestedMemberId)
+			: pilots.find((entry) => entry.callsign?.toUpperCase() === fallbackCallsign);
+		const controller = requestedMemberId
+			? controllers.find((entry) => entry.cid === requestedMemberId)
+			: controllers.find((entry) => entry.callsign?.toUpperCase() === fallbackCallsign);
+		const memberId = pilot?.cid ?? controller?.cid ?? null;
+		const resolvedCallsign = pilot?.callsign ?? controller?.callsign ?? fallbackCallsign;
 
 		return json({
-			connected: Boolean(pilot),
-			callsign,
-			memberId: pilot?.cid ?? null,
+			connected: Boolean(pilot || controller),
+			callsign: resolvedCallsign,
+			memberId,
+			networkRole: pilot ? 'pilot' : controller ? 'controller' : 'offline',
 			route: pilot?.flight_plan
 				? `${pilot.flight_plan.departure ?? '????'} → ${pilot.flight_plan.arrival ?? '????'}`
-				: 'N/A',
+				: controller
+					? 'ATC Station'
+					: 'N/A',
 			altitude: formatAltitude(pilot?.altitude),
 			onlinePilots: pilots.length,
-			onlineControllers: data.controllers?.length ?? 0,
+			onlineControllers: controllers.length,
 			onlineAtis: data.atis?.length ?? 0,
 			dataVersion: data.general?.version ?? null,
 			lastUpdated: new Date().toISOString()
@@ -87,7 +116,8 @@ export const GET: RequestHandler = async ({ url }) => {
 		return json(
 			{
 				connected: false,
-				callsign,
+				callsign: fallbackCallsign,
+				memberId: requestedMemberId,
 				route: 'N/A',
 				altitude: 'N/A',
 				error: message

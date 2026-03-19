@@ -9,7 +9,6 @@
 		hec,
 		munichairways
 	} from '$lib/assets/index.js';
-	import VatsimMap from '$lib/components/VatsimMap.svelte';
 	import { onMount } from 'svelte';
 
 	let mobileMenu = $state(false);
@@ -36,6 +35,7 @@
 	};
 
 	let recentFlightplans = $state<FlightplanItem[]>([]);
+	const HARDCODED_VATSIM_MEMBER_ID = 1411028;
 
 	const stats = [
 		{ value: '1.8K', label: 'Flight Hours' },
@@ -70,34 +70,10 @@
 		{ time: '22:35', flight: 'ELM999', route: 'Berlin → London', status: 'SCHEDULED' }
 	];
 
-	const routeCards = [
-		{
-			title: 'Current Ops',
-			from: 'EDDB',
-			to: 'LOWW',
-			aircraft: 'Fenix A320',
-			duration: '01:05'
-		},
-		{
-			title: 'Long Haul',
-			from: 'EDDF',
-			to: 'KJFK',
-			aircraft: 'iniBuilds A350',
-			duration: '08:35'
-		},
-		{
-			title: 'Regional Hop',
-			from: 'EDDM',
-			to: 'LSZH',
-			aircraft: 'A319',
-			duration: '00:50'
-		}
-	];
-
 	async function loadStatus() {
 		const [twitchRes, vatsimRes] = await Promise.allSettled([
 			fetch('/api/twitch/status'),
-			fetch('/api/vatsim/status'),
+			fetch(`/api/vatsim/status?memberId=${HARDCODED_VATSIM_MEMBER_ID}`),
 		]);
 
 		if (twitchRes.status === 'fulfilled' && twitchRes.value.ok) {
@@ -113,12 +89,12 @@
 			vatsimCallsign = data.callsign;
 			vatsimRoute = data.route;
 			vatsimAltitude = data.altitude;
-			vatsimMemberId = data.memberId ?? null;
+			vatsimMemberId = data.memberId ?? HARDCODED_VATSIM_MEMBER_ID;
 			onlinePilots = data.onlinePilots ?? 0;
 			onlineControllers = data.onlineControllers ?? 0;
 
-			if (vatsimMemberId) {
-				const flightplanRes = await fetch(`/api/vatsim/member/flightplans?memberId=${vatsimMemberId}`);
+			if (HARDCODED_VATSIM_MEMBER_ID) {
+				const flightplanRes = await fetch(`/api/vatsim/member/flightplans?memberId=${HARDCODED_VATSIM_MEMBER_ID}`);
 				if (flightplanRes.ok) {
 					const flightplanData = await flightplanRes.json();
 					recentFlightplans = flightplanData.items ?? [];
@@ -139,7 +115,7 @@
 	<title>elmoradar — Air Ops Center</title>
 	<meta
 		name="description"
-		content="Live aviation command center for elmoradar — VATSIM, routes, departures, hardware and community."
+		content="Live aviation command center for elmoradar — VATSIM, hardware and community."
 	/>
 </svelte:head>
 
@@ -161,8 +137,6 @@
 
 			<div class="hidden items-center gap-8 text-sm text-white/60 md:flex">
 				<a href="#overview" class="transition hover:text-white">Overview</a>
-				<a href="#ops" class="transition hover:text-white">Ops</a>
-				<a href="#departures" class="transition hover:text-white">Departures</a>
 				<a href="#hardware" class="transition hover:text-white">Hardware</a>
 				<a href="#partners" class="transition hover:text-white">Partners</a>
 			</div>
@@ -204,8 +178,6 @@
 			<div class="border-t border-white/10 bg-[#060a12]/95 px-6 py-5 md:hidden">
 				<div class="flex flex-col gap-4 text-sm text-white/70">
 					<a href="#overview" onclick={() => (mobileMenu = false)}>Overview</a>
-					<a href="#ops" onclick={() => (mobileMenu = false)}>Ops</a>
-					<a href="#departures" onclick={() => (mobileMenu = false)}>Departures</a>
 					<a href="#hardware" onclick={() => (mobileMenu = false)}>Hardware</a>
 					<a href="#partners" onclick={() => (mobileMenu = false)}>Partners</a>
 				</div>
@@ -336,19 +308,6 @@
 
 	<section id="overview" class="px-6 py-8">
 		<div class="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-			<div class="overflow-hidden rounded-4xl border border-white/10 bg-white/4 p-6 md:p-8">
-				<div class="mb-6 flex items-end justify-between gap-4">
-					<div>
-						<p class="text-xs uppercase tracking-[0.25em] text-white/35">Map View</p>
-						<h2 class="mt-2 text-3xl font-semibold">Live VATSIM Flight Map</h2>
-					</div>
-				</div>
-
-				<div class="relative h-105 overflow-hidden rounded-3xl border border-white/10 bg-[#071019]">
-					<VatsimMap />
-				</div>	
-			</div>
-
 			<div id="ops" class="grid gap-6">
 				<div class="overflow-hidden rounded-4xl border border-white/10 bg-white/4 p-6">
 					<p class="text-xs uppercase tracking-[0.25em] text-white/35">Network API</p>
