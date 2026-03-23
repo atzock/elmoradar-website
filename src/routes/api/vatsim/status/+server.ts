@@ -78,7 +78,7 @@ export const GET: RequestHandler = async ({ url }) => {
 		);
 	}
 
-	const fallbackCallsign = requestedCallsign ?? 'EDDB_DEP';
+	const fallbackCallsign = requestedCallsign ?? 'N/A';
 
 	try {
 		const data = await fetchJson<VatsimDataResponse>(VATSIM_DATA_URL);
