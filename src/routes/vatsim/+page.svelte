@@ -1,0 +1,2 @@
+<!-- maybe eine coole Ansicht wo meine VATSIM endorsements zu sehen sind -->
+<!-- maybe einen tab machen, wo wir blogähnlich ein paar fragen beantworten (wie fängt man auf VATSIM an? Was braucht man zum Fliegen? … vlt auch gut für Google Suchen) -->
