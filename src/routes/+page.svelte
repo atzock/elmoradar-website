@@ -27,6 +27,9 @@
 	let onlinePilots = $state<number>(0);
 	let onlineControllers = $state<number>(0);
 
+	let recentVideoUrl1 = $state('https://www.youtube.com/embed/ES-5Mbhwi1g');
+	let recentVideoUrl2 = $state('https://www.youtube.com/embed/ES-5Mbhwi1g');
+
 	type FlightplanItem = {
 		id: number;
 		callsign: string;
@@ -132,29 +135,19 @@
 			<a href="#top" class="flex items-center gap-3">
 				<img src={logo} alt="elmoradar logo" class="h-10 w-10 rounded-xl object-cover ring-1 ring-white/10" />
 				<div>
-					<div class="text-sm uppercase tracking-[0.28em] text-white/45">Air Ops</div>
+					<div class="text-xs uppercase tracking-[0.28em] text-white/45">Air Ops</div>
 					<div class="text-lg font-semibold">elmoradar</div>
 				</div>
 			</a>
 
 			<div class="hidden items-center gap-8 text-sm text-white/60 md:flex">
-				<a href="#overview" class="transition hover:text-white">Overview</a>
-				<a href="#hardware" class="transition hover:text-white">Hardware</a>
-				<a href="#partners" class="transition hover:text-white">Partners</a>
+				<a href="/" class="transition hover:text-white">Overview</a>
+				<a href="/hardware" class="transition hover:text-white">Hardware</a>
+				<a href="/vatsim" class="transition hover:text-white">Vatsim</a>
+				<a href="/settings" class="transition hover:text-white">Settings</a>
 			</div>
 
 			<div class="hidden md:flex items-center gap-3">
-				<div class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs backdrop-blur-md">
-					<span class={`h-2.5 w-2.5 rounded-full ${twitchLive ? 'bg-red-500 shadow-[0_0_12px_rgba(239,68,68,0.9),0_0_25px_rgba(239,68,68,0.4)]' : 'bg-white/20 shadow-[0_0_8px_rgba(255,255,255,0.1)]'}`}></span>
-					<span class="text-white/75">
-						{#if twitchLive}
-							LIVE{#if twitchViewers !== null} · {twitchViewers} viewers{/if}
-						{:else}
-							TWITCH OFFLINE
-						{/if}
-					</span>
-				</div>
-
 				<a
 					href="https://twitch.tv/elmoradar"
 					target="_blank"
@@ -319,9 +312,11 @@
 				<h2 class="mt-2 text-3xl font-semibold">Streaming Setup</h2>
 			</div>
 
-			<a href="/hardware" class="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white/70 hover:bg-white/20">
-				Zur Hardware
-			</a>
+			<div class="mb-8">
+				<a href="/hardware" class="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white/70 hover:bg-white/20">
+					Zur Hardware
+				</a>
+			</div>
 
 			<div class="grid gap-6 lg:grid-cols-2">
 				
@@ -342,7 +337,7 @@
 								Command Center
 							</div>
 							<div class="text-lg font-semibold">
-								Dual Monitor ATC + Streaming Setup
+								Dual Monitor + Streaming Setup
 							</div>
 						</div>
 					</div>
@@ -357,7 +352,7 @@
 					/>
 
 					<!-- overlay -->
-					<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+					<div class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></div>
 
 					<div class="absolute bottom-4 left-4 right-4">
 						<div class="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-4">
@@ -418,7 +413,7 @@
 							<iframe
 								title="Recent flight 1"
 								class="aspect-video w-full"
-								src="https://www.youtube.com/embed/O-wnGXWXwY0"
+								src={recentVideoUrl1}
 								allowfullscreen
 							></iframe>
 						</div>
@@ -427,7 +422,7 @@
 							<iframe
 								title="Recent flight 2"
 								class="aspect-video w-full"
-								src="https://www.youtube.com/embed/-ZV9TUgVJto"
+								src={recentVideoUrl2}
 								allowfullscreen
 							></iframe>
 						</div>
@@ -450,7 +445,7 @@
 
 			<div>
 				<div>Made by atzock</div>
-				<div>© 2025 elmoradar. All rights reserved.</div>
+				<div>© 2026 elmoradar. All rights reserved.</div>
 			</div>
 		</div>
 	</footer>
