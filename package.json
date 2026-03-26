@@ -54,6 +54,7 @@
 		"svelte"
 	],
 	"dependencies": {
-		"leaflet": "^1.9.4"
+		"leaflet": "^1.9.4",
+		"lucide-svelte": "^1.0.1"
 	}
 }
