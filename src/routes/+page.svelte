@@ -8,6 +8,7 @@
 		inibuilds,
 		setupImage,
 		streamerImage,
+		gamesPlanet,
 	} from '$lib/assets/index.js';
 	import BasicPage from '$lib/components/basic-page.svelte';
 	import { onMount } from 'svelte';
@@ -55,6 +56,7 @@
 		{ name: 'Aerosoft', url: 'https://aerosoft.com', logo: aerosoft },
 		{ name: 'Orbx', url: 'https://orbxdirect.com', logo: orbx },
 		{ name: 'iniBuilds', url: 'https://inibuilds.com/?ref=elmoradar', logo: inibuilds },
+		{ name: 'GamesPlanet', url: 'https://de.gamesplanet.com/?ref=elmo', logo: gamesPlanet },
 	];
 
 	async function loadStatus() {
@@ -132,18 +134,6 @@
 					<p class="max-w-2xl text-lg leading-8 text-white/70 md:text-xl">
 						Heyyo, ich bin Marvin, 25 Jahre alt, und ich nehme euch überwiegend mit auf meine VATSIM Fluglotsen- und Pilotensessions. <br>Neben VATSIM studiere ich Rechtswissenschaften.
 					</p>
-
-					<div class="mt-6 flex flex-wrap gap-3">
-						<span class="rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-sm text-red-200">
-							Fenix A319 / A320 / A321
-						</span>
-						<span class="rounded-full border border-orange-500/20 bg-orange-500/10 px-3 py-1 text-sm text-orange-200">
-							iniBuilds A350
-						</span>
-						<span class="rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-sm text-blue-200">
-							VATSIM C1
-						</span>
-					</div>
 
 					<div class="mt-8 flex flex-wrap gap-4">
 						<a

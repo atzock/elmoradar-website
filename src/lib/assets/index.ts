@@ -7,6 +7,7 @@ import elmoFace from './elmos/elmo-face.png?url';
 import inibuilds from './inibuilds.webp?url';
 import setupImage from './setupImage.webp?url';
 import streamerImage from './streamerImage.webp?url';
+import gamesPlanet from './gamesPlanet.png?url';
 
 export {
   logo,
@@ -16,7 +17,8 @@ export {
   elmoFace,
   inibuilds,
   setupImage,
-  streamerImage
+  streamerImage,
+  gamesPlanet
 };
 
 export default {
@@ -27,5 +29,6 @@ export default {
   elmoFace,
   inibuilds,
   setupImage,
-  streamerImage
+  streamerImage,
+  gamesPlanet
 };

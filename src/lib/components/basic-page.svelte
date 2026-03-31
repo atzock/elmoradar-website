@@ -8,7 +8,8 @@
 		{ name: 'Hardware', href: '/hardware' },
 		{ name: 'Vatsim', href: '/vatsim' },
 		{ name: 'MSFS Settings', href: '/settings' },
-		{ name: 'Impressum', href: '/impressum' }
+		{ name: 'Impressum', href: '/impressum' },
+		{ name: 'Kontakt', href: '/contact' }
 	];
 </script>
 
