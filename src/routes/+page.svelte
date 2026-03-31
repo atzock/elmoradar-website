@@ -9,6 +9,7 @@
 		setupImage,
 		streamerImage,
 	} from '$lib/assets/index.js';
+	import BasicPage from '$lib/components/basic-page.svelte';
 	import { onMount } from 'svelte';
 
 	let mobileMenu = $state(false);
@@ -105,73 +106,8 @@
 	/>
 </svelte:head>
 
-<div class="min-h-screen bg-[#04070c] text-white overflow-x-hidden selection:bg-red-500/30 relative">
-
-	<!-- BACKGROUND SYSTEM -->
-	<div class="fixed inset-0 pointer-events-none">
-		<!-- Radar Sweep -->
-		<div class="absolute inset-0">
-			<div class="radar-sweep"></div>
-		</div>
-
-		<!-- Grid Overlay -->
-		<div
-			class="absolute inset-0 opacity-[0.05]"
-			style="
-				background-image: 
-					linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-					linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
-				background-size: 80px 80px;
-			"
-		></div>
-
-		<!-- Radial Light Zones -->
-		<div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(239,68,68,0.12),transparent_30%),radial-gradient(circle_at_80%_60%,rgba(59,130,246,0.08),transparent_30%)]"></div>
-	</div>
-
-	<!-- NAV -->
-	<nav class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#05080e]/70 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
-		<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-			<a href="/" class="flex items-center gap-3">
-				<img src={logo} alt="elmoradar logo" class="h-10 w-10 rounded-xl object-cover ring-1 ring-white/10" />
-				<div>
-					<div class="text-xs uppercase tracking-[0.28em] text-white/45">Air Ops</div>
-					<div class="text-lg font-semibold">elmoradar</div>
-				</div>
-			</a>
-
-			<div class="hidden items-center gap-8 text-sm text-white/60 md:flex">
-				<a href="/" class="transition hover:text-white">Overview</a>
-				<a href="/hardware" class="transition hover:text-white">Hardware</a>
-				<a href="/vatsim" class="transition hover:text-white">Vatsim</a>
-				<a href="/settings" class="transition hover:text-white">Settings</a>
-			</div>
-
-			<div class="hidden md:flex items-center gap-3">
-				<a
-					href="https://twitch.tv/elmoradar"
-					target="_blank"
-					rel="noreferrer"
-					class="rounded-full bg-red-600 px-4 py-2 text-sm font-semibold transition-all duration-300 hover:bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:shadow-[0_0_30px_rgba(239,68,68,0.6)]"
-				>
-					Open Stream
-				</a>
-			</div>
-
-			<!-- svelte-ignore a11y_consider_explicit_label -->
-			<button
-				class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 md:hidden backdrop-blur-md"
-				onclick={() => (mobileMenu = !mobileMenu)}
-				aria-label="Toggle menu"
-			>
-				<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-					<path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
-				</svg>
-			</button>
-		</div>
-	</nav>
-
-	<section id="top" class="relative px-6 pt-32 pb-16 md:pt-36">
+<BasicPage>
+	<section id="top">
 		<div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.15fr_0.85fr]">
 			<div class="relative overflow-hidden rounded-4xl border border-white/10 bg-white/4 p-8 shadow-[0_20px_80px_rgba(0,0,0,0.45)] md:p-10">
 				<div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(239,68,68,0.18),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.1),transparent_24%)]"></div>
@@ -449,8 +385,7 @@
 			</div>
 		</div>
 	</footer>
-</div>
-
+</BasicPage>
 <style>
 	@keyframes dash {
 		from {
