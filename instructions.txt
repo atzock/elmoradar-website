@@ -1,0 +1,30 @@
+GamesPlanet
+https://de.gamesplanet.com/?ref=elmo sollte gehen, bis vor ein paar Tagen ging auch https://de.gamesplanet.com/search?query=only:7245-1,7245-2,7245-3&ref=elmo noch :monkaX: aber scheinbar haben sie kein MSFS2024 mehr :ohno: 
+
+Blogseite - über mich (für die Visitenkarte)
+In letzter Zeit kommen doch einige Business-Anfragen rein, wo es cool wäre wenn die sich über die Website über mich informieren könnten. Kp ob das auf die Mainseite kommt oder man dafür eine Extraseite macht. Erstmal alles mit Lorem Ipsum füllen. Aber Überschriften:
+Wer bin ich, was mache ich?
+Wie habe ich mit FlightSimming angefangen?
+Wie bin ich zu VATSIM gekommen?
+Wann und warum habe ich angefangen zu Streamen?
+Warum "elmoradar"?
+
+FAQ-Seite - allgemeine Sachen, wo es nicht um mich geht
+Dort könnte man dann so auf oft gefragte Fragen eingehen.
+Wie werde ich VATSIM-Lotse?
+Wie werde ich VATSIM-Pilot?
+Tipps für VATSIM-Anfänger?
+Was brauche ich zum fliegen?
+
+
+Maybe mit Volanta API die letzten 3 Flüge fetchen :IDK:
+
+---
+Meine (Go-To) Flieger + Bild kann man vlt auch auf einer Seite so einblenden :joa: 
+Fenix A320/A319/A321
+ini A350
+ini A340
+ini A300
+FSLabs A321neo
+FBW A380
+iFly 737-MAX

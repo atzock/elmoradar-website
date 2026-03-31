@@ -1,93 +1,136 @@
-<!-- maybe eine coole Ansicht wo meine VATSIM endorsements zu sehen sind -->
-<!-- maybe einen tab machen, wo wir blogähnlich ein paar fragen beantworten (wie fängt man auf VATSIM an? Was braucht man zum Fliegen? … vlt auch gut für Google Suchen) -->
 <script lang="ts">
-    import {
-		logo,
-	} from '$lib/assets/index.js';
+	import BasicPage from '$lib/components/basic-page.svelte';
+	import { TowerControl, Radar, Globe } from "lucide-svelte";
 
-    let mobileMenu = $state(false);
+	const tower = [
+		"EDDF_TWR – Frankfurt",
+		"EDDH_TWR – Hamburg",
+		"EDDK_TWR – Köln",
+		"EDDL_TWR – Düsseldorf",
+		"EDDM_TWR – München"
+	];
+
+	const approach = [
+		"EDDF_APP – Frankfurt",
+		"EDDK_APP – Köln",
+		"EDDL_APP – Düsseldorf"
+	];
+
+	const center = [
+		"EDGG_CTR – Langen Radar",
+		"EDWW_CTR – Bremen Radar",
+		"EDMM_CTR – München Radar (fast vollständig)"
+	];
 </script>
 
+<BasicPage>
 
-<div class="min-h-screen bg-[#04070c] text-white overflow-x-hidden selection:bg-red-500/30 relative">
+	<main class="mx-auto max-w-7xl px-6 py-16">
 
-	<!-- BACKGROUND -->
-	<div class="fixed inset-0 pointer-events-none">
-		<div class="absolute inset-0">
-			<div class="radar-sweep"></div>
-		</div>
+		<!-- HERO -->
+		<section class="mb-14">
+			<h1 class="text-5xl font-black tracking-tight">
+				VATSIM <span class="text-red-400">Endorsements</span>
+			</h1>
+			<p class="mt-4 text-white/60 max-w-2xl">
+				Overview of all available ATC positions and sector permissions across Germany.
+			</p>
+		</section>
 
-		<div
-			class="absolute inset-0 opacity-[0.05]"
-			style="
-				background-image: 
-					linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-					linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
-				background-size: 80px 80px;
-			"
-		></div>
+		<!-- GRID -->
+		<div class="grid lg:grid-cols-3 gap-6">
 
-		<div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(239,68,68,0.12),transparent_30%),radial-gradient(circle_at_80%_60%,rgba(59,130,246,0.08),transparent_30%)]"></div>
-	</div>
-
-	<!-- NAV -->
-	<nav class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#05080e]/70 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
-		<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-			<a href="#top" class="flex items-center gap-3">
-				<img src={logo} alt="elmoradar logo" class="h-10 w-10 rounded-xl ring-1 ring-white/10" />
-				<div>
-					<div class="text-xs uppercase tracking-[0.28em] text-white/45">Air Ops</div>
-					<div class="text-lg font-semibold">elmoradar</div>
+			<!-- TOWER -->
+			<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
+				<div class="flex items-center gap-3 mb-4">
+					<TowerControl class="text-red-400" size={20} />
+					<h2 class="text-lg font-semibold">Tower</h2>
 				</div>
-			</a>
 
-			<div class="hidden md:flex gap-8 text-sm text-white/60">
-				<a href="/" class="hover:text-white">Overview</a>
-				<a href="/hardware" class="hover:text-white">Hardware</a>
-				<a href="/vatsim" class="hover:text-white">Vatsim</a>
-				<a href="/settings" class="transition hover:text-white">Settings</a>
+				<p class="text-xs text-white/40 mb-4 uppercase tracking-[0.25em]">
+					All major airports
+				</p>
+
+				<div class="space-y-3">
+					{#each tower as item}
+						<div class="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
+							<span class="text-sm">{item}</span>
+							<span class="text-green-400 text-xs">ACTIVE</span>
+						</div>
+					{/each}
+				</div>
+
+				<div class="mt-5 text-sm text-white/50">
+					❌ Ausnahme: <span class="text-red-400">EDDB (Berlin)</span>
+				</div>
 			</div>
 
-			<a
-				href="https://twitch.tv/elmoradar"
-				target="_blank"
-				class="hidden md:inline-flex rounded-full bg-red-600 px-4 py-2 text-sm font-semibold hover:bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.4)]"
-			>
-				Open Stream
-			</a>
+			<!-- APPROACH -->
+			<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
+				<div class="flex items-center gap-3 mb-4">
+					<Radar class="text-blue-400" size={20} />
+					<h2 class="text-lg font-semibold">Approach</h2>
+				</div>
 
-			<button
-				class="md:hidden h-11 w-11 rounded-xl border border-white/10 bg-white/5"
-				onclick={() => (mobileMenu = !mobileMenu)}
-			>
-				☰
-			</button>
+				<p class="text-xs text-white/40 mb-4 uppercase tracking-[0.25em]">
+					Selected sectors
+				</p>
+
+				<div class="space-y-3">
+					{#each approach as item}
+						<div class="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
+							<span class="text-sm">{item}</span>
+							<span class="text-green-400 text-xs">ACTIVE</span>
+						</div>
+					{/each}
+				</div>
+
+				<div class="mt-5 text-sm text-white/50 space-y-1">
+					<div>❌ EDDB (Berlin)</div>
+					<div>❌ EDDM (München)</div>
+					<div>❌ EDDH (Hamburg)</div>
+				</div>
+			</div>
+
+			<!-- CENTER -->
+			<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
+				<div class="flex items-center gap-3 mb-4">
+					<Globe class="text-orange-400" size={20} />
+					<h2 class="text-lg font-semibold">Center</h2>
+				</div>
+
+				<p class="text-xs text-white/40 mb-4 uppercase tracking-[0.25em]">
+					High altitude sectors
+				</p>
+
+				<div class="space-y-3">
+					{#each center as item}
+						<div class="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
+							<span class="text-sm">{item}</span>
+							<span class="text-green-400 text-xs">ACTIVE</span>
+						</div>
+					{/each}
+				</div>
+
+				<div class="mt-5 text-sm text-white/50">
+					⚠️ München: einzelne Sektoren eingeschränkt (z. B. EDMM_STA_CTR)
+				</div>
+			</div>
+
 		</div>
-	</nav>
-</div>
 
-<style>
-    .radar-sweep {
-		position: absolute;
-		width: 200%;
-		height: 200%;
-		top: -50%;
-		left: -50%;
-		background: conic-gradient(
-			from 0deg,
-			transparent 0deg,
-			rgba(255, 0, 0, 0.08) 20deg,
-			transparent 60deg
-		);
-		animation: radarRotate 8s linear infinite;
-	}
+		<!-- EXTRA INFO -->
+		<section class="mt-14">
+			<div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl">
+				<h3 class="text-lg font-semibold mb-3">Additional Notes</h3>
 
-	@keyframes radarRotate {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
-</style>
+				<p class="text-white/60 text-sm leading-relaxed">
+					This overview is based on internal Tier 1 endorsements and is not publicly accessible via VATSIM.
+					The data reflects current operational permissions across German FIRs and may change depending on training progress or network requirements.
+				</p>
+			</div>
+		</section>
+
+	</main>
+
+</BasicPage>
