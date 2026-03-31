@@ -95,7 +95,7 @@ FlightSim:
 	<!-- NAV -->
 	<nav class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#05080e]/70 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
 		<div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-			<a href="#top" class="flex items-center gap-3">
+			<a href="/" class="flex items-center gap-3">
 				<img src={logo} alt="elmoradar logo" class="h-10 w-10 rounded-xl ring-1 ring-white/10" />
 				<div>
 					<div class="text-xs uppercase tracking-[0.28em] text-white/45">Air Ops</div>
