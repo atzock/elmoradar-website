@@ -29,8 +29,30 @@
 	let onlinePilots = $state<number>(0);
 	let onlineControllers = $state<number>(0);
 
-	let recentVideoUrl1 = $state('https://www.youtube.com/embed/ES-5Mbhwi1g');
-	let recentVideoUrl2 = $state('https://www.youtube.com/embed/ES-5Mbhwi1g');
+	type RecentVideoItem = {
+		videoId: string;
+		title: string;
+		publishedAt: string;
+		embedUrl: string;
+		url: string;
+	};
+
+	let recentVideos = $state<RecentVideoItem[]>([
+		{
+			videoId: 'l0k5qLb5RJE',
+			title: 'Recent flight 1',
+			publishedAt: '',
+			embedUrl: 'https://www.youtube.com/embed/l0k5qLb5RJE',
+			url: 'https://www.youtube.com/watch?v=l0k5qLb5RJE'
+		},
+		{
+			videoId: 'l0k5qLb5RJE',
+			title: 'Recent flight 2',
+			publishedAt: '',
+			embedUrl: 'https://www.youtube.com/embed/l0k5qLb5RJE',
+			url: 'https://www.youtube.com/watch?v=l0k5qLb5RJE'
+		}
+	]);
 
 	type FlightplanItem = {
 		id: number;
@@ -60,9 +82,10 @@
 	];
 
 	async function loadStatus() {
-		const [twitchRes, vatsimRes] = await Promise.allSettled([
+		const [twitchRes, vatsimRes, youtubeRes] = await Promise.allSettled([
 			fetch('/api/twitch/status'),
 			fetch(`/api/vatsim/status?memberId=${HARDCODED_VATSIM_MEMBER_ID}`),
+			fetch('/api/youtube/videos?handle=elmoradarVODs')
 		]);
 
 		if (twitchRes.status === 'fulfilled' && twitchRes.value.ok) {
@@ -92,6 +115,11 @@
 				recentFlightplans = [];
 			}
 		}
+
+		if (youtubeRes.status === 'fulfilled' && youtubeRes.value.ok) {
+			const data = await youtubeRes.value.json();
+			recentVideos = Array.isArray(data.items) && data.items.length > 0 ? data.items.slice(0, 2) : recentVideos;
+		}
 	}
 
 	onMount(() => {
@@ -109,313 +137,162 @@
 </svelte:head>
 
 <BasicPage>
-	<section id="top">
-		<div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.15fr_0.85fr]">
-			<div class="relative overflow-hidden rounded-4xl border border-white/10 bg-white/4 p-8 shadow-[0_20px_80px_rgba(0,0,0,0.45)] md:p-10">
-				<div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(239,68,68,0.18),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.1),transparent_24%)]"></div>
-
-				<div class="relative z-10">
-					<div class="mb-6 flex flex-wrap items-center gap-4">
-						<img
-							src={elmoFace}
-							alt="Elmo face"
-							class="h-20 w-20 rounded-2xl object-cover ring-1 ring-white/10 shadow-[0_0_50px_rgba(239,68,68,0.2)]"
-						/>
-						<div>
-							<p class="text-sm uppercase tracking-[0.35em] text-white/35">Offizielle Website</p>
-							<h1 class="mt-1 text-5xl font-black tracking-tight md:text-7xl">
-								<span class="bg-linear-to-r from-red-500 via-orange-300 to-red-600 bg-clip-text text-transparent">
-									elmoradar
-								</span>
-							</h1>
-						</div>
-					</div>
-
-					<p class="max-w-2xl text-lg leading-8 text-white/70 md:text-xl">
-						Heyyo, ich bin Marvin, 25 Jahre alt, und ich nehme euch überwiegend mit auf meine VATSIM Fluglotsen- und Pilotensessions. <br>Neben VATSIM studiere ich Rechtswissenschaften.
-					</p>
-
-					<div class="mt-8 flex flex-wrap gap-4">
-						<a
-							href="https://twitch.tv/elmoradar"
-							target="_blank"
-							rel="noreferrer"
-							class="rounded-full bg-red-600 px-6 py-3 font-semibold transition hover:bg-red-500"
-						>
-							Watch Live
-						</a>
-						<a
-							href={discordLink}
-							target="_blank"
-							rel="noreferrer"
-							class="rounded-full bg-blue-600 px-6 py-3 font-semibold transition hover:bg-blue-500"
-						>
-							Join Discord
-						</a>
-						<a
-							href="https://youtube.com/@elmoradarVODs"
-							target="_blank"
-							rel="noreferrer"
-							class="rounded-full border border-white/12 bg-white/5 px-6 py-3 font-semibold text-white/85 transition hover:border-red-500/40 hover:bg-red-500/10"
-						>
-							VOD Archive
-						</a>
-					</div>
-
-					<div class="mt-10 grid gap-4 sm:grid-cols-3">
-						<div class="rounded-2xl border border-white/10 bg-black/25 p-4">
-							<div class="text-xs uppercase tracking-[0.25em] text-white/35">Twitch</div>
-							<div class="mt-2 flex items-center gap-2">
-								<span class={`h-2.5 w-2.5 rounded-full ${twitchLive ? 'bg-red-500 shadow-[0_0_14px_rgba(239,68,68,0.9)]' : 'bg-white/20'}`}></span>
-								<div class="text-sm font-medium">{twitchTitle}</div>
-							</div>
-						</div>
-
-						<div class="rounded-2xl border border-white/10 bg-black/25 p-4">
-							<div class="text-xs uppercase tracking-[0.25em] text-white/35">VATSIM</div>
-							<div class="mt-2 text-sm font-medium">{vatsimConnected ? 'Connected' : 'Offline'}</div>
-						</div>
-
-						<div class="rounded-2xl border border-white/10 bg-black/25 p-4">
-							<div class="text-xs uppercase tracking-[0.25em] text-white/35">Current Route</div>
-							<div class="mt-2 text-sm font-medium">{vatsimRoute}</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="grid gap-6">
-				<div class="overflow-hidden rounded-4xl border border-white/10 bg-white/4 p-6">
-					<div class="mb-4 flex items-center justify-between">
-						<div>
-							<p class="text-xs uppercase tracking-[0.25em] text-white/35">Live Ops</p>
-							<h2 class="mt-2 text-2xl font-semibold">Aktueller Status</h2>
-						</div>
-						<div class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
-							{vatsimConnected ? 'ACTIVE' : 'STANDBY'}
-						</div>
-					</div>
-
-					<div class="grid gap-3">
-						<div class="flex items-center justify-between rounded-2xl border border-white/10 bg-black/25 px-4 py-3">
-							<span class="text-white/45">Callsign</span>
-							<span class="font-medium">{vatsimCallsign}</span>
-						</div>
-						<div class="flex items-center justify-between rounded-2xl border border-white/10 bg-black/25 px-4 py-3">
-							<span class="text-white/45">Route</span>
-							<span class="font-medium">{vatsimRoute}</span>
-						</div>
-						<div class="flex items-center justify-between rounded-2xl border border-white/10 bg-black/25 px-4 py-3">
-							<span class="text-white/45">Cruise</span>
-							<span class="font-medium">{vatsimAltitude}</span>
-						</div>
-					</div>
-				</div>
-
-				<div class="overflow-hidden rounded-4xl border border-white/10 bg-white/4 p-6">
-					<div class="mb-5">
-						<p class="text-xs uppercase tracking-[0.25em] text-white/35">Flight Record</p>
-						<h2 class="mt-2 text-2xl font-semibold">Pilot Profile</h2>
-					</div>
-
-					<div class="grid grid-cols-2 gap-4">
-						{#each stats as s}
-							<div class="rounded-2xl border border-white/10 bg-black/25 p-4">
-								<div class="text-3xl font-bold text-red-400">{s.value}</div>
-								<div class="mt-1 text-sm text-white/50">{s.label}</div>
-							</div>
-						{/each}
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<section id="setup" class="px-6 py-8">
+	<section class="px-6 py-10">
 		<div class="mx-auto max-w-7xl">
-			<div class="mb-8">
-				<p class="text-xs uppercase tracking-[0.25em] text-white/35">Studio</p>
-				<h2 class="mt-2 text-3xl font-semibold">Streaming Setup</h2>
-			</div>
 
-			<div class="mb-8">
-				<a href="/hardware" class="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white/70 hover:bg-white/20">
-					Zur Hardware
-				</a>
-			</div>
-
-			<div class="grid gap-6 lg:grid-cols-2">
-				
-				<!-- SETUP IMAGE -->
-				<div class="group relative overflow-hidden rounded-4xl border border-white/10 bg-white/4">
+			<!-- HEADER / IDENTITY -->
+			<div class="mb-10 flex items-center justify-between">
+				<div class="flex items-center gap-4">
 					<img
-						src={setupImage}
-						alt="Streaming Setup"
-						class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+						src={elmoFace}
+						alt="Elmo"
+						class="h-14 w-14 rounded-xl ring-1 ring-white/10"
 					/>
-
-					<!-- overlay -->
-					<div class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></div>
-
-					<div class="absolute bottom-4 left-4 right-4">
-						<div class="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-4">
-							<div class="text-xs uppercase tracking-[0.25em] text-white/40">
-								Command Center
-							</div>
-							<div class="text-lg font-semibold">
-								Dual Monitor + Streaming Setup
-							</div>
-						</div>
+					<div>
+						<h1 class="text-3xl font-semibold tracking-tight">
+							elmoradar
+						</h1>
+						<p class="text-sm text-white/40">
+							Air Operations Center
+						</p>
 					</div>
 				</div>
 
-				<!-- FACE CAM IMAGE -->
-				<div class="group relative overflow-hidden rounded-4xl border border-white/10 bg-white/4">
-					<img
-						src={streamerImage}
-						alt="Streamer"
-						class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-					/>
-
-					<!-- overlay -->
-					<div class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></div>
-
-					<div class="absolute bottom-4 left-4 right-4">
-						<div class="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-4">
-							<div class="text-xs uppercase tracking-[0.25em] text-white/40">
-								Operator
-							</div>
-							<div class="text-lg font-semibold">
-								Live ATC & Pilot Sessions
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</section>
-	
-	<section id="partners" class="px-6 py-8 pb-20">
-		<div class="mx-auto max-w-7xl">
-			<div class="mb-8">
-				<p class="text-xs uppercase tracking-[0.25em] text-white/35">Network</p>
-				<h2 class="mt-2 text-3xl font-semibold">Partners & Airlines</h2>
-			</div>
-
-			<div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-				{#each partners as p}
-					<a
-						href={p.url}
-						target="_blank"
-						rel="noreferrer"
-						class="group overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/4 p-6 transition hover:border-red-500/35 hover:-translate-y-1"
-					>
-						<div class="flex items-center gap-4">
-							<div class="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-black/25">
-								<img src={p.logo} alt={p.name + ' logo'} class="h-12 w-12 rounded-full object-contain transition group-hover:scale-110" />
-							</div>
-
-							<div>
-								<div class="text-lg font-semibold">{p.name}</div>
-								<div class="text-sm text-white/45">Zum Partner</div>
-							</div>
-						</div>
+				<div class="flex gap-3">
+					<a href="https://twitch.tv/elmoradar" target="_blank"
+						class="rounded-xl bg-red-600 px-4 py-2 text-sm font-medium hover:bg-red-500">
+						Live
 					</a>
-				{/each}
+					<a href={discordLink} target="_blank"
+						class="rounded-xl bg-white/10 px-4 py-2 text-sm text-white/70 hover:bg-white/20">
+						Discord
+					</a>
+				</div>
 			</div>
-		</div>
-	</section>
 
-	<section id="overview" class="px-6 py-8">
-		<div class="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-			<div id="ops" class="grid gap-6">
-				<div class="overflow-hidden rounded-4xl border border-white/10 bg-white/4 p-6">
-					<p class="text-xs uppercase tracking-[0.25em] text-white/35">Archive</p>
-					<h2 class="mt-2 text-3xl font-semibold">Recent Flights</h2>
+			<!-- MAIN GRID -->
+			<div class="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
 
-					<div class="mt-6 grid gap-4">
-						<div class="overflow-hidden rounded-2xl border border-white/10">
-							<iframe
-								title="Recent flight 1"
-								class="aspect-video w-full"
-								src={recentVideoUrl1}
-								allowfullscreen
-							></iframe>
+				<!-- LEFT: CORE PANEL -->
+				<div class="grid gap-6">
+
+					<!-- STATUS BAR -->
+					<div class="grid grid-cols-3 gap-4">
+						<div class="rounded-2xl border border-white/10 bg-black/30 p-4">
+							<div class="text-xs uppercase tracking-[0.25em] text-white/40">
+								Twitch
+							</div>
+							<div class="mt-2 flex items-center gap-2 text-sm">
+								<span class={`h-2 w-2 rounded-full ${twitchLive ? 'bg-red-500' : 'bg-white/20'}`}></span>
+								{twitchTitle}
+							</div>
 						</div>
 
-						<div class="overflow-hidden rounded-2xl border border-white/10">
-							<iframe
-								title="Recent flight 2"
-								class="aspect-video w-full"
-								src={recentVideoUrl2}
-								allowfullscreen
-							></iframe>
+						<div class="rounded-2xl border border-white/10 bg-black/30 p-4">
+							<div class="text-xs uppercase tracking-[0.25em] text-white/40">
+								VATSIM
+							</div>
+							<div class="mt-2 text-sm">
+								{vatsimConnected ? 'Connected' : 'Offline'}
+							</div>
+						</div>
+
+						<div class="rounded-2xl border border-white/10 bg-black/30 p-4">
+							<div class="text-xs uppercase tracking-[0.25em] text-white/40">
+								Route
+							</div>
+							<div class="mt-2 text-sm">
+								{vatsimRoute}
+							</div>
 						</div>
 					</div>
+
+					<!-- LIVE OPS PANEL -->
+					<div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+						<div class="mb-6 flex items-center justify-between">
+							<h2 class="text-xl font-semibold">Live Operations</h2>
+							<span class="text-xs text-white/40">
+								{vatsimConnected ? 'ACTIVE' : 'STANDBY'}
+							</span>
+						</div>
+
+						<div class="grid gap-3">
+							<div class="flex justify-between text-sm">
+								<span class="text-white/40">Callsign</span>
+								<span>{vatsimCallsign}</span>
+							</div>
+
+							<div class="flex justify-between text-sm">
+								<span class="text-white/40">Route</span>
+								<span>{vatsimRoute}</span>
+							</div>
+
+							<div class="flex justify-between text-sm">
+								<span class="text-white/40">Cruise</span>
+								<span>{vatsimAltitude}</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- VIDEOS -->
+					<div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+						<h2 class="mb-4 text-xl font-semibold">Recent Flights</h2>
+
+						<div class="grid gap-4">
+							{#each recentVideos as video}
+								<div class="overflow-hidden rounded-xl border border-white/10">
+									<iframe
+										title={video.title}
+										class="aspect-video w-full"
+										src={video.embedUrl}
+										allowfullscreen
+									></iframe>
+								</div>
+							{/each}
+						</div>
+					</div>
+
 				</div>
-				
+
+				<!-- RIGHT: SIDE INFO -->
+				<div class="grid gap-6">
+
+					<!-- PROFILE -->
+					<div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+						<h2 class="mb-4 text-xl font-semibold">Pilot Profile</h2>
+
+						<div class="grid grid-cols-2 gap-4">
+							{#each stats as s}
+								<div class="rounded-xl border border-white/10 bg-black/30 p-4">
+									<div class="text-lg font-semibold text-red-400">
+										{s.value}
+									</div>
+									<div class="text-xs text-white/40">
+										{s.label}
+									</div>
+								</div>
+							{/each}
+						</div>
+					</div>
+
+					<!-- SETUP -->
+					<div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+						<h2 class="mb-4 text-xl font-semibold">Setup</h2>
+
+						<div class="space-y-4 text-sm text-white/60">
+							<p>Dual Monitor Streaming Setup</p>
+							<p>ATC + Pilot Operations</p>
+
+							<a href="/hardware"
+								class="inline-block text-red-400 hover:underline">
+								View Hardware →
+							</a>
+						</div>
+					</div>
+
+				</div>
+
 			</div>
 		</div>
 	</section>
-
-	<footer class="border-t border-white/10 bg-black/30 px-6 py-8">
-		<div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-center text-sm text-white/40 md:flex-row md:text-left">
-			<div class="flex items-center gap-3">
-				<img src={logo} alt="elmoradar logo" class="h-9 w-9 rounded-xl ring-1 ring-white/10" />
-				<div>
-					<div class="font-medium text-white/70">elmoradar</div>
-					<div>Air Ops Center</div>
-				</div>
-			</div>
-
-			<div>
-				<div>Made by atzock</div>
-				<div>© 2026 elmoradar. All rights reserved.</div>
-			</div>
-		</div>
-	</footer>
 </BasicPage>
-<style>
-	@keyframes dash {
-		from {
-			stroke-dashoffset: 0;
-		}
-		to {
-			stroke-dashoffset: -220;
-		}
-	}
-
-	@keyframes routeFloat {
-		0%, 100% {
-			transform: translateY(0px);
-		}
-		50% {
-			transform: translateY(-10px);
-		}
-	}
-
-	.radar-sweep {
-		position: absolute;
-		width: 200%;
-		height: 200%;
-		top: -50%;
-		left: -50%;
-		background: conic-gradient(
-			from 0deg,
-			transparent 0deg,
-			rgba(255, 0, 0, 0.08) 20deg,
-			transparent 60deg
-		);
-		animation: radarRotate 8s linear infinite;
-	}
-
-	@keyframes radarRotate {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
-</style>
