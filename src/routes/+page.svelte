@@ -19,12 +19,12 @@
 
 	let twitchLive = $state(false);
 	let twitchViewers = $state<number | null>(null);
-	let twitchTitle = $state('Offline');
+	let twitchTitle = $state('');
 
-	let vatsimConnected = $state(true);
-	let vatsimCallsign = $state('N/A');
-	let vatsimRoute = $state('N/A');
-	let vatsimAltitude = $state('N/A');
+	let vatsimConnected = $state(false);
+	let vatsimCallsign = $state('');
+	let vatsimRoute = $state('');
+	let vatsimAltitude = $state('');
 	let vatsimMemberId = $state<number | null>(null);
 	let onlinePilots = $state<number>(0);
 	let onlineControllers = $state<number>(0);
@@ -40,14 +40,14 @@
 	let recentVideos = $state<RecentVideoItem[]>([
 		{
 			videoId: 'l0k5qLb5RJE',
-			title: 'Recent flight 1',
+			title: '',
 			publishedAt: '',
 			embedUrl: 'https://www.youtube.com/embed/l0k5qLb5RJE',
 			url: 'https://www.youtube.com/watch?v=l0k5qLb5RJE'
 		},
 		{
 			videoId: 'l0k5qLb5RJE',
-			title: 'Recent flight 2',
+			title: '',
 			publishedAt: '',
 			embedUrl: 'https://www.youtube.com/embed/l0k5qLb5RJE',
 			url: 'https://www.youtube.com/watch?v=l0k5qLb5RJE'
@@ -67,9 +67,9 @@
 	const HARDCODED_VATSIM_MEMBER_ID = 1411028;
 
 	const stats = [
-		{ value: '1.8K', label: 'Flight Hours' },
-		{ value: '450+', label: 'VATSIM Flights' },
-		{ value: '75+', label: 'Airports Visited' },
+		{ value: '1.8K', label: 'Flugstunden' },
+		{ value: '450+', label: 'VATSIM-Flüge' },
+		{ value: '75+', label: 'Airports' },
 		{ value: 'C1', label: 'VATSIM Rating' }
 	];
 
@@ -92,7 +92,7 @@
 			const data = await twitchRes.value.json();
 			twitchLive = data.live;
 			twitchViewers = data.viewers ?? null;
-			twitchTitle = data.title ?? 'Offline';
+			twitchTitle = data.title ?? '';
 		}
 
 		if (vatsimRes.status === 'fulfilled' && vatsimRes.value.ok) {
@@ -132,167 +132,152 @@
 	<title>elmoradar - Marvin</title>
 	<meta
 		name="description"
-		content="Live aviation command center for elmoradar — VATSIM, hardware and community."
+		content="Flugsimulation, VATSIM und zu viel Kaffee — elmoradar auf Twitch."
 	/>
 </svelte:head>
 
 <BasicPage>
-	<section class="px-6 py-10">
-		<div class="mx-auto max-w-7xl">
+	<div class="px-2 sm:px-6">
 
-			<!-- HEADER / IDENTITY -->
-			<div class="mb-10 flex items-center justify-between">
-				<div class="flex items-center gap-4">
-					<img
-						src={elmoFace}
-						alt="Elmo"
-						class="h-14 w-14 rounded-xl ring-1 ring-white/10"
-					/>
-					<div>
-						<h1 class="text-3xl font-semibold tracking-tight">
-							elmoradar
-						</h1>
-						<p class="text-sm text-white/40">
-							Air Operations Center
-						</p>
+		<!-- HERO -->
+		<section class="pt-4 pb-12 border-b border-white/[0.07]">
+			<div class="flex flex-col sm:flex-row gap-6 items-start">
+				<img
+					src={elmoFace}
+					alt="Elmo"
+					class="h-16 rounded-2xl shrink-0"
+				/>
+				<div class="flex-1 min-w-0">
+					<div class="flex flex-wrap items-center gap-3 mb-3">
+						<h1 class="text-3xl font-bold tracking-tight">elmoradar</h1>
+
+						{#if twitchLive}
+							<a
+								href="https://twitch.tv/elmoradar"
+								target="_blank"
+								class="flex items-center gap-1.5 bg-red-600 px-3 py-1 rounded-full text-xs font-semibold shrink-0 hover:bg-red-500 transition-colors"
+							>
+								<span class="h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span>
+								LIVE{twitchViewers ? ` · ${twitchViewers}` : ''}
+							</a>
+						{/if}
+					</div>
+
+					<p class="text-white/55 text-base leading-relaxed max-w-lg">
+						Flugsimulation auf VATSIM, zu viel Kaffee und ein Homesetup, das langsam außer Kontrolle gerät. Ich streame auf Twitch, rede dabei über Dinge, die kein Mensch braucht — und manchmal klappt sogar die Landung.
+					</p>
+
+					<div class="flex gap-5 mt-5 text-sm">
+						<a href="https://twitch.tv/elmoradar" target="_blank" class="text-white hover:text-red-400 transition-colors">Twitch</a>
+						<a href={discordLink} target="_blank" class="text-white/45 hover:text-white transition-colors">Discord</a>
+						<a href="/hardware" class="text-white/45 hover:text-white transition-colors">Setup</a>
+						<a href="/vatsim" class="text-white/45 hover:text-white transition-colors">VATSIM</a>
 					</div>
 				</div>
+			</div>
+		</section>
 
-				<div class="flex gap-3">
-					<a href="https://twitch.tv/elmoradar" target="_blank"
-						class="rounded-xl bg-red-600 px-4 py-2 text-sm font-medium hover:bg-red-500">
-						Live
-					</a>
-					<a href={discordLink} target="_blank"
-						class="rounded-xl bg-white/10 px-4 py-2 text-sm text-white/70 hover:bg-white/20">
-						Discord
-					</a>
+		<!-- VATSIM LIVE STRIP -->
+		{#if vatsimConnected}
+			<section class="py-5 border-b border-white/[0.07]">
+				<div class="flex flex-wrap items-baseline gap-x-6 gap-y-1 text-sm">
+					<span class="flex items-center gap-2 text-xs text-white/30 uppercase tracking-widest">
+						<span class="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse"></span>
+						Gerade in der Luft
+					</span>
+					{#if vatsimCallsign}
+						<span class="font-mono text-white/80">{vatsimCallsign}</span>
+					{/if}
+					{#if vatsimRoute && vatsimRoute !== 'N/A'}
+						<span class="text-white/40">{vatsimRoute}</span>
+					{/if}
+					{#if vatsimAltitude && vatsimAltitude !== 'N/A'}
+						<span class="text-white/30">{vatsimAltitude}</span>
+					{/if}
+				</div>
+			</section>
+		{/if}
+
+		<!-- MAIN CONTENT -->
+		<div class="py-12 grid gap-12 lg:grid-cols-[1fr_260px]">
+
+			<!-- LEFT: VIDEOS -->
+			<div>
+				<h2 class="text-xs text-white/30 uppercase tracking-widest mb-7">Letzte Flüge</h2>
+				<div class="grid gap-8">
+					{#each recentVideos as video}
+						<div>
+							<div class="overflow-hidden rounded-xl">
+								<iframe
+									title={video.title || 'YouTube Video'}
+									class="aspect-video w-full"
+									src={video.embedUrl}
+									allowfullscreen
+								></iframe>
+							</div>
+							{#if video.title}
+								<p class="mt-2 text-sm text-white/40">{video.title}</p>
+							{/if}
+						</div>
+					{/each}
 				</div>
 			</div>
 
-			<!-- MAIN GRID -->
-			<div class="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+			<!-- RIGHT: SIDEBAR -->
+			<div class="space-y-10">
 
-				<!-- LEFT: CORE PANEL -->
-				<div class="grid gap-6">
-
-					<!-- STATUS BAR -->
-					<div class="grid grid-cols-3 gap-4">
-						<div class="rounded-2xl border border-white/10 bg-black/30 p-4">
-							<div class="text-xs uppercase tracking-[0.25em] text-white/40">
-								Twitch
-							</div>
-							<div class="mt-2 flex items-center gap-2 text-sm">
-								<span class={`h-2 w-2 rounded-full ${twitchLive ? 'bg-red-500' : 'bg-white/20'}`}></span>
-								{twitchTitle}
-							</div>
-						</div>
-
-						<div class="rounded-2xl border border-white/10 bg-black/30 p-4">
-							<div class="text-xs uppercase tracking-[0.25em] text-white/40">
-								VATSIM
-							</div>
-							<div class="mt-2 text-sm">
-								{vatsimConnected ? 'Connected' : 'Offline'}
-							</div>
-						</div>
-
-						<div class="rounded-2xl border border-white/10 bg-black/30 p-4">
-							<div class="text-xs uppercase tracking-[0.25em] text-white/40">
-								Route
-							</div>
-							<div class="mt-2 text-sm">
-								{vatsimRoute}
-							</div>
-						</div>
-					</div>
-
-					<!-- LIVE OPS PANEL -->
-					<div class="rounded-3xl border border-white/10 bg-white/5 p-6">
-						<div class="mb-6 flex items-center justify-between">
-							<h2 class="text-xl font-semibold">Live Operations</h2>
-							<span class="text-xs text-white/40">
-								{vatsimConnected ? 'ACTIVE' : 'STANDBY'}
-							</span>
-						</div>
-
-						<div class="grid gap-3">
+				<!-- STATS -->
+				<div>
+					<h3 class="text-xs text-white/30 uppercase tracking-widest mb-5">Zahlen</h3>
+					<div class="space-y-3">
+						{#each stats as s}
 							<div class="flex justify-between text-sm">
-								<span class="text-white/40">Callsign</span>
-								<span>{vatsimCallsign}</span>
+								<span class="text-white/45">{s.label}</span>
+								<span class="font-semibold text-white">{s.value}</span>
 							</div>
-
-							<div class="flex justify-between text-sm">
-								<span class="text-white/40">Route</span>
-								<span>{vatsimRoute}</span>
-							</div>
-
-							<div class="flex justify-between text-sm">
-								<span class="text-white/40">Cruise</span>
-								<span>{vatsimAltitude}</span>
-							</div>
-						</div>
+						{/each}
 					</div>
-
-					<!-- VIDEOS -->
-					<div class="rounded-3xl border border-white/10 bg-white/5 p-6">
-						<h2 class="mb-4 text-xl font-semibold">Recent Flights</h2>
-
-						<div class="grid gap-4">
-							{#each recentVideos as video}
-								<div class="overflow-hidden rounded-xl border border-white/10">
-									<iframe
-										title={video.title}
-										class="aspect-video w-full"
-										src={video.embedUrl}
-										allowfullscreen
-									></iframe>
-								</div>
-							{/each}
-						</div>
-					</div>
-
 				</div>
 
-				<!-- RIGHT: SIDE INFO -->
-				<div class="grid gap-6">
-
-					<!-- PROFILE -->
-					<div class="rounded-3xl border border-white/10 bg-white/5 p-6">
-						<h2 class="mb-4 text-xl font-semibold">Pilot Profile</h2>
-
-						<div class="grid grid-cols-2 gap-4">
-							{#each stats as s}
-								<div class="rounded-xl border border-white/10 bg-black/30 p-4">
-									<div class="text-lg font-semibold text-red-400">
-										{s.value}
-									</div>
-									<div class="text-xs text-white/40">
-										{s.label}
-									</div>
-								</div>
-							{/each}
+				<!-- VATSIM NETWORK -->
+				{#if onlinePilots > 0}
+					<div>
+						<h3 class="text-xs text-white/30 uppercase tracking-widest mb-5">VATSIM Netzwerk</h3>
+						<div class="space-y-2 text-sm text-white/45">
+							<div>{onlinePilots.toLocaleString('de')} Piloten online</div>
+							<div>{onlineControllers.toLocaleString('de')} Controller online</div>
 						</div>
 					</div>
+				{/if}
 
-					<!-- SETUP -->
-					<div class="rounded-3xl border border-white/10 bg-white/5 p-6">
-						<h2 class="mb-4 text-xl font-semibold">Setup</h2>
-
-						<div class="space-y-4 text-sm text-white/60">
-							<p>Dual Monitor Streaming Setup</p>
-							<p>ATC + Pilot Operations</p>
-
-							<a href="/hardware"
-								class="inline-block text-red-400 hover:underline">
-								View Hardware →
-							</a>
-						</div>
-					</div>
-
+				<!-- SETUP LINK -->
+				<div>
+					<h3 class="text-xs text-white/30 uppercase tracking-widest mb-5">Hardware</h3>
+					<p class="text-sm text-white/45 mb-3">Dual-Monitor-Setup, irgendwie gewachsen, nie geplant.</p>
+					<a href="/hardware" class="text-sm text-white hover:text-red-400 transition-colors">
+						Setup ansehen →
+					</a>
 				</div>
 
 			</div>
 		</div>
-	</section>
+
+		<!-- PARTNERS -->
+		<section class="border-t border-white/[0.07] py-10">
+			<p class="text-xs text-white/25 uppercase tracking-widest mb-7">Partner & Sponsoren</p>
+			<div class="flex flex-wrap gap-8 items-center">
+				{#each partners as p}
+					<a
+						href={p.url}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="opacity-35 hover:opacity-70 transition-opacity"
+					>
+						<img src={p.logo} alt={p.name} class="h-6" />
+					</a>
+				{/each}
+			</div>
+		</section>
+
+	</div>
 </BasicPage>

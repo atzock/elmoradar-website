@@ -1,136 +1,131 @@
 <script lang="ts">
 	import BasicPage from '$lib/components/basic-page.svelte';
-	import { TowerControl, Radar, Globe } from "lucide-svelte";
 
-	const tower = [
-		"EDDF_TWR – Frankfurt",
-		"EDDH_TWR – Hamburg",
-		"EDDK_TWR – Köln",
-		"EDDL_TWR – Düsseldorf",
-		"EDDM_TWR – München"
+	import TowerControl from 'lucide-svelte/icons/tower-control';
+	import Radar from 'lucide-svelte/icons/radar';
+	import Globe from 'lucide-svelte/icons/globe';
+	import BadgeCheck from 'lucide-svelte/icons/badge-check';
+
+	import type { Component } from 'svelte';
+
+	type Position = { callsign: string; airport: string; active: boolean };
+	type Section = {
+		title: string;
+		icon: Component<{ size?: number; class?: string }>;
+		note?: string;
+		positions: Position[];
+	};
+
+	const tower: Position[] = [
+		{ callsign: 'EDDF_TWR', airport: 'Frankfurt', active: true },
+		{ callsign: 'EDDH_TWR', airport: 'Hamburg', active: true },
+		{ callsign: 'EDDK_TWR', airport: 'Köln', active: true },
+		{ callsign: 'EDDL_TWR', airport: 'Düsseldorf', active: true },
+		{ callsign: 'EDDM_TWR', airport: 'München', active: true },
+		{ callsign: 'EDDB_TWR', airport: 'Berlin', active: false }
 	];
 
-	const approach = [
-		"EDDF_APP – Frankfurt",
-		"EDDK_APP – Köln",
-		"EDDL_APP – Düsseldorf"
+	const approach: Position[] = [
+		{ callsign: 'EDDF_APP', airport: 'Frankfurt', active: true },
+		{ callsign: 'EDDK_APP', airport: 'Köln', active: true },
+		{ callsign: 'EDDL_APP', airport: 'Düsseldorf', active: true },
+		{ callsign: 'EDDB_APP', airport: 'Berlin', active: false },
+		{ callsign: 'EDDM_APP', airport: 'München', active: false },
+		{ callsign: 'EDDH_APP', airport: 'Hamburg', active: false }
 	];
 
-	const center = [
-		"EDGG_CTR – Langen Radar",
-		"EDWW_CTR – Bremen Radar",
-		"EDMM_CTR – München Radar (fast vollständig)"
+	const center: Position[] = [
+		{ callsign: 'EDGG_CTR', airport: 'Langen Radar', active: true },
+		{ callsign: 'EDWW_CTR', airport: 'Bremen Radar', active: true },
+		{ callsign: 'EDMM_CTR', airport: 'München Radar', active: true }
+	];
+
+	const sections: Section[] = [
+		{ title: 'Tower', icon: TowerControl, positions: tower },
+		{ title: 'Approach', icon: Radar, note: 'Keine: EDDB, EDDM, EDDH', positions: approach },
+		{ title: 'Center', icon: Globe, note: 'München: einzelne Sektoren eingeschränkt', positions: center }
+	];
+
+	const quickStats = [
+		{ label: 'Flüge', value: '450+' },
+		{ label: 'Flugstunden', value: '1.800+' },
+		{ label: 'Airports', value: '75+' }
 	];
 </script>
 
+<svelte:head>
+	<title>VATSIM – elmoradar</title>
+</svelte:head>
+
 <BasicPage>
+	<div class="px-2 sm:px-6">
 
-	<main class="mx-auto max-w-7xl px-6 py-16">
+		<!-- HEADER -->
+		<section class="pt-4 pb-12 border-b border-white/[0.07]">
+			<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
+				<div class="flex-1">
+					<h1 class="text-3xl font-bold tracking-tight mb-3">VATSIM</h1>
+					<p class="text-white/50 text-base max-w-lg">
+						Tier 1 Endorsements für Deutschland — welche ATC-Positionen ich besetzen darf.
+						Piloten fliege ich auch, aber ATC macht mehr Spaß.
+					</p>
 
-		<!-- HERO -->
-		<section class="mb-14">
-			<h1 class="text-5xl font-black tracking-tight">
-				VATSIM <span class="text-red-400">Endorsements</span>
-			</h1>
-			<p class="mt-4 text-white/60 max-w-2xl">
-				Overview of all available ATC positions and sector permissions across Germany.
+					<div class="flex flex-wrap gap-x-8 gap-y-2 mt-6">
+						{#each quickStats as s}
+							<div class="text-sm">
+								<span class="text-white/35">{s.label} </span>
+								<span class="font-semibold text-white">{s.value}</span>
+							</div>
+						{/each}
+					</div>
+				</div>
+
+				<!-- RATING BADGE -->
+				<div class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/3 px-5 py-4 shrink-0 self-start">
+					<BadgeCheck size={20} class="text-red-400" />
+					<div>
+						<div class="text-xs text-white/30 uppercase tracking-widest">ATC Rating</div>
+						<div class="text-2xl font-bold leading-tight">C1</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ENDORSEMENT SECTIONS -->
+		<div class="py-12 grid gap-12 lg:grid-cols-3">
+			{#each sections as section}
+				<div>
+					<div class="flex items-center gap-2 mb-7">
+						<section.icon size={14} class="text-white/35" />
+						<h2 class="text-xs text-white/30 uppercase tracking-widest">{section.title}</h2>
+					</div>
+
+					<div>
+						{#each section.positions as pos}
+							<div class="flex items-center justify-between py-3 border-b border-white/[0.07] text-sm">
+								<div class="flex items-center gap-2.5">
+									<span class="h-1.5 w-1.5 rounded-full shrink-0 {pos.active ? 'bg-green-500' : 'bg-white/15'}"></span>
+									<span class="font-mono {pos.active ? 'text-white/80' : 'text-white/25 line-through decoration-white/15'}">{pos.callsign}</span>
+								</div>
+								<span class="text-white/35 text-xs">{pos.airport}</span>
+							</div>
+						{/each}
+					</div>
+
+					{#if section.note}
+						<p class="mt-4 text-xs text-white/25 leading-relaxed">{section.note}</p>
+					{/if}
+				</div>
+			{/each}
+		</div>
+
+		<!-- NOTE -->
+		<section class="border-t border-white/[0.07] py-8">
+			<p class="text-sm text-white/30 max-w-lg leading-relaxed">
+				Diese Übersicht basiert auf internen Tier 1 Endorsements und ist nicht öffentlich über VATSIM einsehbar.
+				Stand kann sich durch Trainingsfortschritt ändern.
 			</p>
 		</section>
 
-		<!-- GRID -->
-		<div class="grid lg:grid-cols-3 gap-6">
-
-			<!-- TOWER -->
-			<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
-				<div class="flex items-center gap-3 mb-4">
-					<TowerControl class="text-red-400" size={20} />
-					<h2 class="text-lg font-semibold">Tower</h2>
-				</div>
-
-				<p class="text-xs text-white/40 mb-4 uppercase tracking-[0.25em]">
-					All major airports
-				</p>
-
-				<div class="space-y-3">
-					{#each tower as item}
-						<div class="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
-							<span class="text-sm">{item}</span>
-							<span class="text-green-400 text-xs">ACTIVE</span>
-						</div>
-					{/each}
-				</div>
-
-				<div class="mt-5 text-sm text-white/50">
-					❌ Ausnahme: <span class="text-red-400">EDDB (Berlin)</span>
-				</div>
-			</div>
-
-			<!-- APPROACH -->
-			<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
-				<div class="flex items-center gap-3 mb-4">
-					<Radar class="text-blue-400" size={20} />
-					<h2 class="text-lg font-semibold">Approach</h2>
-				</div>
-
-				<p class="text-xs text-white/40 mb-4 uppercase tracking-[0.25em]">
-					Selected sectors
-				</p>
-
-				<div class="space-y-3">
-					{#each approach as item}
-						<div class="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
-							<span class="text-sm">{item}</span>
-							<span class="text-green-400 text-xs">ACTIVE</span>
-						</div>
-					{/each}
-				</div>
-
-				<div class="mt-5 text-sm text-white/50 space-y-1">
-					<div>❌ EDDB (Berlin)</div>
-					<div>❌ EDDM (München)</div>
-					<div>❌ EDDH (Hamburg)</div>
-				</div>
-			</div>
-
-			<!-- CENTER -->
-			<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
-				<div class="flex items-center gap-3 mb-4">
-					<Globe class="text-orange-400" size={20} />
-					<h2 class="text-lg font-semibold">Center</h2>
-				</div>
-
-				<p class="text-xs text-white/40 mb-4 uppercase tracking-[0.25em]">
-					High altitude sectors
-				</p>
-
-				<div class="space-y-3">
-					{#each center as item}
-						<div class="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
-							<span class="text-sm">{item}</span>
-							<span class="text-green-400 text-xs">ACTIVE</span>
-						</div>
-					{/each}
-				</div>
-
-				<div class="mt-5 text-sm text-white/50">
-					⚠️ München: einzelne Sektoren eingeschränkt (z. B. EDMM_STA_CTR)
-				</div>
-			</div>
-
-		</div>
-
-		<!-- EXTRA INFO -->
-		<section class="mt-14">
-			<div class="rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl">
-				<h3 class="text-lg font-semibold mb-3">Additional Notes</h3>
-
-				<p class="text-white/60 text-sm leading-relaxed">
-					This overview is based on internal Tier 1 endorsements and is not publicly accessible via VATSIM.
-					The data reflects current operational permissions across German FIRs and may change depending on training progress or network requirements.
-				</p>
-			</div>
-		</section>
-
-	</main>
-
+	</div>
 </BasicPage>

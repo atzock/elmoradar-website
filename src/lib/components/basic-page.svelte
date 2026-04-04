@@ -15,26 +15,9 @@
 
 <div class="min-h-screen bg-[#04070c] text-white overflow-x-hidden selection:bg-red-500/30 relative">
 
-	<!-- BACKGROUND SYSTEM -->
+	<!-- BACKGROUND -->
 	<div class="fixed inset-0 pointer-events-none">
-		<!-- RADAR SWEEP -->
-		<div class="absolute inset-0">
-			<div class="radar-sweep"></div>
-		</div>
-
-		<!-- GRID -->
-		<div
-			class="absolute inset-0 opacity-[0.05]"
-			style="
-				background-image: 
-					linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-					linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
-				background-size: 80px 80px;
-			"
-		></div>
-
-		<!-- LIGHT ZONES -->
-		<div class="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(239,68,68,0.12),transparent_35%),radial-gradient(circle_at_85%_70%,rgba(59,130,246,0.08),transparent_35%)]"></div>
+		<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(239,68,68,0.06),transparent_50%)]"></div>
 	</div>
 
 	<!-- NAVBAR -->
@@ -118,28 +101,3 @@
 
 </div>
 
-<style>
-	.radar-sweep {
-		position: absolute;
-		width: 200%;
-		height: 200%;
-		top: -50%;
-		left: -50%;
-		background: conic-gradient(
-			from 0deg,
-			transparent 0deg,
-			rgba(255, 0, 0, 0.08) 20deg,
-			transparent 60deg
-		);
-		animation: radarRotate 10s linear infinite;
-	}
-
-	@keyframes radarRotate {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
-</style>
