@@ -1,140 +1,88 @@
 <script lang="ts">
 	import BasicPage from '$lib/components/basic-page.svelte';
-	import { Monitor, Cpu, Sliders, Cloud } from "lucide-svelte";
 
 	const general = [
-		{ label: "Resolution", value: "2560x1440" },
-		{ label: "Anti-Aliasing", value: "TAA" },
-		{ label: "Render Scaling", value: "100" },
-		{ label: "DLSS Frame Generation", value: "On" },
-		{ label: "Max FPS", value: "60 FPS" },
-		{ label: "NVIDIA Reflex", value: "On" }
+		{ label: 'Auflösung', value: '2560×1440' },
+		{ label: 'Anti-Aliasing', value: 'TAA' },
+		{ label: 'Render Scaling', value: '100' },
+		{ label: 'DLSS Frame Generation', value: 'An' },
+		{ label: 'Max FPS', value: '60' },
+		{ label: 'NVIDIA Reflex', value: 'An' }
 	];
 
 	const traffic = [
-		{ label: "Aircraft Traffic", value: "Off" },
-		{ label: "Ground Aircraft", value: "Off" },
-		{ label: "Vehicles", value: "Medium" },
-		{ label: "Road Traffic", value: "High" },
-		{ label: "Ships", value: "Ultra" },
-		{ label: "Fauna", value: "Low" }
+		{ label: 'Flugzeug-Traffic', value: 'Aus' },
+		{ label: 'Bodenfahrzeuge', value: 'Mittel' },
+		{ label: 'Straßenverkehr', value: 'Hoch' },
+		{ label: 'Schiffe', value: 'Ultra' },
+		{ label: 'Fauna', value: 'Niedrig' }
 	];
 
 	const graphics = [
-		{ label: "Terrain LOD", value: "Dynamic (170 → 300)" },
-		{ label: "Object LOD", value: "140" },
-		{ label: "Buildings", value: "Ultra" },
-		{ label: "Trees", value: "Ultra" },
-		{ label: "Grass", value: "Ultra" },
-		{ label: "Clouds", value: "Ultra" },
-		{ label: "Textures", value: "Ultra" }
+		{ label: 'Terrain LOD', value: 'Dynamic (170 → 300)' },
+		{ label: 'Object LOD', value: '140' },
+		{ label: 'Gebäude', value: 'Ultra' },
+		{ label: 'Bäume', value: 'Ultra' },
+		{ label: 'Gras', value: 'Ultra' },
+		{ label: 'Wolken', value: 'Ultra' },
+		{ label: 'Texturen', value: 'Ultra' }
 	];
 
 	const autofps = [
-		{ label: "Mode", value: "Auto TLOD" },
-		{ label: "TLOD Base", value: "170 @ Ground" },
-		{ label: "TLOD Max", value: "300 @ High Altitude" },
-		{ label: "OLOD Base", value: "140" },
-		{ label: "OLOD Max", value: "130 → 10000ft" }
+		{ label: 'Modus', value: 'Auto TLOD' },
+		{ label: 'TLOD am Boden', value: '170' },
+		{ label: 'TLOD in Reiseflughöhe', value: '300' },
+		{ label: 'OLOD Basis', value: '140' },
+		{ label: 'OLOD ab 10.000 ft', value: '130' }
+	];
+
+	type Section = { title: string; note?: string; items: { label: string; value: string }[] };
+
+	const sections: Section[] = [
+		{ title: 'Allgemein', items: general },
+		{ title: 'Traffic & Umgebung', items: traffic },
+		{ title: 'Grafik', items: graphics },
+		{
+			title: 'AutoFPS',
+			note: 'AutoFPS passt den Terrain LOD dynamisch je nach Flughöhe an — weniger Detail am Boden für Performance, mehr in der Luft für Optik.',
+			items: autofps
+		}
 	];
 </script>
 
+<svelte:head>
+	<title>MSFS Settings – elmoradar</title>
+</svelte:head>
+
 <BasicPage>
+	<div class="px-2 sm:px-6">
 
-	<main class="mx-auto max-w-7xl px-6 py-16">
-
-		<!-- HERO -->
-		<section class="mb-14">
-			<h1 class="text-5xl font-black tracking-tight">
-				MSFS <span class="text-red-400">Settings</span>
-			</h1>
-			<p class="mt-4 text-white/60 max-w-2xl">
-				Optimized performance and visual settings for Microsoft Flight Simulator — tuned for smooth VATSIM operations and streaming.
+		<section class="pt-4 pb-12 border-b border-white/[0.07]">
+			<h1 class="text-3xl font-bold tracking-tight mb-3">MSFS Settings</h1>
+			<p class="text-white/50 text-base max-w-lg">
+				Meine aktuellen Einstellungen — optimiert für VATSIM-Betrieb und Streaming auf der RTX 5090.
+				Nicht für jeden Rechner geeignet, aber als Referenz ganz nützlich.
 			</p>
-            <p class="mt-2 text-sm text-white/40 max-w-2xl">
-                These settings are based on my personal experience and may not be optimal for everyone. Adjust them according to your hardware capabilities and preferences.
-            </p>
 		</section>
 
-		<!-- GRID -->
-		<div class="grid lg:grid-cols-2 gap-6">
-
-			<!-- GENERAL -->
-			<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
-				<div class="flex items-center gap-3 mb-4">
-					<Monitor class="text-blue-400" size={20} />
-					<h2 class="text-lg font-semibold">General</h2>
+		<div class="py-12 grid gap-12 sm:grid-cols-2">
+			{#each sections as section}
+				<div>
+					<h2 class="text-xs text-white/30 uppercase tracking-widest mb-6">{section.title}</h2>
+					<div class="space-y-0">
+						{#each section.items as item}
+							<div class="flex justify-between py-3 border-b border-white/[0.07] text-sm">
+								<span class="text-white/45">{item.label}</span>
+								<span class="font-medium">{item.value}</span>
+							</div>
+						{/each}
+					</div>
+					{#if section.note}
+						<p class="mt-5 text-xs text-white/30 leading-relaxed">{section.note}</p>
+					{/if}
 				</div>
-
-				<div class="space-y-3">
-					{#each general as item}
-						<div class="flex justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
-							<span class="text-sm text-white/60">{item.label}</span>
-							<span class="text-sm font-semibold">{item.value}</span>
-						</div>
-					{/each}
-				</div>
-			</div>
-
-			<!-- TRAFFIC -->
-			<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
-				<div class="flex items-center gap-3 mb-4">
-					<Sliders class="text-red-400" size={20} />
-					<h2 class="text-lg font-semibold">Traffic & Environment</h2>
-				</div>
-
-				<div class="space-y-3">
-					{#each traffic as item}
-						<div class="flex justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
-							<span class="text-sm text-white/60">{item.label}</span>
-							<span class="text-sm font-semibold">{item.value}</span>
-						</div>
-					{/each}
-				</div>
-			</div>
-
-			<!-- GRAPHICS -->
-			<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
-				<div class="flex items-center gap-3 mb-4">
-					<Cloud class="text-purple-400" size={20} />
-					<h2 class="text-lg font-semibold">Graphics</h2>
-				</div>
-
-				<div class="space-y-3">
-					{#each graphics as item}
-						<div class="flex justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
-							<span class="text-sm text-white/60">{item.label}</span>
-							<span class="text-sm font-semibold">{item.value}</span>
-						</div>
-					{/each}
-				</div>
-			</div>
-
-			<!-- AUTO FPS -->
-			<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
-				<div class="flex items-center gap-3 mb-4">
-					<Cpu class="text-green-400" size={20} />
-					<h2 class="text-lg font-semibold">AutoFPS System</h2>
-				</div>
-
-				<div class="space-y-3 mb-4">
-					{#each autofps as item}
-						<div class="flex justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
-							<span class="text-sm text-white/60">{item.label}</span>
-							<span class="text-sm font-semibold">{item.value}</span>
-						</div>
-					{/each}
-				</div>
-
-				<div class="text-sm text-white/60 leading-relaxed">
-					AutoFPS dynamically adjusts Terrain Level of Detail (TLOD) based on altitude.
-					On the ground, lower values are used to improve performance.
-					As altitude increases, TLOD is raised to render more terrain and maintain visual quality.
-				</div>
-			</div>
-
+			{/each}
 		</div>
 
-	</main>
-
+	</div>
 </BasicPage>

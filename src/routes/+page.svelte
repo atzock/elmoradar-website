@@ -19,18 +19,40 @@
 
 	let twitchLive = $state(false);
 	let twitchViewers = $state<number | null>(null);
-	let twitchTitle = $state('Offline');
+	let twitchTitle = $state('');
 
-	let vatsimConnected = $state(true);
-	let vatsimCallsign = $state('N/A');
-	let vatsimRoute = $state('N/A');
-	let vatsimAltitude = $state('N/A');
+	let vatsimConnected = $state(false);
+	let vatsimCallsign = $state('');
+	let vatsimRoute = $state('');
+	let vatsimAltitude = $state('');
 	let vatsimMemberId = $state<number | null>(null);
 	let onlinePilots = $state<number>(0);
 	let onlineControllers = $state<number>(0);
 
-	let recentVideoUrl1 = $state('https://www.youtube.com/embed/ES-5Mbhwi1g');
-	let recentVideoUrl2 = $state('https://www.youtube.com/embed/ES-5Mbhwi1g');
+	type RecentVideoItem = {
+		videoId: string;
+		title: string;
+		publishedAt: string;
+		embedUrl: string;
+		url: string;
+	};
+
+	let recentVideos = $state<RecentVideoItem[]>([
+		{
+			videoId: 'l0k5qLb5RJE',
+			title: '',
+			publishedAt: '',
+			embedUrl: 'https://www.youtube.com/embed/l0k5qLb5RJE',
+			url: 'https://www.youtube.com/watch?v=l0k5qLb5RJE'
+		},
+		{
+			videoId: 'l0k5qLb5RJE',
+			title: '',
+			publishedAt: '',
+			embedUrl: 'https://www.youtube.com/embed/l0k5qLb5RJE',
+			url: 'https://www.youtube.com/watch?v=l0k5qLb5RJE'
+		}
+	]);
 
 	type FlightplanItem = {
 		id: number;
@@ -45,9 +67,9 @@
 	const HARDCODED_VATSIM_MEMBER_ID = 1411028;
 
 	const stats = [
-		{ value: '1.8K', label: 'Flight Hours' },
-		{ value: '450+', label: 'VATSIM Flights' },
-		{ value: '75+', label: 'Airports Visited' },
+		{ value: '1.8K', label: 'Flugstunden' },
+		{ value: '450+', label: 'VATSIM-Flüge' },
+		{ value: '75+', label: 'Airports' },
 		{ value: 'C1', label: 'VATSIM Rating' }
 	];
 
@@ -60,16 +82,17 @@
 	];
 
 	async function loadStatus() {
-		const [twitchRes, vatsimRes] = await Promise.allSettled([
+		const [twitchRes, vatsimRes, youtubeRes] = await Promise.allSettled([
 			fetch('/api/twitch/status'),
 			fetch(`/api/vatsim/status?memberId=${HARDCODED_VATSIM_MEMBER_ID}`),
+			fetch('/api/youtube/videos?handle=elmoradarVODs')
 		]);
 
 		if (twitchRes.status === 'fulfilled' && twitchRes.value.ok) {
 			const data = await twitchRes.value.json();
 			twitchLive = data.live;
 			twitchViewers = data.viewers ?? null;
-			twitchTitle = data.title ?? 'Offline';
+			twitchTitle = data.title ?? '';
 		}
 
 		if (vatsimRes.status === 'fulfilled' && vatsimRes.value.ok) {
@@ -92,6 +115,11 @@
 				recentFlightplans = [];
 			}
 		}
+
+		if (youtubeRes.status === 'fulfilled' && youtubeRes.value.ok) {
+			const data = await youtubeRes.value.json();
+			recentVideos = Array.isArray(data.items) && data.items.length > 0 ? data.items.slice(0, 2) : recentVideos;
+		}
 	}
 
 	onMount(() => {
@@ -104,318 +132,152 @@
 	<title>elmoradar - Marvin</title>
 	<meta
 		name="description"
-		content="Live aviation command center for elmoradar — VATSIM, hardware and community."
+		content="Flugsimulation, VATSIM und zu viel Kaffee — elmoradar auf Twitch."
 	/>
 </svelte:head>
 
 <BasicPage>
-	<section id="top">
-		<div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.15fr_0.85fr]">
-			<div class="relative overflow-hidden rounded-4xl border border-white/10 bg-white/4 p-8 shadow-[0_20px_80px_rgba(0,0,0,0.45)] md:p-10">
-				<div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(239,68,68,0.18),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.1),transparent_24%)]"></div>
+	<div class="px-2 sm:px-6">
 
-				<div class="relative z-10">
-					<div class="mb-6 flex flex-wrap items-center gap-4">
-						<img
-							src={elmoFace}
-							alt="Elmo face"
-							class="h-20 w-20 rounded-2xl object-cover ring-1 ring-white/10 shadow-[0_0_50px_rgba(239,68,68,0.2)]"
-						/>
-						<div>
-							<p class="text-sm uppercase tracking-[0.35em] text-white/35">Offizielle Website</p>
-							<h1 class="mt-1 text-5xl font-black tracking-tight md:text-7xl">
-								<span class="bg-linear-to-r from-red-500 via-orange-300 to-red-600 bg-clip-text text-transparent">
-									elmoradar
-								</span>
-							</h1>
-						</div>
+		<!-- HERO -->
+		<section class="pt-4 pb-12 border-b border-white/[0.07]">
+			<div class="flex flex-col sm:flex-row gap-6 items-start">
+				<img
+					src={elmoFace}
+					alt="Elmo"
+					class="h-16 rounded-2xl shrink-0"
+				/>
+				<div class="flex-1 min-w-0">
+					<div class="flex flex-wrap items-center gap-3 mb-3">
+						<h1 class="text-3xl font-bold tracking-tight">elmoradar</h1>
+
+						{#if twitchLive}
+							<a
+								href="https://twitch.tv/elmoradar"
+								target="_blank"
+								class="flex items-center gap-1.5 bg-red-600 px-3 py-1 rounded-full text-xs font-semibold shrink-0 hover:bg-red-500 transition-colors"
+							>
+								<span class="h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span>
+								LIVE{twitchViewers ? ` · ${twitchViewers}` : ''}
+							</a>
+						{/if}
 					</div>
 
-					<p class="max-w-2xl text-lg leading-8 text-white/70 md:text-xl">
-						Heyyo, ich bin Marvin, 25 Jahre alt, und ich nehme euch überwiegend mit auf meine VATSIM Fluglotsen- und Pilotensessions. <br>Neben VATSIM studiere ich Rechtswissenschaften.
+					<p class="text-white/55 text-base leading-relaxed max-w-lg">
+						Flugsimulation auf VATSIM, zu viel Kaffee und ein Homesetup, das langsam außer Kontrolle gerät. Ich streame auf Twitch, rede dabei über Dinge, die kein Mensch braucht — und manchmal klappt sogar die Landung.
 					</p>
 
-					<div class="mt-8 flex flex-wrap gap-4">
-						<a
-							href="https://twitch.tv/elmoradar"
-							target="_blank"
-							rel="noreferrer"
-							class="rounded-full bg-red-600 px-6 py-3 font-semibold transition hover:bg-red-500"
-						>
-							Watch Live
-						</a>
-						<a
-							href={discordLink}
-							target="_blank"
-							rel="noreferrer"
-							class="rounded-full bg-blue-600 px-6 py-3 font-semibold transition hover:bg-blue-500"
-						>
-							Join Discord
-						</a>
-						<a
-							href="https://youtube.com/@elmoradarVODs"
-							target="_blank"
-							rel="noreferrer"
-							class="rounded-full border border-white/12 bg-white/5 px-6 py-3 font-semibold text-white/85 transition hover:border-red-500/40 hover:bg-red-500/10"
-						>
-							VOD Archive
-						</a>
-					</div>
-
-					<div class="mt-10 grid gap-4 sm:grid-cols-3">
-						<div class="rounded-2xl border border-white/10 bg-black/25 p-4">
-							<div class="text-xs uppercase tracking-[0.25em] text-white/35">Twitch</div>
-							<div class="mt-2 flex items-center gap-2">
-								<span class={`h-2.5 w-2.5 rounded-full ${twitchLive ? 'bg-red-500 shadow-[0_0_14px_rgba(239,68,68,0.9)]' : 'bg-white/20'}`}></span>
-								<div class="text-sm font-medium">{twitchTitle}</div>
-							</div>
-						</div>
-
-						<div class="rounded-2xl border border-white/10 bg-black/25 p-4">
-							<div class="text-xs uppercase tracking-[0.25em] text-white/35">VATSIM</div>
-							<div class="mt-2 text-sm font-medium">{vatsimConnected ? 'Connected' : 'Offline'}</div>
-						</div>
-
-						<div class="rounded-2xl border border-white/10 bg-black/25 p-4">
-							<div class="text-xs uppercase tracking-[0.25em] text-white/35">Current Route</div>
-							<div class="mt-2 text-sm font-medium">{vatsimRoute}</div>
-						</div>
+					<div class="flex gap-5 mt-5 text-sm">
+						<a href="https://twitch.tv/elmoradar" target="_blank" class="text-white hover:text-red-400 transition-colors">Twitch</a>
+						<a href={discordLink} target="_blank" class="text-white/45 hover:text-white transition-colors">Discord</a>
+						<a href="/hardware" class="text-white/45 hover:text-white transition-colors">Setup</a>
+						<a href="/vatsim" class="text-white/45 hover:text-white transition-colors">VATSIM</a>
 					</div>
 				</div>
 			</div>
+		</section>
 
-			<div class="grid gap-6">
-				<div class="overflow-hidden rounded-4xl border border-white/10 bg-white/4 p-6">
-					<div class="mb-4 flex items-center justify-between">
-						<div>
-							<p class="text-xs uppercase tracking-[0.25em] text-white/35">Live Ops</p>
-							<h2 class="mt-2 text-2xl font-semibold">Aktueller Status</h2>
-						</div>
-						<div class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
-							{vatsimConnected ? 'ACTIVE' : 'STANDBY'}
-						</div>
-					</div>
-
-					<div class="grid gap-3">
-						<div class="flex items-center justify-between rounded-2xl border border-white/10 bg-black/25 px-4 py-3">
-							<span class="text-white/45">Callsign</span>
-							<span class="font-medium">{vatsimCallsign}</span>
-						</div>
-						<div class="flex items-center justify-between rounded-2xl border border-white/10 bg-black/25 px-4 py-3">
-							<span class="text-white/45">Route</span>
-							<span class="font-medium">{vatsimRoute}</span>
-						</div>
-						<div class="flex items-center justify-between rounded-2xl border border-white/10 bg-black/25 px-4 py-3">
-							<span class="text-white/45">Cruise</span>
-							<span class="font-medium">{vatsimAltitude}</span>
-						</div>
-					</div>
+		<!-- VATSIM LIVE STRIP -->
+		{#if vatsimConnected}
+			<section class="py-5 border-b border-white/[0.07]">
+				<div class="flex flex-wrap items-baseline gap-x-6 gap-y-1 text-sm">
+					<span class="flex items-center gap-2 text-xs text-white/30 uppercase tracking-widest">
+						<span class="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse"></span>
+						Gerade in der Luft
+					</span>
+					{#if vatsimCallsign}
+						<span class="font-mono text-white/80">{vatsimCallsign}</span>
+					{/if}
+					{#if vatsimRoute && vatsimRoute !== 'N/A'}
+						<span class="text-white/40">{vatsimRoute}</span>
+					{/if}
+					{#if vatsimAltitude && vatsimAltitude !== 'N/A'}
+						<span class="text-white/30">{vatsimAltitude}</span>
+					{/if}
 				</div>
+			</section>
+		{/if}
 
-				<div class="overflow-hidden rounded-4xl border border-white/10 bg-white/4 p-6">
-					<div class="mb-5">
-						<p class="text-xs uppercase tracking-[0.25em] text-white/35">Flight Record</p>
-						<h2 class="mt-2 text-2xl font-semibold">Pilot Profile</h2>
-					</div>
+		<!-- MAIN CONTENT -->
+		<div class="py-12 grid gap-12 lg:grid-cols-[1fr_260px]">
 
-					<div class="grid grid-cols-2 gap-4">
+			<!-- LEFT: VIDEOS -->
+			<div>
+				<h2 class="text-xs text-white/30 uppercase tracking-widest mb-7">Letzte Flüge</h2>
+				<div class="grid gap-8">
+					{#each recentVideos as video}
+						<div>
+							<div class="overflow-hidden rounded-xl">
+								<iframe
+									title={video.title || 'YouTube Video'}
+									class="aspect-video w-full"
+									src={video.embedUrl}
+									allowfullscreen
+								></iframe>
+							</div>
+							{#if video.title}
+								<p class="mt-2 text-sm text-white/40">{video.title}</p>
+							{/if}
+						</div>
+					{/each}
+				</div>
+			</div>
+
+			<!-- RIGHT: SIDEBAR -->
+			<div class="space-y-10">
+
+				<!-- STATS -->
+				<div>
+					<h3 class="text-xs text-white/30 uppercase tracking-widest mb-5">Zahlen</h3>
+					<div class="space-y-3">
 						{#each stats as s}
-							<div class="rounded-2xl border border-white/10 bg-black/25 p-4">
-								<div class="text-3xl font-bold text-red-400">{s.value}</div>
-								<div class="mt-1 text-sm text-white/50">{s.label}</div>
+							<div class="flex justify-between text-sm">
+								<span class="text-white/45">{s.label}</span>
+								<span class="font-semibold text-white">{s.value}</span>
 							</div>
 						{/each}
 					</div>
 				</div>
-			</div>
-		</div>
-	</section>
 
-	<section id="setup" class="px-6 py-8">
-		<div class="mx-auto max-w-7xl">
-			<div class="mb-8">
-				<p class="text-xs uppercase tracking-[0.25em] text-white/35">Studio</p>
-				<h2 class="mt-2 text-3xl font-semibold">Streaming Setup</h2>
-			</div>
-
-			<div class="mb-8">
-				<a href="/hardware" class="rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white/70 hover:bg-white/20">
-					Zur Hardware
-				</a>
-			</div>
-
-			<div class="grid gap-6 lg:grid-cols-2">
-				
-				<!-- SETUP IMAGE -->
-				<div class="group relative overflow-hidden rounded-4xl border border-white/10 bg-white/4">
-					<img
-						src={setupImage}
-						alt="Streaming Setup"
-						class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-					/>
-
-					<!-- overlay -->
-					<div class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></div>
-
-					<div class="absolute bottom-4 left-4 right-4">
-						<div class="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-4">
-							<div class="text-xs uppercase tracking-[0.25em] text-white/40">
-								Command Center
-							</div>
-							<div class="text-lg font-semibold">
-								Dual Monitor + Streaming Setup
-							</div>
+				<!-- VATSIM NETWORK -->
+				{#if onlinePilots > 0}
+					<div>
+						<h3 class="text-xs text-white/30 uppercase tracking-widest mb-5">VATSIM Netzwerk</h3>
+						<div class="space-y-2 text-sm text-white/45">
+							<div>{onlinePilots.toLocaleString('de')} Piloten online</div>
+							<div>{onlineControllers.toLocaleString('de')} Controller online</div>
 						</div>
 					</div>
-				</div>
+				{/if}
 
-				<!-- FACE CAM IMAGE -->
-				<div class="group relative overflow-hidden rounded-4xl border border-white/10 bg-white/4">
-					<img
-						src={streamerImage}
-						alt="Streamer"
-						class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-					/>
-
-					<!-- overlay -->
-					<div class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></div>
-
-					<div class="absolute bottom-4 left-4 right-4">
-						<div class="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-4">
-							<div class="text-xs uppercase tracking-[0.25em] text-white/40">
-								Operator
-							</div>
-							<div class="text-lg font-semibold">
-								Live ATC & Pilot Sessions
-							</div>
-						</div>
-					</div>
+				<!-- SETUP LINK -->
+				<div>
+					<h3 class="text-xs text-white/30 uppercase tracking-widest mb-5">Hardware</h3>
+					<p class="text-sm text-white/45 mb-3">Dual-Monitor-Setup, irgendwie gewachsen, nie geplant.</p>
+					<a href="/hardware" class="text-sm text-white hover:text-red-400 transition-colors">
+						Setup ansehen →
+					</a>
 				</div>
 
 			</div>
 		</div>
-	</section>
-	
-	<section id="partners" class="px-6 py-8 pb-20">
-		<div class="mx-auto max-w-7xl">
-			<div class="mb-8">
-				<p class="text-xs uppercase tracking-[0.25em] text-white/35">Network</p>
-				<h2 class="mt-2 text-3xl font-semibold">Partners & Airlines</h2>
-			</div>
 
-			<div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+		<!-- PARTNERS -->
+		<section class="border-t border-white/[0.07] py-10">
+			<p class="text-xs text-white/25 uppercase tracking-widest mb-7">Partner & Sponsoren</p>
+			<div class="flex flex-wrap gap-8 items-center">
 				{#each partners as p}
 					<a
 						href={p.url}
 						target="_blank"
-						rel="noreferrer"
-						class="group overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/4 p-6 transition hover:border-red-500/35 hover:-translate-y-1"
+						rel="noopener noreferrer"
+						class="opacity-35 hover:opacity-70 transition-opacity"
 					>
-						<div class="flex items-center gap-4">
-							<div class="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-black/25">
-								<img src={p.logo} alt={p.name + ' logo'} class="h-12 w-12 rounded-full object-contain transition group-hover:scale-110" />
-							</div>
-
-							<div>
-								<div class="text-lg font-semibold">{p.name}</div>
-								<div class="text-sm text-white/45">Zum Partner</div>
-							</div>
-						</div>
+						<img src={p.logo} alt={p.name} class="h-6" />
 					</a>
 				{/each}
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<section id="overview" class="px-6 py-8">
-		<div class="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-			<div id="ops" class="grid gap-6">
-				<div class="overflow-hidden rounded-4xl border border-white/10 bg-white/4 p-6">
-					<p class="text-xs uppercase tracking-[0.25em] text-white/35">Archive</p>
-					<h2 class="mt-2 text-3xl font-semibold">Recent Flights</h2>
-
-					<div class="mt-6 grid gap-4">
-						<div class="overflow-hidden rounded-2xl border border-white/10">
-							<iframe
-								title="Recent flight 1"
-								class="aspect-video w-full"
-								src={recentVideoUrl1}
-								allowfullscreen
-							></iframe>
-						</div>
-
-						<div class="overflow-hidden rounded-2xl border border-white/10">
-							<iframe
-								title="Recent flight 2"
-								class="aspect-video w-full"
-								src={recentVideoUrl2}
-								allowfullscreen
-							></iframe>
-						</div>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-	</section>
-
-	<footer class="border-t border-white/10 bg-black/30 px-6 py-8">
-		<div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-center text-sm text-white/40 md:flex-row md:text-left">
-			<div class="flex items-center gap-3">
-				<img src={logo} alt="elmoradar logo" class="h-9 w-9 rounded-xl ring-1 ring-white/10" />
-				<div>
-					<div class="font-medium text-white/70">elmoradar</div>
-					<div>Air Ops Center</div>
-				</div>
-			</div>
-
-			<div>
-				<div>Made by atzock</div>
-				<div>© 2026 elmoradar. All rights reserved.</div>
-			</div>
-		</div>
-	</footer>
+	</div>
 </BasicPage>
-<style>
-	@keyframes dash {
-		from {
-			stroke-dashoffset: 0;
-		}
-		to {
-			stroke-dashoffset: -220;
-		}
-	}
-
-	@keyframes routeFloat {
-		0%, 100% {
-			transform: translateY(0px);
-		}
-		50% {
-			transform: translateY(-10px);
-		}
-	}
-
-	.radar-sweep {
-		position: absolute;
-		width: 200%;
-		height: 200%;
-		top: -50%;
-		left: -50%;
-		background: conic-gradient(
-			from 0deg,
-			transparent 0deg,
-			rgba(255, 0, 0, 0.08) 20deg,
-			transparent 60deg
-		);
-		animation: radarRotate 8s linear infinite;
-	}
-
-	@keyframes radarRotate {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
-</style>

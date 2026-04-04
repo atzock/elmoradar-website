@@ -1,64 +1,52 @@
 <script lang="ts">
 	import BasicPage from '$lib/components/basic-page.svelte';
-	import { Mail, Send } from "lucide-svelte";
 </script>
 
+<svelte:head>
+	<title>Kontakt – elmoradar</title>
+</svelte:head>
+
 <BasicPage>
+	<div class="px-2 sm:px-6 max-w-2xl">
 
-	<main class="mx-auto max-w-5xl px-6 py-16">
-
-		<!-- HERO -->
-		<section class="mb-14">
-			<h1 class="text-5xl font-black tracking-tight">
-				Contact <span class="text-red-400">Ops</span>
-			</h1>
-			<p class="mt-4 text-white/60 max-w-2xl">
-				Business inquiries, collaborations or general questions — feel free to reach out.
+		<section class="pt-4 pb-12 border-b border-white/[0.07]">
+			<h1 class="text-3xl font-bold tracking-tight mb-3">Kontakt</h1>
+			<p class="text-white/50 text-base max-w-md">
+				Kooperationen, Anfragen oder einfach kurz Hallo sagen — am schnellsten per Mail oder Discord.
 			</p>
 		</section>
 
-		<!-- CONTACT CARD -->
-		<div class="grid md:grid-cols-2 gap-6">
+		<div class="py-12 space-y-10">
 
-			<!-- EMAIL -->
-			<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
-
-				<div class="flex items-center gap-3 mb-4">
-					<Mail class="text-red-400" size={20} />
-					<h2 class="text-lg font-semibold">Email Contact</h2>
-				</div>
-
-				<p class="text-sm text-white/50 mb-6">
-					Direct contact for business-related topics, partnerships or inquiries.
-				</p>
-
+			<div>
+				<h2 class="text-xs text-white/30 uppercase tracking-widest mb-5">E-Mail</h2>
 				<a
 					href="mailto:elmoradar@gmail.com"
-					class="block rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4 text-lg font-semibold text-red-400 hover:text-red-300 hover:border-red-500/30 transition"
+					class="text-lg font-medium text-white hover:text-red-400 transition-colors"
 				>
 					elmoradar@gmail.com
 				</a>
-
+				<p class="mt-3 text-sm text-white/35">
+					Antwortzeit in der Regel 24–48 Stunden. Bitte relevante Details direkt mitschicken.
+				</p>
 			</div>
 
-			<!-- INFO -->
-			<div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
-
-				<div class="flex items-center gap-3 mb-4">
-					<Send class="text-blue-400" size={20} />
-					<h2 class="text-lg font-semibold">Information</h2>
-				</div>
-
-				<ul class="text-sm text-white/60 space-y-3">
-					<li>• Response time usually within 24–48 hours</li>
-					<li>• Please include relevant details in your request</li>
-					<li>• Business & collaboration inquiries preferred via email</li>
-				</ul>
-
+			<div>
+				<h2 class="text-xs text-white/30 uppercase tracking-widest mb-5">Discord</h2>
+				<a
+					href="https://discord.gg/elmoradar"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="text-lg font-medium text-white hover:text-red-400 transition-colors"
+				>
+					discord.gg/elmoradar
+				</a>
+				<p class="mt-3 text-sm text-white/35">
+					Für alles, was nicht dringend ist — Community, Fragen, Smalltalk.
+				</p>
 			</div>
 
 		</div>
 
-	</main>
-
+	</div>
 </BasicPage>
