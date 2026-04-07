@@ -42,7 +42,7 @@
 
 	const sections: Section[] = [
 		{ title: 'Tower', icon: TowerControl, positions: tower },
-		{ title: 'Approach', icon: Radar, note: 'Keine: EDDB, EDDM, EDDH', positions: approach },
+		{ title: 'Approach', icon: Radar, positions: approach },
 		{ title: 'Center', icon: Globe, note: 'München: einzelne Sektoren eingeschränkt', positions: center }
 	];
 
