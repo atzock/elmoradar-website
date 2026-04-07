@@ -100,7 +100,7 @@
 						{/each}
 					</div>
 					<div class="px-2.5 pb-2.5">
-						<div class="h-px bg-white/[0.06] mb-2.5"></div>
+						<div class="h-px bg-white/6 mb-2.5"></div>
 						<a
 							href="https://twitch.tv/elmoradar"
 							target="_blank"

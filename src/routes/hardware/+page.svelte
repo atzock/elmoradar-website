@@ -73,6 +73,51 @@ FlightSim:
 		{ label: 'Sidestick', value: 'WinWing URSA Minor Airline L', icon: Plane },
 		{ label: 'Pedale', value: 'Logitech G Saitek Pro Flight Rudder Pedals', icon: Plane }
 	];
+
+	const fleet = [
+		{
+			name: 'Fenix A320 / A319 / A321',
+			dev: 'Fenix Simulations',
+			type: 'Narrowbody',
+			img: 'https://flyawaysimulation.com/media/images14/images/fenix-roadmap-a320neo-fs2020-fs2024-1.jpeg'
+		},
+		{
+			name: 'ini A350-900',
+			dev: 'iniBuilds',
+			type: 'Widebody',
+			img: 'https://inibuilds.com/cdn/shop/files/FlightSimulator2024_gibhJDge7T_b8c0b58b-eb0f-499b-9f94-776345917ec6.png?v=1741617134'
+		},
+		{
+			name: 'ini A340-300',
+			dev: 'iniBuilds',
+			type: 'Widebody',
+			img: 'https://inibuilds.com/cdn/shop/files/A340AirlinerMainStore.png?v=1759245373'
+		},
+		{
+			name: 'ini A300-600',
+			dev: 'iniBuilds',
+			type: 'Widebody',
+			img: 'https://flightnews24.de/wp-content/uploads/2023/09/ini-A300-23.jpg'
+		},
+		{
+			name: 'FSLabs A321neo',
+			dev: 'Flight Sim Labs',
+			type: 'Narrowbody',
+			img: 'https://www.flightsimlabs.com/wp-content/uploads/slider/cache/10d5c8543459adafa4909bf1a09067c1/img-51.jpg'
+		},
+		{
+			name: 'FBW A380',
+			dev: 'FlyByWire Simulations',
+			type: 'Widebody',
+			img: 'https://flightnews24.de/wp-content/uploads/2024/11/A380x-55.jpg'
+		},
+		{
+			name: 'iFly 737-MAX',
+			dev: 'iFly',
+			type: 'Narrowbody',
+			img: 'https://cruiselevel.de/wp-content/uploads/2024/10/AtariumMAX.png'
+		}
+	];
 </script>
 
 <svelte:head>
@@ -135,7 +180,7 @@ FlightSim:
 		</section>
 
 		<!-- FLIGHT SIM -->
-		<section class="py-12">
+		<section class="py-12 border-b border-white/[0.07]">
 			<h2 class="text-xs text-white/30 uppercase tracking-widest mb-7">Flugsimulation</h2>
 
 			<div class="grid sm:grid-cols-2 gap-4 max-w-3xl">
@@ -145,6 +190,36 @@ FlightSim:
 						<div>
 							<div class="text-white/35 text-xs mb-0.5">{item.label}</div>
 							<div class="text-white/75">{item.value}</div>
+						</div>
+					</div>
+				{/each}
+			</div>
+		</section>
+
+		<!-- FLEET -->
+		<section class="py-12">
+			<h2 class="text-xs text-white/30 uppercase tracking-widest mb-2">Go-To Flieger</h2>
+			<p class="text-white/40 text-sm mb-8">Die Add-ons, die meistens im Hangar stehen.</p>
+
+			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+				{#each fleet as plane}
+					<div class="rounded-xl overflow-hidden border border-white/[0.07] bg-white/2 group">
+						<div class="aspect-video overflow-hidden bg-white/5">
+							<img
+								src={plane.img}
+								alt={plane.name}
+								loading="lazy"
+								class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+							/>
+						</div>
+						<div class="px-4 py-3 flex items-center justify-between gap-3">
+							<div>
+								<div class="text-sm font-medium text-white/90">{plane.name}</div>
+								<div class="text-xs text-white/35 mt-0.5">{plane.dev}</div>
+							</div>
+							<span class="shrink-0 text-[10px] uppercase tracking-widest text-white/25 border border-white/8 rounded-md px-2 py-1">
+								{plane.type}
+							</span>
 						</div>
 					</div>
 				{/each}
