@@ -1,12 +1,18 @@
 <script lang="ts">
 	import { logo } from '$lib/assets/index.js';
+	import { page } from '$app/state';
+	import { slide } from 'svelte/transition';
+	import Menu from 'lucide-svelte/icons/menu';
+	import X from 'lucide-svelte/icons/x';
 
-	let mobileMenu = false;
+	let { children } = $props();
+
+	let mobileMenu = $state(false);
 
 	const navItems = [
-		{ name: 'Overview', href: '/' },
+		{ name: 'Übersicht', href: '/' },
 		{ name: 'Hardware', href: '/hardware' },
-		{ name: 'Vatsim', href: '/vatsim' },
+		{ name: 'VATSIM', href: '/vatsim' },
 		{ name: 'MSFS Settings', href: '/settings' },
 		{ name: 'Impressum', href: '/impressum' },
 		{ name: 'Kontakt', href: '/contact' }
@@ -22,69 +28,86 @@
 
 	<!-- NAVBAR -->
 	<nav class="fixed inset-x-0 top-0 z-50">
-		<div class="mx-auto max-w-7xl px-6 pt-4">
-			<div class="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl px-6 py-4 shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
+		<div class="mx-auto max-w-7xl px-4 sm:px-6 pt-4">
+			<div class="flex items-center justify-between rounded-2xl border border-white/10 bg-white/3 backdrop-blur-xl px-5 py-3.5 shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
 
 				<!-- LOGO -->
-				<a href="/" class="flex items-center gap-3">
-					<img src={logo} alt="elmoradar logo" class="h-10 w-10 rounded-xl ring-1 ring-white/10" />
+				<a href="/" class="flex items-center gap-3 shrink-0">
+					<img src={logo} alt="elmoradar logo" class="h-9 w-9 rounded-xl ring-1 ring-white/10" />
 					<div>
-						<div class="text-[10px] uppercase tracking-[0.35em] text-white/40">Air Ops</div>
-						<div class="text-lg font-semibold tracking-wide">elmoradar</div>
+						<div class="text-[10px] uppercase tracking-[0.35em] text-white/35 leading-none mb-1">Air Ops</div>
+						<div class="text-base font-semibold tracking-wide leading-none">elmoradar</div>
 					</div>
 				</a>
 
 				<!-- NAV DESKTOP -->
-				<div class="hidden md:flex items-center gap-6 text-sm">
+				<div class="hidden md:flex items-center gap-0.5">
 					{#each navItems as item}
 						<a
 							href={item.href}
-							class="relative text-white/60 hover:text-white transition"
+							class="px-3 py-2 rounded-lg text-sm transition-colors {page.url.pathname === item.href
+								? 'text-white bg-white/8 font-medium'
+								: 'text-white/50 hover:text-white hover:bg-white/5'}"
 						>
 							{item.name}
-
-							<!-- hover underline glow -->
-							<span class="absolute left-0 -bottom-1 h-[2px] w-0 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
 						</a>
 					{/each}
 				</div>
 
-				<!-- CTA -->
-				<div class="hidden md:flex items-center gap-3">
+				<!-- CTA + MOBILE BUTTON -->
+				<div class="flex items-center gap-2">
 					<a
 						href="https://twitch.tv/elmoradar"
 						target="_blank"
-						class="rounded-full bg-red-600 px-4 py-2 text-sm font-semibold hover:bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.45)] transition"
+						class="hidden md:inline-flex items-center rounded-full bg-red-600 px-4 py-2 text-sm font-semibold hover:bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.3)] transition-colors"
 					>
-						Open Stream
+						Stream
 					</a>
+					<button
+						class="md:hidden h-9 w-9 rounded-xl border border-white/10 bg-white/4 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/8 transition-colors"
+						onclick={() => (mobileMenu = !mobileMenu)}
+						aria-label="Menü öffnen"
+					>
+						{#if mobileMenu}
+							<X size={17} />
+						{:else}
+							<Menu size={17} />
+						{/if}
+					</button>
 				</div>
-
-				<!-- MOBILE BUTTON -->
-				<button
-					class="md:hidden h-11 w-11 rounded-xl border border-white/10 bg-white/5 backdrop-blur"
-					on:click={() => (mobileMenu = !mobileMenu)}
-				>
-					☰
-				</button>
 			</div>
 
 			<!-- MOBILE MENU -->
 			{#if mobileMenu}
-				<div class="mt-3 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-4 md:hidden shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
-					<div class="flex flex-col gap-4 text-sm text-white/70">
+				<div
+					transition:slide={{ duration: 180 }}
+					class="mt-2 rounded-2xl border border-white/10 bg-[#070c14] backdrop-blur-xl overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.7)] md:hidden"
+				>
+					<div class="p-2.5 flex flex-col gap-0.5">
 						{#each navItems as item}
-							<a href={item.href} class="hover:text-white transition">
+							<a
+								href={item.href}
+								onclick={() => (mobileMenu = false)}
+								class="flex items-center px-4 py-3 rounded-xl text-sm transition-colors {page.url.pathname === item.href
+									? 'text-white bg-white/8 font-medium'
+									: 'text-white/55 hover:text-white hover:bg-white/5'}"
+							>
 								{item.name}
+								{#if page.url.pathname === item.href}
+									<span class="ml-auto h-1.5 w-1.5 rounded-full bg-red-500"></span>
+								{/if}
 							</a>
 						{/each}
-
+					</div>
+					<div class="px-2.5 pb-2.5">
+						<div class="h-px bg-white/[0.06] mb-2.5"></div>
 						<a
 							href="https://twitch.tv/elmoradar"
 							target="_blank"
-							class="mt-2 rounded-xl bg-red-600 px-4 py-2 text-center font-semibold hover:bg-red-500"
+							onclick={() => (mobileMenu = false)}
+							class="flex items-center justify-center gap-2 w-full rounded-xl bg-red-600 py-3 text-sm font-semibold hover:bg-red-500 transition-colors"
 						>
-							Open Stream
+							Stream öffnen
 						</a>
 					</div>
 				</div>
@@ -93,11 +116,10 @@
 	</nav>
 
 	<!-- PAGE CONTENT -->
-	<div class="relative z-10 pt-32 px-4">
+	<div class="relative z-10 pt-28 pb-8 px-4">
 		<div class="mx-auto max-w-7xl">
-			<slot />
+			{@render children()}
 		</div>
 	</div>
 
 </div>
-
