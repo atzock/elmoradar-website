@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {
-		elmoFace,
+		logo,
 		navigraph,
 		aerosoft,
 		orbx,
@@ -122,7 +122,9 @@
 </script>
 
 <svelte:head>
-	<title>elmoradar - Marvin</title>
+	<title>elmoradar - Flugsimulation, VATSIM & Streaming</title>
+	<meta name="og:title" content="elmoradar - Flugsimulation, VATSIM & Streaming" />
+	<meta name="og:description" content="Flugsimulation auf VATSIM, zu viel Kaffee und ein Homesetup, das langsam außer Kontrolle gerät. Streame auf Twitch." />
 	<meta
 		name="description"
 		content="Flugsimulation, VATSIM und zu viel Kaffee — elmoradar auf Twitch."
@@ -156,7 +158,7 @@
 
 			<div class="flex gap-4 sm:gap-6 items-start">
 				<img
-					src={elmoFace}
+					src={logo}
 					alt="Elmo"
 					class="h-16 sm:h-20 rounded-2xl shrink-0 ring-1 ring-white/10"
 				/>
