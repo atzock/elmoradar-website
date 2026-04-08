@@ -11,9 +11,9 @@
 
 	const navItems = [
 		{ name: 'Übersicht', href: '/' },
-		{ name: 'Hardware', href: '/hardware' },
+		{ name: 'Hardware & Settings', href: '/hardware' },
+		{ name: 'Meine Addons', href: '/addons' },
 		{ name: 'VATSIM', href: '/vatsim' },
-		{ name: 'MSFS Settings', href: '/settings' },
 		{ name: 'Kontakt', href: '/contact' }
 	];
 </script>

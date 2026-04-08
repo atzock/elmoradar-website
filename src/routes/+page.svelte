@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {
-		elmoFace,
+		logo,
 		navigraph,
 		aerosoft,
 		orbx,
@@ -15,6 +15,7 @@
 	import Award from 'lucide-svelte/icons/award';
 	import Map from 'lucide-svelte/icons/map';
 	import Radio from 'lucide-svelte/icons/radio';
+	import ArrowRight from 'lucide-svelte/icons/arrow-right';
 
 	let discordLink = 'https://discord.gg/elmoradar';
 
@@ -65,6 +66,25 @@
 		{ name: 'Orbx', url: 'https://orbxdirect.com', logo: orbx },
 		{ name: 'iniBuilds', url: 'https://inibuilds.com/?ref=elmoradar', logo: inibuilds },
 		{ name: 'GamesPlanet', url: 'https://de.gamesplanet.com/?ref=elmo', logo: gamesPlanet }
+	];
+
+	const fleetTeaser = [
+		{
+			name: 'Fenix A320',
+			img: 'https://flyawaysimulation.com/media/images14/images/fenix-roadmap-a320neo-fs2020-fs2024-1.jpeg'
+		},
+		{
+			name: 'ini A350',
+			img: 'https://inibuilds.com/cdn/shop/files/FlightSimulator2024_gibhJDge7T_b8c0b58b-eb0f-499b-9f94-776345917ec6.png?v=1741617134'
+		},
+		{
+			name: 'FBW A380',
+			img: 'https://flybywiresim.com/img/notam-images/a380x/a380x-a32nx.png'
+		},
+		{
+			name: 'HPG H145',
+			img: 'https://www.hypeperformancegroup.com/cdn/shop/products/yes_1_1296x.jpg?v=1630111353'
+		}
 	];
 
 	async function loadStatus() {
@@ -122,7 +142,9 @@
 </script>
 
 <svelte:head>
-	<title>elmoradar - Marvin</title>
+	<title>elmoradar - Flugsimulation, VATSIM & Streaming</title>
+	<meta name="og:title" content="elmoradar - Flugsimulation, VATSIM & Streaming" />
+	<meta name="og:description" content="Flugsimulation auf VATSIM, zu viel Kaffee und ein Homesetup, das langsam außer Kontrolle gerät. Streame auf Twitch." />
 	<meta
 		name="description"
 		content="Flugsimulation, VATSIM und zu viel Kaffee — elmoradar auf Twitch."
@@ -156,7 +178,7 @@
 
 			<div class="flex gap-4 sm:gap-6 items-start">
 				<img
-					src={elmoFace}
+					src={logo}
 					alt="Elmo"
 					class="h-16 sm:h-20 rounded-2xl shrink-0 ring-1 ring-white/10"
 				/>
@@ -343,23 +365,84 @@
 					</div>
 				{/if}
 
-				<!-- HARDWARE LINK -->
+				<!-- RECENT FLIGHTS -->
+				{#if recentFlightplans.length > 0}
+					<div>
+						<h3 class="text-xs text-white/30 uppercase tracking-widest mb-4">Letzte Flüge</h3>
+						<div class="space-y-1">
+							{#each recentFlightplans.slice(0, 5) as fp}
+								<div class="flex items-center gap-2 px-2 py-2.5 rounded-lg hover:bg-white/3 transition-colors text-xs group">
+									<Plane size={11} class="text-white/15 shrink-0 group-hover:text-white/30 transition-colors" />
+									<span class="font-mono text-white/55 shrink-0 w-20 truncate">{fp.callsign}</span>
+									{#if fp.dep && fp.arr}
+										<span class="text-white/30 truncate">{fp.dep} → {fp.arr}</span>
+									{/if}
+								</div>
+							{/each}
+						</div>
+					</div>
+				{/if}
+
+				<!-- ADDONS LINK -->
 				<div>
-					<h3 class="text-xs text-white/30 uppercase tracking-widest mb-4">Hardware</h3>
+					<h3 class="text-xs text-white/30 uppercase tracking-widest mb-4">Meine Addons</h3>
 					<p class="text-sm text-white/40 mb-3 leading-relaxed">
-						Quad-Monitor-Setup, irgendwie gewachsen, nie geplant.
+						8 Flieger, 6 Tools — alles täglich im Einsatz.
 					</p>
 					<a
-						href="/hardware"
+						href="/addons"
 						class="inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors"
 					>
-						Setup ansehen
-						<span class="text-white/30">→</span>
+						Addons ansehen
+						<ArrowRight size={13} class="text-white/30" />
 					</a>
 				</div>
 
 			</div>
 		</div>
+
+		<!-- FLEET TEASER -->
+		<section class="border-t border-white/6 py-10 sm:py-14">
+			<div class="flex items-end justify-between mb-6 sm:mb-8">
+				<div>
+					<h2 class="text-xl sm:text-2xl font-bold text-white mb-1.5">Im Hangar</h2>
+					<p class="text-sm text-white/45">Die Flieger, die meistens zum Einsatz kommen.</p>
+				</div>
+				<a
+					href="/addons"
+					class="hidden sm:flex items-center gap-1.5 text-sm text-white/40 hover:text-white/70 transition-colors shrink-0"
+				>
+					Alle ansehen
+					<ArrowRight size={14} />
+				</a>
+			</div>
+
+			<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+				{#each fleetTeaser as plane}
+					<a href="/addons" class="group rounded-xl overflow-hidden border border-white/8 bg-white/2 hover:border-white/15 transition-all">
+						<div class="aspect-video overflow-hidden bg-white/5">
+							<img
+								src={plane.img}
+								alt={plane.name}
+								loading="lazy"
+								class="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+							/>
+						</div>
+						<div class="px-3 py-2.5">
+							<p class="text-xs text-white/60 group-hover:text-white/80 transition-colors font-medium leading-tight">{plane.name}</p>
+						</div>
+					</a>
+				{/each}
+			</div>
+
+			<a
+				href="/addons"
+				class="sm:hidden flex items-center justify-center gap-1.5 mt-4 text-sm text-white/40 hover:text-white/70 transition-colors"
+			>
+				Alle Flieger & Addons ansehen
+				<ArrowRight size={14} />
+			</a>
+		</section>
 
 		<!-- PARTNERS -->
 		<section class="border-t border-white/6 py-10 sm:py-16">
