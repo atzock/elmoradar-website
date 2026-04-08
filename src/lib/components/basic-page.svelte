@@ -14,7 +14,6 @@
 		{ name: 'Hardware', href: '/hardware' },
 		{ name: 'VATSIM', href: '/vatsim' },
 		{ name: 'MSFS Settings', href: '/settings' },
-		{ name: 'Impressum', href: '/impressum' },
 		{ name: 'Kontakt', href: '/contact' }
 	];
 </script>
@@ -121,5 +120,17 @@
 			{@render children()}
 		</div>
 	</div>
+
+	<!-- GLOBAL FOOTER -->
+	<footer class="relative z-10 border-t border-white/6 px-4">
+		<div class="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-3 py-6">
+			<p class="text-xs text-white/20">
+				&copy; {new Date().getFullYear()} elmoradar. Alle Rechte vorbehalten.
+			</p>
+			<a href="/impressum" class="text-xs text-white/20 hover:text-white/50 transition-colors">
+				Impressum
+			</a>
+		</div>
+	</footer>
 
 </div>

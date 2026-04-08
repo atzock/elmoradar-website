@@ -97,7 +97,7 @@ FlightSim:
 			name: 'ini A300-600',
 			dev: 'iniBuilds',
 			type: 'Widebody',
-			img: 'https://flightnews24.de/wp-content/uploads/2023/09/ini-A300-23.jpg'
+			img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx4tPiRh0YEyPNdoiMB5Tc3Mh0OUZ-Qg3pDw&s'
 		},
 		{
 			name: 'FSLabs A321neo',
@@ -109,7 +109,7 @@ FlightSim:
 			name: 'FBW A380',
 			dev: 'FlyByWire Simulations',
 			type: 'Widebody',
-			img: 'https://flightnews24.de/wp-content/uploads/2024/11/A380x-55.jpg'
+			img: 'https://flybywiresim.com/img/notam-images/a380x/a380x-a32nx.png'
 		},
 		{
 			name: 'iFly 737-MAX',
