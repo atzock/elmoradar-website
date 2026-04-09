@@ -8,6 +8,7 @@
 		gamesPlanet,
 	} from '$lib/assets/index.js';
 	import BasicPage from '$lib/components/basic-page.svelte';
+	import { glow } from '$lib/glow.js';
 	import { onMount } from 'svelte';
 	import Plane from 'lucide-svelte/icons/plane';
 	import Users from 'lucide-svelte/icons/users';
@@ -60,6 +61,20 @@
 		{ value: 'C1', label: 'VATSIM Rating', icon: Award }
 	];
 
+	// Typical stream schedule (set to your actual schedule)
+	const schedule = [
+		{ day: 'Mo', active: false },
+		{ day: 'Di', active: false },
+		{ day: 'Mi', active: true },
+		{ day: 'Do', active: false },
+		{ day: 'Fr', active: true },
+		{ day: 'Sa', active: true },
+		{ day: 'So', active: false }
+	];
+
+	// Today's weekday index (0 = Mo, 6 = So)
+	const todayIdx = (new Date().getDay() + 6) % 7;
+
 	const partners = [
 		{ name: 'Navigraph', url: 'https://navigraph.com', logo: navigraph },
 		{ name: 'Aerosoft', url: 'https://aerosoft.com', logo: aerosoft },
@@ -71,18 +86,22 @@
 	const fleetTeaser = [
 		{
 			name: 'Fenix A320',
+			url: 'https://fenixsim.com',
 			img: 'https://flyawaysimulation.com/media/images14/images/fenix-roadmap-a320neo-fs2020-fs2024-1.jpeg'
 		},
 		{
 			name: 'ini A350',
+			url: 'https://inibuilds.com/products/inibuilds-a350-900-msfs',
 			img: 'https://inibuilds.com/cdn/shop/files/FlightSimulator2024_gibhJDge7T_b8c0b58b-eb0f-499b-9f94-776345917ec6.png?v=1741617134'
 		},
 		{
 			name: 'FBW A380',
+			url: 'https://flybywiresim.com/a380x/',
 			img: 'https://flybywiresim.com/img/notam-images/a380x/a380x-a32nx.png'
 		},
 		{
 			name: 'HPG H145',
+			url: 'https://www.hypeperformancegroup.com/products/hpg-h145',
 			img: 'https://www.hypeperformancegroup.com/cdn/shop/products/yes_1_1296x.jpg?v=1630111353'
 		}
 	];
@@ -257,6 +276,39 @@
 			{/each}
 		</div>
 
+		<!-- SCHEDULE STRIP -->
+		<div class="flex items-center gap-3 py-5 border-b border-white/6">
+			<span class="text-[10px] uppercase tracking-[0.25em] text-white/25 shrink-0">Stream-Tage</span>
+			<div class="flex gap-1.5">
+				{#each schedule as s, i}
+					<div class="flex flex-col items-center gap-1">
+						<span
+							class="text-[10px] w-7 h-7 rounded-lg flex items-center justify-center font-medium transition-colors
+							{i === todayIdx
+								? 'bg-white/10 text-white/80 ring-1 ring-white/20'
+								: s.active
+									? 'text-red-400/80'
+									: 'text-white/15'}"
+						>
+							{s.day}
+						</span>
+						{#if s.active}
+							<span class="h-1 w-1 rounded-full {i === todayIdx ? 'bg-red-400' : 'bg-red-500/40'}"></span>
+						{:else}
+							<span class="h-1 w-1 rounded-full bg-transparent"></span>
+						{/if}
+					</div>
+				{/each}
+			</div>
+			<span class="text-[10px] text-white/20 ml-1 hidden sm:block">ab ~20 Uhr</span>
+			{#if twitchLive}
+				<span class="ml-auto flex items-center gap-1.5 text-[10px] text-red-400/80">
+					<span class="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse"></span>
+					Jetzt live
+				</span>
+			{/if}
+		</div>
+
 		<!-- MAIN GRID -->
 		<div class="py-8 sm:py-12 grid gap-8 sm:gap-12 lg:grid-cols-[1fr_240px]">
 
@@ -419,17 +471,26 @@
 
 			<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
 				{#each fleetTeaser as plane}
-					<a href="/addons" class="group rounded-xl overflow-hidden border border-white/8 bg-white/2 hover:border-white/15 transition-all">
-						<div class="aspect-video overflow-hidden bg-white/5">
-							<img
-								src={plane.img}
-								alt={plane.name}
-								loading="lazy"
-								class="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
-							/>
-						</div>
-						<div class="px-3 py-2.5">
-							<p class="text-xs text-white/60 group-hover:text-white/80 transition-colors font-medium leading-tight">{plane.name}</p>
+					<a
+						href={plane.url}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="glow-card group relative rounded-xl block"
+						use:glow
+					>
+						<span class="glow-border" aria-hidden="true"></span>
+						<div class="rounded-xl overflow-hidden border border-white/8 bg-white/2 hover:border-white/15 transition-all">
+							<div class="aspect-video overflow-hidden bg-white/5">
+								<img
+									src={plane.img}
+									alt={plane.name}
+									loading="lazy"
+									class="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+								/>
+							</div>
+							<div class="px-3 py-2.5">
+								<p class="text-xs text-white/60 group-hover:text-white/80 transition-colors font-medium leading-tight">{plane.name}</p>
+							</div>
 						</div>
 					</a>
 				{/each}

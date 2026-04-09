@@ -1,1 +1,37 @@
 @import 'tailwindcss';
+
+/* ── Glow card effect ─────────────────────────────────────────────────────── */
+/*
+ * Usage: add class="glow-card" to the wrapper element (no overflow-hidden!),
+ * then place <span class="glow-border" aria-hidden="true"></span> as the
+ * first child. Apply use:glow from $lib/glow.ts to wire up the CSS vars.
+ *
+ * The inner content card can still have overflow-hidden, rounded corners, etc.
+ * The border glow sits on the outer wrapper.
+ */
+
+.glow-card {
+	--start: 0;
+	--active: 0;
+	position: relative;
+}
+
+.glow-border {
+	position: absolute;
+	inset: -1px;
+	border-radius: inherit;
+	background: conic-gradient(
+		from calc(var(--start) * 1deg),
+		transparent 0%,
+		rgba(239, 68, 68, calc(var(--active) * 0.65)) 12%,
+		rgba(251, 146, 60, calc(var(--active) * 0.25)) 20%,
+		transparent 35%
+	);
+	pointer-events: none;
+	z-index: 2;
+	/* mask trick: only show the 1px border ring */
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	padding: 1px;
+}

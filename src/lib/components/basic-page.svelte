@@ -22,7 +22,8 @@
 
 	<!-- BACKGROUND -->
 	<div class="fixed inset-0 pointer-events-none">
-		<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(239,68,68,0.06),transparent_50%)]"></div>
+		<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(239,68,68,0.09),transparent_55%)]"></div>
+		<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(56,189,248,0.04),transparent_50%)]"></div>
 	</div>
 
 	<!-- NAVBAR -->
