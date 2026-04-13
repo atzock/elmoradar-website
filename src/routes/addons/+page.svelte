@@ -15,21 +15,21 @@
 			name: 'ini A350-900',
 			dev: 'iniBuilds',
 			type: 'Widebody',
-			url: 'https://inibuilds.com/products/inibuilds-a350-900-msfs',
+			url: 'https://inibuilds.com/products/inibuilds-a350-airliner-msfs-2024?ref=elmoradar',
 			img: 'https://inibuilds.com/cdn/shop/files/FlightSimulator2024_gibhJDge7T_b8c0b58b-eb0f-499b-9f94-776345917ec6.png?v=1741617134'
 		},
 		{
 			name: 'ini A340-300',
 			dev: 'iniBuilds',
 			type: 'Widebody',
-			url: 'https://inibuilds.com/products/inibuilds-a340',
+			url: 'https://inibuilds.com/products/inibuilds-a340-airliner-msfs-2024?ref=elmoradar',
 			img: 'https://inibuilds.com/cdn/shop/files/A340AirlinerMainStore.png?v=1759245373'
 		},
 		{
 			name: 'ini A300-600',
 			dev: 'iniBuilds',
 			type: 'Widebody',
-			url: 'https://inibuilds.com/products/inibuilds-a300',
+			url: 'https://inibuilds.com/products/inibuilds-a300-600r-airliner-msfs-2024?_pos=7&_fid=9a7f043a8&_ss=c?ref=elmoradar',
 			img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx4tPiRh0YEyPNdoiMB5Tc3Mh0OUZ-Qg3pDw&s'
 		},
 		{
@@ -82,7 +82,7 @@
 			name: 'ChasePlane',
 			category: 'Kamera',
 			desc: 'Cineastische Kamerafahrten, vollständig anpassbar. Replay sieht danach aus wie echte Footage.',
-			url: 'https://chaseplane.com',
+			url: 'https://parallel42.com/products/chaseplane',
 			accent: 'from-blue-500/15 to-blue-500/5 border-blue-500/20'
 		},
 		{

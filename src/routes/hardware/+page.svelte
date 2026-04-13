@@ -13,6 +13,13 @@ FlightSim:
 	import BasicPage from '$lib/components/basic-page.svelte';
 	import { glow } from '$lib/glow.js';
 
+	import {
+		peiker1,
+		peiker2,
+		pc1,
+		pc2,
+	} from '$lib/assets/index.js';
+
 	import Cpu          from 'lucide-svelte/icons/cpu';
 	import Gpu          from 'lucide-svelte/icons/gpu';
 	import MemoryStick  from 'lucide-svelte/icons/memory-stick';
@@ -32,6 +39,7 @@ FlightSim:
 	import Zap          from 'lucide-svelte/icons/zap';
 	import ExternalLink from 'lucide-svelte/icons/external-link';
 	import ArrowUpRight from 'lucide-svelte/icons/arrow-up-right';
+	import Info from 'lucide-svelte/icons/info';
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	type Icon = any;
@@ -52,8 +60,8 @@ FlightSim:
 			value: 'AMD Ryzen 7 7800X3D',
 			note: '3D V-Cache macht MSFS deutlich flüssiger.',
 			icon: Cpu,
-			gradient: 'from-red-500/20 via-orange-500/10 to-transparent border-red-500/20',
-			iconColor: 'text-red-400 bg-red-500/15 border-red-500/20',
+			gradient: 'from-[#9147ff]/20 via-violet-500/10 to-transparent border-[#9147ff]/20',
+			iconColor: 'text-[#b580ff] bg-[#9147ff]/15 border-[#9147ff]/20',
 			url: amzn('B0BTZB7F88')
 		},
 		{
@@ -87,7 +95,7 @@ FlightSim:
 			icon: HardDrive,
 			iconColor: 'text-cyan-400',
 			label: 'NVMe',
-			value: 'Lexar 2 TB M.2',
+			value: '2× Lexar 2 TB M.2',
 			url: amznSearch('Lexar 2TB NVMe M.2')
 		},
 		{
@@ -113,8 +121,10 @@ FlightSim:
 		{
 			heading: 'Monitore',
 			items: [
-				{ icon: Monitor, label: 'Haupt', value: '27" MSI MAG274QRF (1440p / 165 Hz)' },
-				{ icon: Monitor, label: 'Seite', value: '27" Acer (1080p), 24" Samsung, 24" Acer' }
+				{ icon: Monitor, label: 'Haupt',      value: '27" MSI MAG274QRF (1440p / 165 Hz)', url: amznSearch('MSI MAG274QRF') },
+				{ icon: Monitor, label: '2. Monitor', value: '27" Acer (1080p)' },
+				{ icon: Monitor, label: '3. Monitor', value: 'Samsung S22D300H (22", nicht mehr erhältlich)' },
+				{ icon: Monitor, label: '4. Monitor', value: 'Acer (22")' }
 			]
 		},
 		{
@@ -139,13 +149,13 @@ FlightSim:
 	const flightsim = [
 		{
 			label: 'Sidestick',
-			value: 'WinWing URSA Minor Airline L',
+			value: 'WinCTRL URSA Minor L',
 			note: 'Side-Stick-Format, spezifisch für Airliner gebaut. Kein Kompromiss.',
 			icon: Joystick,
 			gradient: 'from-sky-500/20 via-blue-500/10 to-transparent border-sky-500/25',
 			iconColor: 'text-sky-300 bg-sky-500/20 border-sky-500/25',
 			badge: 'bg-sky-500/15 text-sky-300 border-sky-500/25',
-			url: 'https://www.winwingsim.com/develop/goods-detail.html?goods_id=127'
+			url: 'https://eu.winctrl.com/view/goods-details.html?id=556'
 		},
 		{
 			label: 'Throttle',
@@ -155,7 +165,7 @@ FlightSim:
 			gradient: 'from-orange-500/20 via-amber-500/10 to-transparent border-orange-500/25',
 			iconColor: 'text-orange-300 bg-orange-500/20 border-orange-500/25',
 			badge: 'bg-orange-500/15 text-orange-300 border-orange-500/25',
-			url: 'https://www.winwingsim.com/develop/goods-detail.html?goods_id=138'
+			url: 'https://eu.winctrl.com/view/goods-details.html?id=1665'
 		},
 		{
 			label: 'Rudder',
@@ -208,6 +218,7 @@ FlightSim:
 		{
 			title: 'Grafik',
 			accent: 'border-t-violet-500/50',
+			note: 'Terrain LOD & Object LOD: Diese Werte sind irrelevant, da sie automatisch durch AutoFPS gesteuert werden.',
 			items: [
 				{ label: 'Terrain LOD',  value: 'Dynamic (170 → 300)' },
 				{ label: 'Object LOD',   value: '140' },
@@ -243,12 +254,12 @@ FlightSim:
 		<!-- ── HEADER ────────────────────────────────────────────── -->
 		<section class="relative pt-8 pb-12 border-b border-white/[0.07] overflow-hidden">
 			<div class="pointer-events-none absolute inset-0">
-				<div class="absolute -top-16 -left-16 w-80 h-80 rounded-full bg-red-500/6 blur-3xl"></div>
+				<div class="absolute -top-16 -left-16 w-80 h-80 rounded-full bg-[#9147ff]/5 blur-3xl"></div>
 				<div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-sky-500/5 blur-3xl"></div>
 			</div>
 			<div class="relative max-w-2xl">
 				<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5">
-					Hardware<span class="text-white/20"> & </span><span class="bg-linear-to-r from-red-400 via-orange-300 to-amber-300 bg-clip-text text-transparent">Settings</span>
+					Hardware<span class="text-white/20"> & </span><span class="bg-linear-to-r from-[#9147ff] via-violet-400 to-blue-400 bg-clip-text text-transparent">Settings</span>
 				</h1>
 				<p class="text-white/50 text-base leading-relaxed mb-4">
 					Das Setup, das sich über Jahre angesammelt hat. Nichts davon war geplant — CPU hier, GPU
@@ -364,6 +375,73 @@ FlightSim:
 			</div>
 		</section>
 
+		<!-- ── PEIKER MIKROFON ───────────────────────────────────── -->
+		<section class="py-12 border-b border-white/[0.07]">
+			<div class="flex items-center gap-2 mb-1">
+				<Mic size={13} class="text-[#9147ff]/70" />
+				<h2 class="text-sm font-semibold text-white/60">Peiker-Mikrofon</h2>
+				<span class="ml-1 text-[10px] uppercase tracking-widest border rounded-md px-2 py-0.5 bg-[#9147ff]/10 text-[#b580ff] border-[#9147ff]/25"
+					>Häufig gefragt</span
+				>
+			</div>
+			<p class="text-xs text-white/30 mb-8">Das Mikrofon, das am häufigsten im Chat auftaucht.</p>
+
+			<div class="glow-card relative rounded-2xl" use:glow>
+				<span class="glow-border" aria-hidden="true"></span>
+				<div
+					class="rounded-2xl border border-[#9147ff]/20 bg-linear-to-br from-[#9147ff]/10 via-[#9147ff]/5 to-transparent overflow-hidden"
+				>
+					<div class="flex flex-col lg:flex-row">
+						<!-- Text content -->
+						<div class="flex-1 p-6 sm:p-8">
+							<div class="flex items-start gap-3 mb-5">
+								<div class="p-3 rounded-xl border border-[#9147ff]/25 bg-[#9147ff]/15 shrink-0">
+									<Mic size={20} class="text-[#b580ff]" />
+								</div>
+								<div>
+									<h3 class="text-lg font-bold text-white leading-tight">Peiker ATC-Mikrofon</h3>
+									<p class="text-xs text-[#b580ff]/70 mt-0.5 uppercase tracking-widest">
+										Benutzerdefinierter USB-Umbau · Einzelstück
+									</p>
+								</div>
+							</div>
+							<p class="text-white/60 text-sm leading-relaxed mb-5">
+								Ich lotse mit einem <span class="text-white/90 font-medium"
+									>Peiker-Mikrofon (zwei Knöpfe)</span
+								>, welches in dieser Ausführung (mit USB-Anschluss)
+								<span class="text-white/90 font-medium">nicht käuflich erwerbbar ist</span>. Das
+								Mikro wurde von mir auf eBay gekauft und von einem Bekannten an eine USB-Soundkarte
+								gelötet, sodass das Mikro mit dem PC verbunden werden kann.
+							</p>
+							<div class="flex items-start gap-2 px-4 py-3 rounded-xl bg-white/4 border border-white/8">
+								<Info size={13} class="text-white/30 shrink-0 mt-0.5" />
+								<p class="text-xs text-white/40 leading-relaxed">
+									Das originale Peiker-Mikrofon ist ein professionelles ATC-Headset aus dem echten
+									Luftfahrtbetrieb. Diese Modifikation ist ein Einzelstück — nicht käuflich.
+								</p>
+							</div>
+						</div>
+						<!-- Images (add peiker1.png / peiker2.png to src/lib/assets/ to replace placeholders) -->
+						<div class="lg:w-72 xl:w-80 shrink-0 p-4 lg:p-6">
+							<div class="flex gap-3 h-full">
+								<div
+									class="flex-1 rounded-xl bg-white/4 border border-white/8 flex items-center justify-center min-h-44 lg:min-h-0"
+								>
+									<div class="text-center p-4">
+										<img
+											src={peiker1}
+											alt="Peiker Mikrofon Frontansicht"
+											class="w-full object-cover"
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
 		<!-- ── FLUGSIMULATION ────────────────────────────────────── -->
 		<section class="py-12 border-b border-white/[0.07]">
 			<h2 class="text-sm font-semibold text-white/60 mb-1">Flugsimulation</h2>
@@ -433,7 +511,8 @@ FlightSim:
 							{/each}
 						</div>
 						{#if section.note}
-							<div class="px-5 py-3 bg-white/2 border-t border-white/5">
+							<div class="px-5 py-3 bg-white/2 border-t border-white/5 flex items-start gap-2">
+								<Info size={12} class="text-white/20 shrink-0 mt-0.5" />
 								<p class="text-xs text-white/25 leading-relaxed">{section.note}</p>
 							</div>
 						{/if}
