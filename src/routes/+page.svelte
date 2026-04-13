@@ -1,11 +1,11 @@
 <script lang="ts">
 	import {
-		logo,
 		navigraph,
 		aerosoft,
 		orbx,
 		inibuilds,
 		gamesPlanet,
+		streamerImage,
 	} from '$lib/assets/index.js';
 	import BasicPage from '$lib/components/basic-page.svelte';
 	import { glow } from '$lib/glow.js';
@@ -17,6 +17,8 @@
 	import Map from 'lucide-svelte/icons/map';
 	import Radio from 'lucide-svelte/icons/radio';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
+	import ExternalLink from 'lucide-svelte/icons/external-link';
+	import CalendarDays from 'lucide-svelte/icons/calendar-days';
 
 	let discordLink = 'https://discord.gg/elmoradar';
 
@@ -61,7 +63,7 @@
 		{ value: 'C1', label: 'VATSIM Rating', icon: Award }
 	];
 
-	// Typical stream schedule (set to your actual schedule)
+	// Typical stream schedule
 	const schedule = [
 		{ day: 'Mo', active: false },
 		{ day: 'Di', active: false },
@@ -91,7 +93,7 @@
 		},
 		{
 			name: 'ini A350',
-			url: 'https://inibuilds.com/products/inibuilds-a350-900-msfs',
+			url: 'https://inibuilds.com/products/inibuilds-a350-airliner-msfs-2024?ref=elmoradar',
 			img: 'https://inibuilds.com/cdn/shop/files/FlightSimulator2024_gibhJDge7T_b8c0b58b-eb0f-499b-9f94-776345917ec6.png?v=1741617134'
 		},
 		{
@@ -161,8 +163,8 @@
 </script>
 
 <svelte:head>
-	<title>elmoradar - Flugsimulation, VATSIM & Streaming</title>
-	<meta name="og:title" content="elmoradar - Flugsimulation, VATSIM & Streaming" />
+	<title>elmoradar – VATSIM ATC & Pilot · Flugsimulation & Streaming</title>
+	<meta name="og:title" content="elmoradar – VATSIM ATC & Pilot · Flugsimulation & Streaming" />
 	<meta name="og:description" content="Flugsimulation auf VATSIM, zu viel Kaffee und ein Homesetup, das langsam außer Kontrolle gerät. Streame auf Twitch." />
 	<meta
 		name="description"
@@ -173,77 +175,123 @@
 <BasicPage>
 	<div class="px-1 sm:px-0">
 
-		<!-- HERO -->
-		<section class="pt-2 pb-8 sm:pb-10 border-b border-white/6">
+		<!-- ── HERO ──────────────────────────────────────────────────── -->
+		<section class="pt-2 pb-10 border-b border-white/6">
 
 			<!-- Twitch live banner -->
 			{#if twitchLive}
 				<a
 					href="https://twitch.tv/elmoradar"
 					target="_blank"
-					class="flex items-center gap-2.5 mb-6 px-4 py-3 rounded-xl bg-red-600/10 border border-red-500/20 hover:bg-red-600/15 transition-colors group"
+					class="flex items-center gap-2.5 mb-6 px-4 py-3 rounded-xl bg-[#9147ff]/10 border border-[#9147ff]/25 hover:bg-[#9147ff]/15 transition-colors group"
 				>
-					<span class="h-2 w-2 rounded-full bg-red-500 animate-pulse shrink-0"></span>
-					<span class="text-sm text-red-400 font-medium shrink-0">Gerade live</span>
+					<span class="h-2 w-2 rounded-full bg-[#9147ff] animate-pulse shrink-0"></span>
+					<span class="text-sm text-[#b580ff] font-medium shrink-0">Gerade live</span>
 					{#if twitchViewers}
 						<span class="text-sm text-white/40 shrink-0">· {twitchViewers}</span>
 					{/if}
 					{#if twitchTitle}
 						<span class="text-sm text-white/30 truncate hidden sm:block">— {twitchTitle}</span>
 					{/if}
-					<span class="ml-auto text-red-500/60 text-xs group-hover:text-red-400 transition-colors shrink-0">Ansehen →</span>
+					<span class="ml-auto text-[#9147ff]/70 text-xs group-hover:text-[#b580ff] transition-colors shrink-0">Ansehen →</span>
 				</a>
 			{/if}
 
-			<div class="flex gap-4 sm:gap-6 items-start">
-				<img
-					src={logo}
-					alt="Elmo"
-					class="h-16 sm:h-20 rounded-2xl shrink-0 ring-1 ring-white/10"
-				/>
-				<div class="flex-1 min-w-0">
-					<h1 class="text-2xl sm:text-3xl font-bold tracking-tight mb-2 sm:mb-3">elmoradar</h1>
+			<!-- TWO-COLUMN LAYOUT -->
+			<div class="flex flex-col lg:flex-row gap-8 lg:gap-14 items-start lg:items-center">
 
-					<p class="text-white/50 text-[14px] sm:text-[15px] leading-relaxed max-w-xl mb-4 sm:mb-5">
-						Flugsimulation auf VATSIM, zu viel Kaffee und ein Homesetup, das langsam außer Kontrolle
-						gerät. Ich streame auf Twitch — und manchmal klappt sogar die Landung.
+				<!-- LEFT: Text + CTA + Socials -->
+				<div class="flex-1 min-w-0">
+					<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">elmoradar</h1>
+
+					<p class="text-white/60 text-[15px] leading-relaxed max-w-xl mb-3">
+						Flugsimulation auf einem Level, bei dem Kaffee kein Genuss mehr ist - er ist eine
+						Notwendigkeit. Ich fliege täglich auf VATSIM, lotse gelegentlich als Controller und
+						versuche, meinen RTX 5090 nicht zu langweilen.
+					</p>
+					<p class="text-white/35 text-sm leading-relaxed max-w-xl mb-7">
+						Hier findest du mein komplettes Setup, alle Addons die ich täglich nutze sowie meine
+						Grafikeinstellungen für Microsoft Flight Simulator 2024. Schau gerne auf dem Stream
+						vorbei. Meistens Mi, Fr &amp; Sa ab ~20 Uhr.
 					</p>
 
-					<div class="flex flex-wrap gap-2 sm:gap-3 text-sm">
+					<!-- Primary Twitch CTA -->
+					<a
+						href="https://twitch.tv/elmoradar"
+						target="_blank"
+						class="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-[#9147ff] hover:bg-[#7d3bd6] text-white font-semibold text-sm shadow-[0_0_30px_rgba(145,71,255,0.4)] hover:shadow-[0_0_45px_rgba(145,71,255,0.55)] transition-all mb-6"
+					>
+						<svg viewBox="0 0 24 24" class="w-4 h-4 fill-current shrink-0" aria-hidden="true">
+							<path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/>
+						</svg>
+						Zum Stream
+					</a>
+
+					<!-- Social icon row -->
+					<div class="flex flex-wrap gap-2 text-sm">
 						<a
-							href="https://twitch.tv/elmoradar"
+							href="https://tiktok.com/@elmoradar"
 							target="_blank"
-							class="flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-lg bg-white/6 hover:bg-white/10 border border-white/8 text-white transition-colors"
+							class="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/8 hover:border-white/15 text-white/55 hover:text-white transition-all"
 						>
-							<Radio size={14} class="text-red-400" />
-							Twitch
+							<svg viewBox="0 0 24 24" class="w-3.5 h-3.5 fill-current shrink-0" aria-hidden="true">
+								<path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/>
+							</svg>
+							TikTok
+						</a>
+						<a
+							href="https://youtube.com/@elmoradar"
+							target="_blank"
+							class="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 hover:bg-red-500/10 border border-white/8 hover:border-red-500/20 text-white/55 hover:text-red-400 transition-all"
+						>
+							<svg viewBox="0 0 24 24" class="w-3.5 h-3.5 fill-current shrink-0" aria-hidden="true">
+								<path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+							</svg>
+							YouTube
+						</a>
+						<a
+							href="https://youtube.com/@elmoradarVODs"
+							target="_blank"
+							class="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 hover:bg-red-500/10 border border-white/8 hover:border-red-500/20 text-white/55 hover:text-red-400 transition-all"
+						>
+							<svg viewBox="0 0 24 24" class="w-3.5 h-3.5 fill-current shrink-0" aria-hidden="true">
+								<path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+							</svg>
+							YouTube VODs
 						</a>
 						<a
 							href={discordLink}
 							target="_blank"
-							class="flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-lg bg-white/4 hover:bg-white/8 border border-white/6 text-white/60 hover:text-white transition-colors"
+							class="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 hover:bg-indigo-500/10 border border-white/8 hover:border-indigo-500/20 text-white/55 hover:text-indigo-300 transition-all"
 						>
+							<svg viewBox="0 0 24 24" class="w-3.5 h-3.5 fill-current shrink-0" aria-hidden="true">
+								<path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/>
+							</svg>
 							Discord
-						</a>
-						<a
-							href="/hardware"
-							class="flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-lg bg-white/4 hover:bg-white/8 border border-white/6 text-white/60 hover:text-white transition-colors"
-						>
-							Setup
-						</a>
-						<a
-							href="/vatsim"
-							class="flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-lg bg-white/4 hover:bg-white/8 border border-white/6 text-white/60 hover:text-white transition-colors"
-						>
-							VATSIM
 						</a>
 					</div>
 				</div>
+
+				<!-- RIGHT: Behind the Stream (desktop only) -->
+				<div class="hidden lg:block shrink-0 w-72 xl:w-80">
+					<div class="relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_0_60px_rgba(145,71,255,0.12)]">
+						<img
+							src={streamerImage}
+							alt="Behind the Stream – elmoradar Setup"
+							class="w-full object-cover"
+						/>
+						<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+						<div class="absolute bottom-0 left-0 right-0 px-4 py-3">
+							<p class="text-[11px] uppercase tracking-[0.2em] text-white/50 font-medium">Behind the Stream</p>
+						</div>
+					</div>
+				</div>
+
 			</div>
 
 			<!-- VATSIM live strip -->
 			{#if vatsimConnected}
-				<div class="mt-4 sm:mt-6 flex flex-wrap items-center gap-x-4 gap-y-1.5 px-4 py-3 rounded-xl bg-green-500/6 border border-green-500/20 text-sm">
+				<div class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1.5 px-4 py-3 rounded-xl bg-green-500/6 border border-green-500/20 text-sm">
 					<span class="flex items-center gap-2 text-green-400/80">
 						<span class="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse"></span>
 						<Plane size={13} />
@@ -276,37 +324,50 @@
 			{/each}
 		</div>
 
-		<!-- SCHEDULE STRIP -->
-		<div class="flex items-center gap-3 py-5 border-b border-white/6">
-			<span class="text-[10px] uppercase tracking-[0.25em] text-white/25 shrink-0">Stream-Tage</span>
-			<div class="flex gap-1.5">
-				{#each schedule as s, i}
-					<div class="flex flex-col items-center gap-1">
-						<span
-							class="text-[10px] w-7 h-7 rounded-lg flex items-center justify-center font-medium transition-colors
-							{i === todayIdx
-								? 'bg-white/10 text-white/80 ring-1 ring-white/20'
-								: s.active
-									? 'text-red-400/80'
-									: 'text-white/15'}"
-						>
-							{s.day}
-						</span>
-						{#if s.active}
-							<span class="h-1 w-1 rounded-full {i === todayIdx ? 'bg-red-400' : 'bg-red-500/40'}"></span>
-						{:else}
-							<span class="h-1 w-1 rounded-full bg-transparent"></span>
-						{/if}
+		<!-- STREAM SCHEDULE -->
+		<div class="py-5 border-b border-white/6">
+			<div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0">
+				<div class="flex items-center gap-3 flex-1">
+					<span class="text-[10px] uppercase tracking-[0.25em] text-white/25 shrink-0">Stream-Tage</span>
+					<div class="flex gap-1.5">
+						{#each schedule as s, i}
+							<div class="flex flex-col items-center gap-1">
+								<span
+									class="text-[10px] w-7 h-7 rounded-lg flex items-center justify-center font-medium transition-colors
+									{i === todayIdx
+										? 'bg-red-500/20 text-red-400 ring-1 ring-red-500/40'
+										: s.active
+											? 'text-red-500/70'
+											: 'text-white/15'}"
+								>
+									{s.day}
+								</span>
+								{#if s.active}
+									<span class="h-1 w-1 rounded-full {i === todayIdx ? 'bg-red-500' : 'bg-red-500/35'}"></span>
+								{:else}
+									<span class="h-1 w-1 rounded-full bg-transparent"></span>
+								{/if}
+							</div>
+						{/each}
 					</div>
-				{/each}
+					<span class="text-[10px] text-white/20 ml-1 hidden sm:block">ab ~20 Uhr</span>
+					{#if twitchLive}
+						<span class="flex items-center gap-1.5 text-[10px] text-[#b580ff]">
+							<span class="h-1.5 w-1.5 rounded-full bg-[#9147ff] animate-pulse"></span>
+							Jetzt live
+						</span>
+					{/if}
+				</div>
+				<a
+					href="https://www.twitch.tv/elmoradar/schedule"
+					target="_blank"
+					class="flex items-center gap-1.5 text-[11px] text-white/30 hover:text-red-500 transition-colors shrink-0"
+				>
+					<CalendarDays size={12} />
+					Vollständiger Plan auf Twitch
+					<ExternalLink size={10} class="text-white/20" />
+				</a>
 			</div>
-			<span class="text-[10px] text-white/20 ml-1 hidden sm:block">ab ~20 Uhr</span>
-			{#if twitchLive}
-				<span class="ml-auto flex items-center gap-1.5 text-[10px] text-red-400/80">
-					<span class="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse"></span>
-					Jetzt live
-				</span>
-			{/if}
 		</div>
 
 		<!-- MAIN GRID -->
@@ -377,7 +438,7 @@
 			<!-- RIGHT: SIDEBAR -->
 			<div class="space-y-9">
 
-				<!-- STATS (desktop only — mobile shows strip above) -->
+				<!-- STATS (desktop only) -->
 				<div class="hidden lg:block">
 					<h3 class="text-xs text-white/30 uppercase tracking-widest mb-4">Zahlen</h3>
 					<div class="space-y-1">
