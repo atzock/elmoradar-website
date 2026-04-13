@@ -11,184 +11,164 @@ FlightSim:
 
 <script lang="ts">
 	import BasicPage from '$lib/components/basic-page.svelte';
+	import { glow } from '$lib/glow.js';
 
-	import Cpu        from 'lucide-svelte/icons/cpu';
-	import Gpu        from 'lucide-svelte/icons/gpu';
-	import MemoryStick from 'lucide-svelte/icons/memory-stick';
+	import Cpu          from 'lucide-svelte/icons/cpu';
+	import Gpu          from 'lucide-svelte/icons/gpu';
+	import MemoryStick  from 'lucide-svelte/icons/memory-stick';
 	import CircuitBoard from 'lucide-svelte/icons/circuit-board';
-	import HardDrive  from 'lucide-svelte/icons/hard-drive';
-	import Fan        from 'lucide-svelte/icons/fan';
-	import Monitor    from 'lucide-svelte/icons/monitor';
-	import Gamepad2   from 'lucide-svelte/icons/gamepad-2';
-	import Mic        from 'lucide-svelte/icons/mic';
-	import Keyboard   from 'lucide-svelte/icons/keyboard';
-	import Mouse      from 'lucide-svelte/icons/mouse';
-	import Headphones from 'lucide-svelte/icons/headphones';
-	import Plane      from 'lucide-svelte/icons/plane';
-	import Joystick   from 'lucide-svelte/icons/joystick';
-	import Gauge      from 'lucide-svelte/icons/gauge';
-	import Settings   from 'lucide-svelte/icons/settings-2';
-	import Zap        from 'lucide-svelte/icons/zap';
+	import HardDrive    from 'lucide-svelte/icons/hard-drive';
+	import Fan          from 'lucide-svelte/icons/fan';
+	import Monitor      from 'lucide-svelte/icons/monitor';
+	import Gamepad2     from 'lucide-svelte/icons/gamepad-2';
+	import Mic          from 'lucide-svelte/icons/mic';
+	import Keyboard     from 'lucide-svelte/icons/keyboard';
+	import Mouse        from 'lucide-svelte/icons/mouse';
+	import Headphones   from 'lucide-svelte/icons/headphones';
+	import Plane        from 'lucide-svelte/icons/plane';
+	import Joystick     from 'lucide-svelte/icons/joystick';
+	import Gauge        from 'lucide-svelte/icons/gauge';
+	import Settings     from 'lucide-svelte/icons/settings-2';
+	import Zap          from 'lucide-svelte/icons/zap';
+	import ExternalLink from 'lucide-svelte/icons/external-link';
+	import ArrowUpRight from 'lucide-svelte/icons/arrow-up-right';
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	type Icon = any;
 
-	type ColoredItem = {
-		label: string;
-		value: string;
-		icon: Icon;
-		gradient: string;
-		iconColor: string;
-	};
+	// Replace with your actual Amazon affiliate tag
+	const AMZN_TAG = 'elmoradar';
+	function amzn(asin: string) {
+		return `https://www.amazon.de/dp/${asin}?tag=${AMZN_TAG}`;
+	}
+	function amznSearch(q: string) {
+		return `https://www.amazon.de/s?k=${encodeURIComponent(q)}&tag=${AMZN_TAG}`;
+	}
 
-	const featured: ColoredItem[] = [
+	// Hero cards — CPU + GPU
+	const featured = [
 		{
 			label: 'CPU',
 			value: 'AMD Ryzen 7 7800X3D',
+			note: '3D V-Cache macht MSFS deutlich flüssiger.',
 			icon: Cpu,
 			gradient: 'from-red-500/20 via-orange-500/10 to-transparent border-red-500/20',
-			iconColor: 'text-red-400 bg-red-500/15 border-red-500/20'
+			iconColor: 'text-red-400 bg-red-500/15 border-red-500/20',
+			url: amzn('B0BTZB7F88')
 		},
 		{
 			label: 'GPU',
 			value: 'NVIDIA RTX 5090 Zotac',
+			note: 'Overkill — aber MSFS nutzt jeden Frame.',
 			icon: Gpu,
 			gradient: 'from-green-500/20 via-emerald-500/10 to-transparent border-green-500/20',
-			iconColor: 'text-green-400 bg-green-500/15 border-green-500/20'
+			iconColor: 'text-green-400 bg-green-500/15 border-green-500/20',
+			url: amznSearch('Zotac RTX 5090')
 		}
 	];
 
-	const pcComponents: ColoredItem[] = [
+	// Spec list items — shown as a clean table, not individual cards
+	const specs: { icon: Icon; iconColor: string; label: string; value: string; url?: string }[] = [
 		{
+			icon: MemoryStick,
+			iconColor: 'text-blue-400',
 			label: 'RAM',
 			value: '64 GB DDR5 (4×16 GB)',
-			icon: MemoryStick,
-			gradient: 'from-blue-500/15 to-transparent border-blue-500/15',
-			iconColor: 'text-blue-400 bg-blue-500/15 border-blue-500/20'
+			url: amznSearch('64GB DDR5 Kit')
 		},
 		{
+			icon: CircuitBoard,
+			iconColor: 'text-violet-400',
 			label: 'Mainboard',
 			value: 'MSI B650 Gaming Plus',
-			icon: CircuitBoard,
-			gradient: 'from-violet-500/15 to-transparent border-violet-500/15',
-			iconColor: 'text-violet-400 bg-violet-500/15 border-violet-500/20'
+			url: amzn('B0BG7D96MW')
 		},
 		{
+			icon: HardDrive,
+			iconColor: 'text-cyan-400',
 			label: 'NVMe',
 			value: 'Lexar 2 TB M.2',
-			icon: HardDrive,
-			gradient: 'from-cyan-500/15 to-transparent border-cyan-500/15',
-			iconColor: 'text-cyan-400 bg-cyan-500/15 border-cyan-500/20'
+			url: amznSearch('Lexar 2TB NVMe M.2')
 		},
 		{
+			icon: HardDrive,
+			iconColor: 'text-sky-400',
 			label: 'SSD',
 			value: 'Samsung 2 TB',
-			icon: HardDrive,
-			gradient: 'from-sky-500/15 to-transparent border-sky-500/15',
-			iconColor: 'text-sky-400 bg-sky-500/15 border-sky-500/20'
+			url: amznSearch('Samsung 870 EVO 2TB')
 		},
 		{
+			icon: Fan,
+			iconColor: 'text-teal-400',
 			label: 'Kühler',
 			value: 'Thermalright Phantom Spirit 120SE',
-			icon: Fan,
-			gradient: 'from-teal-500/15 to-transparent border-teal-500/15',
-			iconColor: 'text-teal-400 bg-teal-500/15 border-teal-500/20'
+			url: amznSearch('Thermalright Phantom Spirit 120 SE')
 		}
 	];
 
-	const desk: ColoredItem[] = [
+	// Desk — grouped to break monotony
+	type DeskGroup = { heading: string; items: { icon: Icon; label: string; value: string; url?: string }[] };
+
+	const deskGroups: DeskGroup[] = [
 		{
-			label: '4× Monitor',
-			value: '27" Acer + 27" MSI + 24" Samsung + 24" Acer',
-			icon: Monitor,
-			gradient: 'from-indigo-500/15 to-transparent border-indigo-500/15',
-			iconColor: 'text-indigo-400 bg-indigo-500/15 border-indigo-500/20'
+			heading: 'Monitore',
+			items: [
+				{ icon: Monitor, label: 'Haupt', value: '27" MSI MAG274QRF (1440p / 165 Hz)' },
+				{ icon: Monitor, label: 'Seite', value: '27" Acer (1080p), 24" Samsung, 24" Acer' }
+			]
 		},
 		{
-			label: 'Stream Deck',
-			value: 'Elgato Stream Deck XL',
-			icon: Gamepad2,
-			gradient: 'from-amber-500/15 to-transparent border-amber-500/15',
-			iconColor: 'text-amber-400 bg-amber-500/15 border-amber-500/20'
+			heading: 'Audio & Streaming',
+			items: [
+				{ icon: Mic,     label: 'Mikrofon', value: 'Razer Siren V3 Chroma',        url: amznSearch('Razer Siren V3 Chroma') },
+				{ icon: Mic,     label: 'Mic Arm',  value: 'Elgato Wave Mic Arm LP',       url: amznSearch('Elgato Wave Mic Arm LP') },
+				{ icon: Gamepad2,label: 'Stream Deck', value: 'Elgato Stream Deck XL',    url: amzn('B07MFCJYQH') }
+			]
 		},
 		{
-			label: 'Mikrofon',
-			value: 'Razer Siren V3 Chroma',
-			icon: Mic,
-			gradient: 'from-green-500/15 to-transparent border-green-500/15',
-			iconColor: 'text-green-400 bg-green-500/15 border-green-500/20'
-		},
-		{
-			label: 'Mic Arm',
-			value: 'Elgato Wave Mic Arm LP',
-			icon: Mic,
-			gradient: 'from-amber-500/15 to-transparent border-amber-500/15',
-			iconColor: 'text-amber-400 bg-amber-500/15 border-amber-500/20'
-		},
-		{
-			label: 'Tastatur',
-			value: 'Roccat Horde AIMO',
-			icon: Keyboard,
-			gradient: 'from-cyan-500/15 to-transparent border-cyan-500/15',
-			iconColor: 'text-cyan-400 bg-cyan-500/15 border-cyan-500/20'
-		},
-		{
-			label: 'Maus',
-			value: 'Roccat Kone AIMO',
-			icon: Mouse,
-			gradient: 'from-cyan-500/15 to-transparent border-cyan-500/15',
-			iconColor: 'text-cyan-400 bg-cyan-500/15 border-cyan-500/20'
-		},
-		{
-			label: 'Headset',
-			value: 'Roccat Syn Pro Air Wireless',
-			icon: Headphones,
-			gradient: 'from-purple-500/15 to-transparent border-purple-500/15',
-			iconColor: 'text-purple-400 bg-purple-500/15 border-purple-500/20'
+			heading: 'Peripherie',
+			items: [
+				{ icon: Keyboard,  label: 'Tastatur', value: 'Roccat Horde AIMO',          url: amznSearch('Roccat Horde AIMO') },
+				{ icon: Mouse,     label: 'Maus',     value: 'Roccat Kone AIMO',           url: amznSearch('Roccat Kone AIMO') },
+				{ icon: Headphones,label: 'Headset',  value: 'Roccat Syn Pro Air Wireless',url: amznSearch('Roccat Syn Pro Air') }
+			]
 		}
 	];
 
-	type SimItem = {
-		label: string;
-		value: string;
-		sub: string;
-		icon: Icon;
-		gradient: string;
-		iconColor: string;
-		badge: string;
-	};
-
-	const flightsim: SimItem[] = [
+	// Flight sim hardware — the stars of the show
+	const flightsim = [
 		{
 			label: 'Sidestick',
 			value: 'WinWing URSA Minor Airline L',
-			sub: 'Präziser Side-Stick für Airliner',
+			note: 'Side-Stick-Format, spezifisch für Airliner gebaut. Kein Kompromiss.',
 			icon: Joystick,
 			gradient: 'from-sky-500/20 via-blue-500/10 to-transparent border-sky-500/25',
 			iconColor: 'text-sky-300 bg-sky-500/20 border-sky-500/25',
-			badge: 'bg-sky-500/15 text-sky-300 border-sky-500/25'
+			badge: 'bg-sky-500/15 text-sky-300 border-sky-500/25',
+			url: 'https://www.winwingsim.com/develop/goods-detail.html?goods_id=127'
 		},
 		{
-			label: 'Throttle + Flaps',
+			label: 'Throttle',
 			value: 'WinCTRL Throttle Pack',
-			sub: 'Throttle & Flaps in einem Pack',
+			note: 'Throttle & Flap-Lever in einem — passt perfekt zum URSA Minor.',
 			icon: Gauge,
 			gradient: 'from-orange-500/20 via-amber-500/10 to-transparent border-orange-500/25',
 			iconColor: 'text-orange-300 bg-orange-500/20 border-orange-500/25',
-			badge: 'bg-orange-500/15 text-orange-300 border-orange-500/25'
+			badge: 'bg-orange-500/15 text-orange-300 border-orange-500/25',
+			url: 'https://www.winwingsim.com/develop/goods-detail.html?goods_id=138'
 		},
 		{
-			label: 'Rudder Pedals',
+			label: 'Rudder',
 			value: 'Logitech G Saitek Pro Flight',
-			sub: 'Rudder Pedals mit Bremsachse',
+			note: 'Bewährt und günstig. Rudder Pedals mit Bremse — tut was er soll.',
 			icon: Plane,
 			gradient: 'from-indigo-500/20 via-violet-500/10 to-transparent border-indigo-500/25',
 			iconColor: 'text-indigo-300 bg-indigo-500/20 border-indigo-500/25',
-			badge: 'bg-indigo-500/15 text-indigo-300 border-indigo-500/25'
+			badge: 'bg-indigo-500/15 text-indigo-300 border-indigo-500/25',
+			url: amznSearch('Logitech Saitek Pro Flight Rudder Pedals')
 		}
 	];
 
-	// Settings value color coding
 	function valueColor(v: string): string {
 		switch (v) {
 			case 'Ultra':   return 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20';
@@ -201,69 +181,54 @@ FlightSim:
 		}
 	}
 
-	const general = [
-		{ label: 'Auflösung', value: '2560×1440' },
-		{ label: 'Anti-Aliasing', value: 'TAA' },
-		{ label: 'Render Scaling', value: '100' },
-		{ label: 'DLSS Frame Generation', value: 'An' },
-		{ label: 'Max FPS', value: '60' },
-		{ label: 'NVIDIA Reflex', value: 'An' }
-	];
-
-	const traffic = [
-		{ label: 'Flugzeug-Traffic', value: 'Aus' },
-		{ label: 'Bodenfahrzeuge', value: 'Mittel' },
-		{ label: 'Straßenverkehr', value: 'Hoch' },
-		{ label: 'Schiffe', value: 'Ultra' },
-		{ label: 'Fauna', value: 'Niedrig' }
-	];
-
-	const graphics = [
-		{ label: 'Terrain LOD', value: 'Dynamic (170 → 300)' },
-		{ label: 'Object LOD', value: '140' },
-		{ label: 'Gebäude', value: 'Ultra' },
-		{ label: 'Bäume', value: 'Ultra' },
-		{ label: 'Gras', value: 'Ultra' },
-		{ label: 'Wolken', value: 'Ultra' },
-		{ label: 'Texturen', value: 'Ultra' }
-	];
-
-	const autofps = [
-		{ label: 'Modus', value: 'Auto TLOD' },
-		{ label: 'TLOD am Boden', value: '170' },
-		{ label: 'TLOD Reiseflug', value: '300' },
-		{ label: 'OLOD Basis', value: '140' },
-		{ label: 'OLOD ab 10.000 ft', value: '130' }
-	];
-
-	type Section = {
-		title: string;
-		note?: string;
-		accent: string;
-		items: { label: string; value: string }[];
-	};
-
-	const msfsSettings: Section[] = [
+	const msfsSettings = [
 		{
 			title: 'Allgemein',
 			accent: 'border-t-blue-500/50',
-			items: general
+			items: [
+				{ label: 'Auflösung',          value: '2560×1440' },
+				{ label: 'Anti-Aliasing',       value: 'TAA' },
+				{ label: 'Render Scaling',      value: '100' },
+				{ label: 'DLSS Frame Gen',      value: 'An' },
+				{ label: 'Max FPS',             value: '60' },
+				{ label: 'NVIDIA Reflex',       value: 'An' }
+			]
 		},
 		{
 			title: 'Traffic & Umgebung',
 			accent: 'border-t-green-500/50',
-			items: traffic
+			items: [
+				{ label: 'Flugzeug-Traffic',   value: 'Aus' },
+				{ label: 'Bodenfahrzeuge',     value: 'Mittel' },
+				{ label: 'Straßenverkehr',     value: 'Hoch' },
+				{ label: 'Schiffe',            value: 'Ultra' },
+				{ label: 'Fauna',              value: 'Niedrig' }
+			]
 		},
 		{
 			title: 'Grafik',
 			accent: 'border-t-violet-500/50',
-			items: graphics
+			items: [
+				{ label: 'Terrain LOD',  value: 'Dynamic (170 → 300)' },
+				{ label: 'Object LOD',   value: '140' },
+				{ label: 'Gebäude',      value: 'Ultra' },
+				{ label: 'Bäume',        value: 'Ultra' },
+				{ label: 'Gras',         value: 'Ultra' },
+				{ label: 'Wolken',       value: 'Ultra' },
+				{ label: 'Texturen',     value: 'Ultra' }
+			]
 		},
 		{
 			title: 'AutoFPS',
 			accent: 'border-t-orange-500/50',
 			note: 'AutoFPS passt den Terrain LOD dynamisch je nach Flughöhe an — weniger Detail am Boden für Performance, mehr in der Luft für Optik.',
-			items: autofps
+			items: [
+				{ label: 'Modus',              value: 'Auto TLOD' },
+				{ label: 'TLOD am Boden',      value: '170' },
+				{ label: 'TLOD Reiseflug',     value: '300' },
+				{ label: 'OLOD Basis',         value: '140' },
+				{ label: 'OLOD ab 10.000 ft',  value: '130' }
+			]
 		}
 	];
 </script>
@@ -273,156 +238,202 @@ FlightSim:
 </svelte:head>
 
 <BasicPage>
-	<div class="px-2 sm:px-6">
+	<div class="px-2 sm:px-4">
 
-		<!-- ── HEADER ─────────────────────────────────────────────── -->
-		<section class="relative pt-6 pb-14 border-b border-white/[0.07] overflow-hidden">
-			<!-- Background glow blobs -->
+		<!-- ── HEADER ────────────────────────────────────────────── -->
+		<section class="relative pt-8 pb-12 border-b border-white/[0.07] overflow-hidden">
 			<div class="pointer-events-none absolute inset-0">
-				<div class="absolute -top-10 -left-10 w-72 h-72 rounded-full bg-red-500/8 blur-3xl"></div>
-				<div class="absolute top-0 right-0 w-56 h-56 rounded-full bg-blue-500/8 blur-3xl"></div>
+				<div class="absolute -top-16 -left-16 w-80 h-80 rounded-full bg-red-500/6 blur-3xl"></div>
+				<div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-sky-500/5 blur-3xl"></div>
 			</div>
-			<div class="relative">
-				<div class="flex items-center gap-2 mb-4">
-					<span class="text-[10px] uppercase tracking-[0.3em] text-white/30">elmoradar</span>
-					<span class="h-px flex-1 max-w-[40px] bg-white/10"></span>
-					<span class="text-[10px] uppercase tracking-[0.3em] text-white/15">v2025</span>
-				</div>
-				<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-					Hardware
-					<span class="text-white/20">&</span>
-					<span class="bg-gradient-to-r from-red-400 via-orange-300 to-amber-300 bg-clip-text text-transparent">Settings</span>
+			<div class="relative max-w-2xl">
+				<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5">
+					Hardware<span class="text-white/20"> & </span><span class="bg-linear-to-r from-red-400 via-orange-300 to-amber-300 bg-clip-text text-transparent">Settings</span>
 				</h1>
-				<p class="text-white/45 text-base max-w-lg leading-relaxed">
-					Das Setup, das sich über Jahre angesammelt hat — und die MSFS-Einstellungen, die dabei entstanden sind.
-					Nichts geplant, alles irgendwie passiert.
+				<p class="text-white/50 text-base leading-relaxed mb-4">
+					Das Setup, das sich über Jahre angesammelt hat. Nichts davon war geplant — CPU hier, GPU
+					dort, irgendwann stand ein vierter Monitor auf dem Schreibtisch. Jetzt läuft's.
+				</p>
+				<p class="text-white/25 text-sm">
+					Affiliate-Links zu Amazon — kostet euch nichts extra, hilft mir beim Weiterfliegen.
 				</p>
 			</div>
 		</section>
 
-		<!-- ── RECHNER ────────────────────────────────────────────── -->
-		<section class="py-14 border-b border-white/[0.07]">
-			<div class="flex items-center gap-3 mb-8">
-				<div class="h-px flex-1 max-w-8 bg-white/10"></div>
-				<h2 class="text-[11px] text-white/35 uppercase tracking-[0.25em]">Rechner</h2>
-				<div class="h-px flex-1 bg-white/5"></div>
-			</div>
+		<!-- ── RECHNER ───────────────────────────────────────────── -->
+		<section class="py-12 border-b border-white/[0.07]">
+			<h2 class="text-sm font-semibold text-white/60 mb-1">Rechner</h2>
+			<p class="text-xs text-white/30 mb-8">Der Kern von allem.</p>
 
-			<!-- CPU + GPU Hero -->
-			<div class="grid sm:grid-cols-2 gap-4 mb-8">
+			<!-- CPU + GPU hero -->
+			<div class="grid sm:grid-cols-2 gap-4 mb-6">
 				{#each featured as item}
-					<div class="relative overflow-hidden rounded-2xl border bg-gradient-to-br {item.gradient} p-6">
-						<div class="absolute top-3 right-4 text-[9px] uppercase tracking-[0.3em] text-white/15">{item.label}</div>
-						<div class="flex items-center gap-4">
-							<div class="p-3.5 rounded-2xl border {item.iconColor} shrink-0">
-								<item.icon size={24} />
-							</div>
-							<div>
-								<div class="text-xs text-white/35 mb-1 uppercase tracking-widest">{item.label}</div>
-								<div class="text-lg font-bold text-white leading-tight">{item.value}</div>
+					<a
+						href={item.url}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="glow-card group relative rounded-2xl block hover:scale-[1.01] transition-transform"
+						use:glow
+					>
+						<span class="glow-border" aria-hidden="true"></span>
+						<div class="overflow-hidden rounded-2xl border bg-linear-to-br {item.gradient} p-6">
+							<div class="flex items-start gap-4">
+								<div class="p-3.5 rounded-2xl border {item.iconColor} shrink-0">
+									<item.icon size={22} />
+								</div>
+								<div class="flex-1 min-w-0">
+									<div class="flex items-center justify-between gap-2 mb-1">
+										<span class="text-[10px] text-white/30 uppercase tracking-widest">{item.label}</span>
+										<ArrowUpRight size={13} class="text-white/15 group-hover:text-white/40 transition-colors shrink-0" />
+									</div>
+									<div class="text-lg font-bold text-white leading-tight mb-1">{item.value}</div>
+									<div class="text-xs text-white/35 leading-snug">{item.note}</div>
+								</div>
 							</div>
 						</div>
-					</div>
+					</a>
 				{/each}
 			</div>
 
-			<!-- Rest PC as colored cards grid -->
-			<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-				{#each pcComponents as item}
-					<div class="group relative overflow-hidden rounded-xl border bg-gradient-to-b {item.gradient} px-4 py-4 hover:scale-[1.02] transition-transform">
-						<div class="p-2 rounded-lg border {item.iconColor} inline-flex mb-3">
-							<item.icon size={14} />
+			<!-- Remaining specs as a clean list -->
+			<div class="rounded-xl border border-white/8 overflow-hidden divide-y divide-white/5">
+				{#each specs as s}
+					{#if s.url}
+						<a
+							href={s.url}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="flex items-center gap-4 px-5 py-3.5 hover:bg-white/3 transition-colors group"
+						>
+							<s.icon size={14} class="{s.iconColor} shrink-0 opacity-60 group-hover:opacity-100 transition-opacity" />
+							<span class="text-xs text-white/35 w-20 shrink-0">{s.label}</span>
+							<span class="text-sm text-white/75 flex-1">{s.value}</span>
+							<ExternalLink size={12} class="text-white/15 group-hover:text-white/40 transition-colors shrink-0" />
+						</a>
+					{:else}
+						<div class="flex items-center gap-4 px-5 py-3.5">
+							<s.icon size={14} class="{s.iconColor} shrink-0 opacity-60" />
+							<span class="text-xs text-white/35 w-20 shrink-0">{s.label}</span>
+							<span class="text-sm text-white/75 flex-1">{s.value}</span>
 						</div>
-						<div class="text-[10px] text-white/30 uppercase tracking-wider mb-1">{item.label}</div>
-						<div class="text-sm text-white/85 font-medium leading-snug">{item.value}</div>
+					{/if}
+				{/each}
+			</div>
+		</section>
+
+		<!-- ── SCHREIBTISCH ──────────────────────────────────────── -->
+		<section class="py-12 border-b border-white/[0.07]">
+			<h2 class="text-sm font-semibold text-white/60 mb-1">Schreibtisch</h2>
+			<p class="text-xs text-white/30 mb-8">Was sonst noch so auf dem Tisch und drumherum steht.</p>
+
+			<div class="grid sm:grid-cols-3 gap-4">
+				{#each deskGroups as group}
+					<div class="rounded-xl border border-white/8 overflow-hidden">
+						<div class="px-4 py-3 border-b border-white/5 bg-white/2">
+							<span class="text-[11px] text-white/40 uppercase tracking-widest">{group.heading}</span>
+						</div>
+						<div class="divide-y divide-white/5">
+							{#each group.items as item}
+								{#if item.url}
+									<a
+										href={item.url}
+										target="_blank"
+										rel="noopener noreferrer"
+										class="flex items-start gap-3 px-4 py-3 hover:bg-white/3 transition-colors group"
+									>
+										<item.icon size={13} class="text-white/30 shrink-0 mt-0.5 group-hover:text-white/50 transition-colors" />
+										<div class="min-w-0 flex-1">
+											<div class="text-[10px] text-white/25 mb-0.5">{item.label}</div>
+											<div class="text-sm text-white/75 leading-snug">{item.value}</div>
+										</div>
+										<ExternalLink size={11} class="text-white/10 group-hover:text-white/35 transition-colors shrink-0 mt-0.5" />
+									</a>
+								{:else}
+									<div class="flex items-start gap-3 px-4 py-3">
+										<item.icon size={13} class="text-white/30 shrink-0 mt-0.5" />
+										<div class="min-w-0">
+											<div class="text-[10px] text-white/25 mb-0.5">{item.label}</div>
+											<div class="text-sm text-white/75 leading-snug">{item.value}</div>
+										</div>
+									</div>
+								{/if}
+							{/each}
+						</div>
 					</div>
 				{/each}
 			</div>
 		</section>
 
-		<!-- ── SCHREIBTISCH ───────────────────────────────────────── -->
-		<section class="py-14 border-b border-white/[0.07]">
-			<div class="flex items-center gap-3 mb-8">
-				<div class="h-px flex-1 max-w-8 bg-white/10"></div>
-				<h2 class="text-[11px] text-white/35 uppercase tracking-[0.25em]">Schreibtisch</h2>
-				<div class="h-px flex-1 bg-white/5"></div>
-			</div>
-
-			<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-				{#each desk as item}
-					<div class="group relative overflow-hidden rounded-xl border bg-gradient-to-b {item.gradient} px-4 py-4 hover:scale-[1.02] transition-transform">
-						<div class="p-2 rounded-lg border {item.iconColor} inline-flex mb-3">
-							<item.icon size={14} />
-						</div>
-						<div class="text-[10px] text-white/30 uppercase tracking-wider mb-1">{item.label}</div>
-						<div class="text-sm text-white/85 font-medium leading-snug">{item.value}</div>
-					</div>
-				{/each}
-			</div>
-		</section>
-
-		<!-- ── FLUGSIMULATION ─────────────────────────────────────── -->
-		<section class="py-14 border-b border-white/[0.07]">
-			<div class="flex items-center gap-3 mb-3">
-				<div class="h-px flex-1 max-w-8 bg-white/10"></div>
-				<h2 class="text-[11px] text-white/35 uppercase tracking-[0.25em]">Flugsimulation</h2>
-				<div class="h-px flex-1 bg-white/5"></div>
-			</div>
-			<p class="text-white/35 text-sm mb-8 pl-1">Die Hardware, die zwischen mir und dem Himmel steht.</p>
+		<!-- ── FLUGSIMULATION ────────────────────────────────────── -->
+		<section class="py-12 border-b border-white/[0.07]">
+			<h2 class="text-sm font-semibold text-white/60 mb-1">Flugsimulation</h2>
+			<p class="text-xs text-white/30 mb-8">Die Hardware zwischen mir und dem Himmel.</p>
 
 			<div class="grid sm:grid-cols-3 gap-5">
 				{#each flightsim as item}
-					<div class="relative overflow-hidden rounded-2xl border bg-gradient-to-br {item.gradient} p-6 group hover:scale-[1.01] transition-transform">
-						<div class="flex items-start justify-between mb-4">
-							<div class="p-3 rounded-xl border {item.iconColor}">
-								<item.icon size={20} />
+					<a
+						href={item.url}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="glow-card group relative rounded-2xl block hover:scale-[1.01] transition-transform"
+						use:glow
+					>
+						<span class="glow-border" aria-hidden="true"></span>
+						<div class="overflow-hidden rounded-2xl border bg-linear-to-br {item.gradient} p-6 h-full">
+							<div class="flex items-start justify-between mb-5">
+								<div class="p-3 rounded-xl border {item.iconColor}">
+									<item.icon size={20} />
+								</div>
+								<span class="text-[10px] uppercase tracking-widest border rounded-md px-2 py-1 {item.badge}">
+									{item.label}
+								</span>
 							</div>
-							<span class="text-[10px] uppercase tracking-widest border rounded-md px-2 py-1 {item.badge}">
-								{item.label}
-							</span>
+							<div class="text-base font-semibold text-white mb-2 leading-snug">{item.value}</div>
+							<div class="text-xs text-white/40 leading-relaxed mb-4">{item.note}</div>
+							<div class="flex items-center gap-1.5 text-[11px] text-white/20 group-hover:text-white/45 transition-colors">
+								<ExternalLink size={11} />
+								Zum Shop
+							</div>
 						</div>
-						<div class="text-base font-semibold text-white mb-1 leading-snug">{item.value}</div>
-						<div class="text-xs text-white/35">{item.sub}</div>
-					</div>
+					</a>
 				{/each}
 			</div>
 		</section>
 
-		<!-- ── MSFS SETTINGS ──────────────────────────────────────── -->
-		<section class="py-14">
-			<div class="flex items-center gap-3 mb-3">
-				<div class="h-px flex-1 max-w-8 bg-white/10"></div>
-				<div class="flex items-center gap-2">
-					<Zap size={12} class="text-yellow-400/60" />
-					<h2 class="text-[11px] text-white/35 uppercase tracking-[0.25em]">MSFS Settings</h2>
+		<!-- ── MSFS SETTINGS ─────────────────────────────────────── -->
+		<section class="py-12">
+			<div class="flex items-start justify-between gap-4 mb-8">
+				<div>
+					<div class="flex items-center gap-2 mb-1">
+						<Zap size={13} class="text-yellow-400/60" />
+						<h2 class="text-sm font-semibold text-white/60">MSFS Settings</h2>
+					</div>
+					<p class="text-xs text-white/30 max-w-md leading-relaxed">
+						Optimiert für VATSIM-Flüge auf der RTX 5090. Guter Startpunkt — aber nicht blind
+						übernehmen, jedes System ist anders.
+					</p>
 				</div>
-				<div class="h-px flex-1 bg-white/5"></div>
 			</div>
-			<p class="text-white/35 text-sm mb-10 pl-1 max-w-md">
-				Optimiert für VATSIM und Streaming auf der RTX 5090. Als Referenz — nicht blind kopieren.
-			</p>
 
-			<div class="grid gap-5 sm:grid-cols-2">
+			<div class="grid gap-4 sm:grid-cols-2">
 				{#each msfsSettings as section}
-					<div class="rounded-2xl border border-white/8 bg-white/[0.02] overflow-hidden border-t-2 {section.accent}">
+					<div class="rounded-2xl border border-white/8 bg-white/2 overflow-hidden border-t-2 {section.accent}">
 						<div class="px-5 pt-5 pb-4">
 							<div class="flex items-center gap-2 mb-4">
 								<Settings size={12} class="text-white/25" />
 								<h3 class="text-[11px] text-white/40 uppercase tracking-widest">{section.title}</h3>
 							</div>
-							<div class="space-y-0">
-								{#each section.items as item}
-									<div class="flex justify-between items-center py-2.5 border-b border-white/5 last:border-b-0 text-sm gap-3">
-										<span class="text-white/45 shrink-0">{item.label}</span>
-										<span class="text-[11px] font-semibold px-2 py-0.5 rounded-md border {valueColor(item.value)} shrink-0">
-											{item.value}
-										</span>
-									</div>
-								{/each}
-							</div>
+							{#each section.items as item}
+								<div class="flex justify-between items-center py-2.5 border-b border-white/5 last:border-b-0 text-sm gap-3">
+									<span class="text-white/45">{item.label}</span>
+									<span class="text-[11px] font-semibold px-2 py-0.5 rounded-md border shrink-0 {valueColor(item.value)}">
+										{item.value}
+									</span>
+								</div>
+							{/each}
 						</div>
 						{#if section.note}
-							<div class="px-5 py-3 bg-white/[0.02] border-t border-white/5">
+							<div class="px-5 py-3 bg-white/2 border-t border-white/5">
 								<p class="text-xs text-white/25 leading-relaxed">{section.note}</p>
 							</div>
 						{/if}
