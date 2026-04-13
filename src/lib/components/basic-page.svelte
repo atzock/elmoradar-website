@@ -59,7 +59,7 @@
 					<a
 						href="https://twitch.tv/elmoradar"
 						target="_blank"
-						class="hidden md:inline-flex items-center gap-2 rounded-full bg-[#9147ff] px-4 py-2 text-sm font-semibold hover:bg-[#7d3bd6] shadow-[0_0_20px_rgba(145,71,255,0.35)] transition-colors"
+						class="hidden md:inline-flex items-center gap-2 rounded-full bg-purple-600 px-4 py-2 text-sm font-semibold hover:bg-purple-500 shadow-[0_0_20px_rgba(239,68,68,0.3)] transition-colors"
 					>
 						<svg viewBox="0 0 24 24" class="w-3.5 h-3.5 fill-current shrink-0">
 							<path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/>
@@ -97,7 +97,7 @@
 							>
 								{item.name}
 								{#if page.url.pathname === item.href}
-									<span class="ml-auto h-1.5 w-1.5 rounded-full bg-[#9147ff]"></span>
+									<span class="ml-auto h-1.5 w-1.5 rounded-full bg-red-500"></span>
 								{/if}
 							</a>
 						{/each}
@@ -108,7 +108,7 @@
 							href="https://twitch.tv/elmoradar"
 							target="_blank"
 							onclick={() => (mobileMenu = false)}
-							class="flex items-center justify-center gap-2 w-full rounded-xl bg-[#9147ff] py-3 text-sm font-semibold hover:bg-[#7d3bd6] transition-colors"
+							class="flex items-center justify-center gap-2 w-full rounded-xl bg-red-600 py-3 text-sm font-semibold hover:bg-red-500 transition-colors"
 						>
 							<svg viewBox="0 0 24 24" class="w-4 h-4 fill-current shrink-0">
 								<path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/>

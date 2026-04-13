@@ -95,7 +95,7 @@ FlightSim:
 			icon: HardDrive,
 			iconColor: 'text-cyan-400',
 			label: 'NVMe',
-			value: '2× Lexar 2 TB M.2',
+			value: '2 x Lexar 2 TB M.2',
 			url: amznSearch('Lexar 2TB NVMe M.2')
 		},
 		{
@@ -253,20 +253,16 @@ FlightSim:
 
 		<!-- ── HEADER ────────────────────────────────────────────── -->
 		<section class="relative pt-8 pb-12 border-b border-white/[0.07] overflow-hidden">
-			<div class="pointer-events-none absolute inset-0">
-				<div class="absolute -top-16 -left-16 w-80 h-80 rounded-full bg-[#9147ff]/5 blur-3xl"></div>
-				<div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-sky-500/5 blur-3xl"></div>
-			</div>
 			<div class="relative max-w-2xl">
 				<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5">
-					Hardware<span class="text-white/20"> & </span><span class="bg-linear-to-r from-[#9147ff] via-violet-400 to-blue-400 bg-clip-text text-transparent">Settings</span>
+					Hardware<span class="text-white/20"> & </span><span class="bg-linear-to-r from-red-500 via-red-400 to-red-300 bg-clip-text text-transparent">Settings</span>
 				</h1>
 				<p class="text-white/50 text-base leading-relaxed mb-4">
-					Das Setup, das sich über Jahre angesammelt hat. Nichts davon war geplant — CPU hier, GPU
+					Das Setup, das sich über Jahre angesammelt hat. Nichts davon war geplant - CPU hier, GPU
 					dort, irgendwann stand ein vierter Monitor auf dem Schreibtisch. Jetzt läuft's.
 				</p>
 				<p class="text-white/25 text-sm">
-					Affiliate-Links zu Amazon — kostet euch nichts extra, hilft mir beim Weiterfliegen.
+					Affiliate-Links zu Amazon - kostet euch nichts extra, hilft mir beim Weiterfliegen.
 				</p>
 			</div>
 		</section>
@@ -330,6 +326,16 @@ FlightSim:
 					{/if}
 				{/each}
 			</div>
+
+			<!-- PC photos -->
+			<div class="grid grid-cols-2 gap-3 mt-5">
+				<div class="rounded-xl overflow-hidden border border-white/8 aspect-video bg-white/3">
+					<img src={pc1} alt="PC Setup – Ansicht 1" class="w-full h-full object-cover" />
+				</div>
+				<div class="rounded-xl overflow-hidden border border-white/8 aspect-video bg-white/3">
+					<img src={pc2} alt="PC Setup – Ansicht 2" class="w-full h-full object-cover" />
+				</div>
+			</div>
 		</section>
 
 		<!-- ── SCHREIBTISCH ──────────────────────────────────────── -->
@@ -378,9 +384,9 @@ FlightSim:
 		<!-- ── PEIKER MIKROFON ───────────────────────────────────── -->
 		<section class="py-12 border-b border-white/[0.07]">
 			<div class="flex items-center gap-2 mb-1">
-				<Mic size={13} class="text-[#9147ff]/70" />
+				<Mic size={13} class="text-red-400/70" />
 				<h2 class="text-sm font-semibold text-white/60">Peiker-Mikrofon</h2>
-				<span class="ml-1 text-[10px] uppercase tracking-widest border rounded-md px-2 py-0.5 bg-[#9147ff]/10 text-[#b580ff] border-[#9147ff]/25"
+				<span class="ml-1 text-[10px] uppercase tracking-widest border rounded-md px-2 py-0.5 bg-red-500/10 text-red-300 border-red-500/25"
 					>Häufig gefragt</span
 				>
 			</div>
@@ -389,18 +395,18 @@ FlightSim:
 			<div class="glow-card relative rounded-2xl" use:glow>
 				<span class="glow-border" aria-hidden="true"></span>
 				<div
-					class="rounded-2xl border border-[#9147ff]/20 bg-linear-to-br from-[#9147ff]/10 via-[#9147ff]/5 to-transparent overflow-hidden"
+					class="rounded-2xl border border-red-500/20 bg-linear-to-br from-red-500/10 via-red-500/5 to-transparent overflow-hidden"
 				>
 					<div class="flex flex-col lg:flex-row">
 						<!-- Text content -->
 						<div class="flex-1 p-6 sm:p-8">
 							<div class="flex items-start gap-3 mb-5">
-								<div class="p-3 rounded-xl border border-[#9147ff]/25 bg-[#9147ff]/15 shrink-0">
-									<Mic size={20} class="text-[#b580ff]" />
+								<div class="p-3 rounded-xl border border-red-500/25 bg-red-500/15 shrink-0">
+									<Mic size={20} class="text-red-300" />
 								</div>
 								<div>
 									<h3 class="text-lg font-bold text-white leading-tight">Peiker ATC-Mikrofon</h3>
-									<p class="text-xs text-[#b580ff]/70 mt-0.5 uppercase tracking-widest">
+									<p class="text-xs text-red-300/70 mt-0.5 uppercase tracking-widest">
 										Benutzerdefinierter USB-Umbau · Einzelstück
 									</p>
 								</div>
@@ -421,19 +427,15 @@ FlightSim:
 								</p>
 							</div>
 						</div>
-						<!-- Images (add peiker1.png / peiker2.png to src/lib/assets/ to replace placeholders) -->
+						<!-- Peiker images -->
 						<div class="lg:w-72 xl:w-80 shrink-0 p-4 lg:p-6">
 							<div class="flex gap-3 h-full">
-								<div
-									class="flex-1 rounded-xl bg-white/4 border border-white/8 flex items-center justify-center min-h-44 lg:min-h-0"
-								>
-									<div class="text-center p-4">
-										<img
-											src={peiker1}
-											alt="Peiker Mikrofon Frontansicht"
-											class="w-full object-cover"
-										/>
-									</div>
+								<div class="flex-1 rounded-xl overflow-hidden border border-white/8 min-h-44 lg:min-h-0">
+									<img
+										src={peiker1}
+										alt="Peiker Mikrofon – Ansicht 1"
+										class="w-full h-full object-cover"
+									/>
 								</div>
 							</div>
 						</div>

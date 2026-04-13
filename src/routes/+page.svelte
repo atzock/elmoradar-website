@@ -205,7 +205,7 @@
 					<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">elmoradar</h1>
 
 					<p class="text-white/60 text-[15px] leading-relaxed max-w-xl mb-3">
-						Flugsimulation auf einem Level, bei dem Kaffee kein Genuss mehr ist – er ist eine
+						Flugsimulation auf einem Level, bei dem Kaffee kein Genuss mehr ist - er ist eine
 						Notwendigkeit. Ich fliege täglich auf VATSIM, lotse gelegentlich als Controller und
 						versuche, meinen RTX 5090 nicht zu langweilen.
 					</p>
@@ -229,16 +229,6 @@
 
 					<!-- Social icon row -->
 					<div class="flex flex-wrap gap-2 text-sm">
-						<a
-							href="https://twitch.tv/elmoradar"
-							target="_blank"
-							class="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 hover:bg-[#9147ff]/15 border border-white/8 hover:border-[#9147ff]/30 text-white/55 hover:text-[#b580ff] transition-all"
-						>
-							<svg viewBox="0 0 24 24" class="w-3.5 h-3.5 fill-current shrink-0" aria-hidden="true">
-								<path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/>
-							</svg>
-							Twitch
-						</a>
 						<a
 							href="https://tiktok.com/@elmoradar"
 							target="_blank"
@@ -345,15 +335,15 @@
 								<span
 									class="text-[10px] w-7 h-7 rounded-lg flex items-center justify-center font-medium transition-colors
 									{i === todayIdx
-										? 'bg-[#9147ff]/20 text-[#b580ff] ring-1 ring-[#9147ff]/40'
+										? 'bg-red-500/20 text-red-400 ring-1 ring-red-500/40'
 										: s.active
-											? 'text-[#9147ff]/70'
+											? 'text-red-500/70'
 											: 'text-white/15'}"
 								>
 									{s.day}
 								</span>
 								{#if s.active}
-									<span class="h-1 w-1 rounded-full {i === todayIdx ? 'bg-[#9147ff]' : 'bg-[#9147ff]/35'}"></span>
+									<span class="h-1 w-1 rounded-full {i === todayIdx ? 'bg-red-500' : 'bg-red-500/35'}"></span>
 								{:else}
 									<span class="h-1 w-1 rounded-full bg-transparent"></span>
 								{/if}
@@ -371,7 +361,7 @@
 				<a
 					href="https://www.twitch.tv/elmoradar/schedule"
 					target="_blank"
-					class="flex items-center gap-1.5 text-[11px] text-white/30 hover:text-[#b580ff] transition-colors shrink-0"
+					class="flex items-center gap-1.5 text-[11px] text-white/30 hover:text-red-500 transition-colors shrink-0"
 				>
 					<CalendarDays size={12} />
 					Vollständiger Plan auf Twitch
