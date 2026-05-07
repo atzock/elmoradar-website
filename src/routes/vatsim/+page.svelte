@@ -65,10 +65,6 @@
 			<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
 				<div class="flex-1">
 					<h1 class="text-3xl font-bold tracking-tight mb-3">VATSIM</h1>
-					<p class="text-white/50 text-base max-w-lg">
-						Tier 1 Endorsements für Deutschland — welche ATC-Positionen ich besetzen darf.
-						Piloten fliege ich auch, aber ATC macht mehr Spaß.
-					</p>
 
 					<div class="flex flex-wrap gap-x-8 gap-y-2 mt-6">
 						{#each quickStats as s}

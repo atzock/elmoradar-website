@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(wc -l /e/GitHub/elmoradar-website-new/src/routes/api/**/*)"
-    ]
-  }
-}
