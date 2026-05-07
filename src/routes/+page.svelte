@@ -9,16 +9,14 @@
 	} from '$lib/assets/index.js';
 	import BasicPage from '$lib/components/basic-page.svelte';
 	import { glow } from '$lib/glow.js';
+	import { consent } from '$lib/stores/consent';
 	import { onMount } from 'svelte';
 	import Plane from 'lucide-svelte/icons/plane';
 	import Users from 'lucide-svelte/icons/users';
 	import Clock from 'lucide-svelte/icons/clock';
 	import Award from 'lucide-svelte/icons/award';
 	import Map from 'lucide-svelte/icons/map';
-	import Radio from 'lucide-svelte/icons/radio';
 	import ArrowRight from 'lucide-svelte/icons/arrow-right';
-	import ExternalLink from 'lucide-svelte/icons/external-link';
-	import CalendarDays from 'lucide-svelte/icons/calendar-days';
 
 	let discordLink = 'https://discord.gg/elmoradar';
 
@@ -207,12 +205,12 @@
 					<p class="text-white/60 text-[15px] leading-relaxed max-w-xl mb-3">
 						Flugsimulation auf einem Level, bei dem Kaffee kein Genuss mehr ist - er ist eine
 						Notwendigkeit. Ich fliege täglich auf VATSIM, lotse gelegentlich als Controller und
-						versuche, meinen RTX 5090 nicht zu langweilen.
+						versuche, meine RTX 5090 nicht zu langweilen.
 					</p>
 					<p class="text-white/35 text-sm leading-relaxed max-w-xl mb-7">
 						Hier findest du mein komplettes Setup, alle Addons die ich täglich nutze sowie meine
 						Grafikeinstellungen für Microsoft Flight Simulator 2024. Schau gerne auf dem Stream
-						vorbei. Meistens Mi, Fr &amp; Sa ab ~20 Uhr.
+						vorbei. Meistens täglich ab ~19 Uhr.
 					</p>
 
 					<!-- Primary Twitch CTA -->
@@ -324,52 +322,6 @@
 			{/each}
 		</div>
 
-		<!-- STREAM SCHEDULE -->
-		<div class="py-5 border-b border-white/6">
-			<div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0">
-				<div class="flex items-center gap-3 flex-1">
-					<span class="text-[10px] uppercase tracking-[0.25em] text-white/25 shrink-0">Stream-Tage</span>
-					<div class="flex gap-1.5">
-						{#each schedule as s, i}
-							<div class="flex flex-col items-center gap-1">
-								<span
-									class="text-[10px] w-7 h-7 rounded-lg flex items-center justify-center font-medium transition-colors
-									{i === todayIdx
-										? 'bg-red-500/20 text-red-400 ring-1 ring-red-500/40'
-										: s.active
-											? 'text-red-500/70'
-											: 'text-white/15'}"
-								>
-									{s.day}
-								</span>
-								{#if s.active}
-									<span class="h-1 w-1 rounded-full {i === todayIdx ? 'bg-red-500' : 'bg-red-500/35'}"></span>
-								{:else}
-									<span class="h-1 w-1 rounded-full bg-transparent"></span>
-								{/if}
-							</div>
-						{/each}
-					</div>
-					<span class="text-[10px] text-white/20 ml-1 hidden sm:block">ab ~20 Uhr</span>
-					{#if twitchLive}
-						<span class="flex items-center gap-1.5 text-[10px] text-[#b580ff]">
-							<span class="h-1.5 w-1.5 rounded-full bg-[#9147ff] animate-pulse"></span>
-							Jetzt live
-						</span>
-					{/if}
-				</div>
-				<a
-					href="https://www.twitch.tv/elmoradar/schedule"
-					target="_blank"
-					class="flex items-center gap-1.5 text-[11px] text-white/30 hover:text-red-500 transition-colors shrink-0"
-				>
-					<CalendarDays size={12} />
-					Vollständiger Plan auf Twitch
-					<ExternalLink size={10} class="text-white/20" />
-				</a>
-			</div>
-		</div>
-
 		<!-- MAIN GRID -->
 		<div class="py-8 sm:py-12 grid gap-8 sm:gap-12 lg:grid-cols-[1fr_240px]">
 
@@ -385,13 +337,35 @@
 							<p class="text-xs text-white/35 mt-0.5">Alle vergangenen Streams ungeschnitten — hier der letzte Stream:</p>
 						</div>
 						{#if vodsVideo}
-							<div class="rounded-xl overflow-hidden border border-white/[0.07] bg-white/2">
-								<iframe
-									title={vodsVideo.title || 'YouTube VOD'}
-									class="aspect-video w-full block"
-									src={vodsVideo.embedUrl}
-									allowfullscreen
-								></iframe>
+							<div class="max-w-xs sm:max-w-none mx-auto sm:mx-0 rounded-xl overflow-hidden border border-white/[0.07] bg-white/2">
+								{#if $consent === 'accepted'}
+									<iframe
+										title={vodsVideo.title || 'YouTube VOD'}
+										class="aspect-video w-full block"
+										src={vodsVideo.embedUrl}
+										allowfullscreen
+									></iframe>
+								{:else}
+									<div class="aspect-video flex flex-col items-center justify-center gap-3 px-6">
+										<svg viewBox="0 0 24 24" class="w-7 h-7 fill-current text-white/12" aria-hidden="true">
+											<path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+										</svg>
+										<p class="text-xs text-white/25 text-center leading-relaxed">
+											Einbettung deaktiviert —<br />Cookies müssen akzeptiert werden.
+										</p>
+										<div class="flex flex-col items-center gap-2">
+											<button
+												onclick={() => consent.accept()}
+												class="text-xs font-medium text-white/55 hover:text-white border border-white/10 hover:border-white/22 bg-white/3 hover:bg-white/6 px-4 py-2 rounded-lg transition-all"
+											>
+												Einbettungen aktivieren
+											</button>
+											<a href={vodsVideo.url} target="_blank" rel="noopener noreferrer" class="text-xs text-white/22 hover:text-white/50 transition-colors">
+												Auf YouTube ansehen →
+											</a>
+										</div>
+									</div>
+								{/if}
 								{#if vodsVideo.title}
 									<div class="px-4 py-3">
 										<p class="text-sm text-white/45 truncate">{vodsVideo.title}</p>
@@ -399,7 +373,7 @@
 								{/if}
 							</div>
 						{:else}
-							<div class="aspect-video rounded-xl border border-white/[0.07] bg-white/2 flex items-center justify-center">
+							<div class="max-w-xs sm:max-w-none mx-auto sm:mx-0 aspect-video rounded-xl border border-white/[0.07] bg-white/2 flex items-center justify-center">
 								<span class="text-xs text-white/20">Wird geladen…</span>
 							</div>
 						{/if}
@@ -412,13 +386,35 @@
 							<p class="text-xs text-white/35 mt-0.5">Highlights aus den Streams — hier das neueste Video:</p>
 						</div>
 						{#if mainVideo}
-							<div class="rounded-xl overflow-hidden border border-white/[0.07] bg-white/2">
-								<iframe
-									title={mainVideo.title || 'YouTube Video'}
-									class="aspect-video w-full block"
-									src={mainVideo.embedUrl}
-									allowfullscreen
-								></iframe>
+							<div class="max-w-xs sm:max-w-none mx-auto sm:mx-0 rounded-xl overflow-hidden border border-white/[0.07] bg-white/2">
+								{#if $consent === 'accepted'}
+									<iframe
+										title={mainVideo.title || 'YouTube Video'}
+										class="aspect-video w-full block"
+										src={mainVideo.embedUrl}
+										allowfullscreen
+									></iframe>
+								{:else}
+									<div class="aspect-video flex flex-col items-center justify-center gap-3 px-6">
+										<svg viewBox="0 0 24 24" class="w-7 h-7 fill-current text-white/12" aria-hidden="true">
+											<path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+										</svg>
+										<p class="text-xs text-white/25 text-center leading-relaxed">
+											Einbettung deaktiviert —<br />Cookies müssen akzeptiert werden.
+										</p>
+										<div class="flex flex-col items-center gap-2">
+											<button
+												onclick={() => consent.accept()}
+												class="text-xs font-medium text-white/55 hover:text-white border border-white/10 hover:border-white/22 bg-white/3 hover:bg-white/6 px-4 py-2 rounded-lg transition-all"
+											>
+												Einbettungen aktivieren
+											</button>
+											<a href={mainVideo.url} target="_blank" rel="noopener noreferrer" class="text-xs text-white/22 hover:text-white/50 transition-colors">
+												Auf YouTube ansehen →
+											</a>
+										</div>
+									</div>
+								{/if}
 								{#if mainVideo.title}
 									<div class="px-4 py-3">
 										<p class="text-sm text-white/45 truncate">{mainVideo.title}</p>
@@ -426,7 +422,7 @@
 								{/if}
 							</div>
 						{:else}
-							<div class="aspect-video rounded-xl border border-white/[0.07] bg-white/2 flex items-center justify-center">
+							<div class="max-w-xs sm:max-w-none mx-auto sm:mx-0 aspect-video rounded-xl border border-white/[0.07] bg-white/2 flex items-center justify-center">
 								<span class="text-xs text-white/20">Wird geladen…</span>
 							</div>
 						{/if}

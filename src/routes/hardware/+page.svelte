@@ -47,10 +47,12 @@ FlightSim:
 	// Replace with your actual Amazon affiliate tag
 	const AMZN_TAG = 'elmoradar';
 	function amzn(asin: string) {
-		return `https://www.amazon.de/dp/${asin}?tag=${AMZN_TAG}`;
+		// return `https://www.amazon.de/dp/${asin}?tag=${AMZN_TAG}`;
+		return `https://www.amazon.de/dp/${asin}`;
 	}
 	function amznSearch(q: string) {
-		return `https://www.amazon.de/s?k=${encodeURIComponent(q)}&tag=${AMZN_TAG}`;
+		// return `https://www.amazon.de/s?k=${encodeURIComponent(q)}&tag=${AMZN_TAG}`;
+		return `https://www.amazon.de/s?k=${encodeURIComponent(q)}`;
 	}
 
 	// Hero cards — CPU + GPU
@@ -67,7 +69,7 @@ FlightSim:
 		{
 			label: 'GPU',
 			value: 'NVIDIA RTX 5090 Zotac',
-			note: 'Overkill — aber MSFS nutzt jeden Frame.',
+			note: 'Mit DLSS 4 + Multi Frame Generation sind sogar deutlich höhere FPS möglich.',
 			icon: Gpu,
 			gradient: 'from-green-500/20 via-emerald-500/10 to-transparent border-green-500/20',
 			iconColor: 'text-green-400 bg-green-500/15 border-green-500/20',
@@ -261,9 +263,9 @@ FlightSim:
 					Das Setup, das sich über Jahre angesammelt hat. Nichts davon war geplant - CPU hier, GPU
 					dort, irgendwann stand ein vierter Monitor auf dem Schreibtisch. Jetzt läuft's.
 				</p>
-				<p class="text-white/25 text-sm">
+				<!-- <p class="text-white/25 text-sm">
 					Affiliate-Links zu Amazon - kostet euch nichts extra, hilft mir beim Weiterfliegen.
-				</p>
+				</p> -->
 			</div>
 		</section>
 
@@ -489,8 +491,7 @@ FlightSim:
 						<h2 class="text-sm font-semibold text-white/60">MSFS Settings</h2>
 					</div>
 					<p class="text-xs text-white/30 max-w-md leading-relaxed">
-						Optimiert für VATSIM-Flüge auf der RTX 5090. Guter Startpunkt — aber nicht blind
-						übernehmen, jedes System ist anders.
+						Optimiert für VATSIM-Flüge auf der RTX 5090.
 					</p>
 				</div>
 			</div>

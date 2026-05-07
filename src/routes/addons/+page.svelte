@@ -59,6 +59,13 @@
 			type: 'Helicopter',
 			url: 'https://www.hypeperformancegroup.com/products/hpg-h145',
 			img: 'https://www.hypeperformancegroup.com/cdn/shop/products/yes_1_1296x.jpg?v=1630111353'
+		},
+		{
+			name: 'MD-11',
+			dev: 'TFDI Design',
+			type: 'Widebody',
+			url: 'https://tfdidesign.com/products/md11',
+			img: 'https://tfdidesign.com/img/md11/1.1/top/1.webp'
 		}
 	];
 
@@ -112,13 +119,21 @@
 			desc: 'Liveries, GSX-Profile, Freeware-Sceneries — die wichtigste Community-Plattform überhaupt.',
 			url: 'https://flightsim.to',
 			accent: 'from-red-500/15 to-red-500/5 border-red-500/20'
+		},
+		{
+			name: 'CRJ',
+			category: 'X',
+			desc: 'X',
+			url: 'X',
+			accent: 'from-pink-500/15 to-pink-500/5 border-pink-500/20' 
 		}
+
 	];
 
 	const typeColors: Record<string, string> = {
-		Narrowbody: 'text-sky-400/70 border-sky-500/20 bg-sky-500/10',
-		Widebody:   'text-violet-400/70 border-violet-500/20 bg-violet-500/10',
-		Helicopter: 'text-amber-400/70 border-amber-500/20 bg-amber-500/10'
+		Narrowbody: 'text-sky-300 border-sky-400/60 bg-sky-500/25',
+		Widebody:   'text-violet-300 border-violet-400/60 bg-violet-500/25',
+		Helicopter: 'text-amber-300 border-amber-400/60 bg-amber-500/25'
 	};
 </script>
 
