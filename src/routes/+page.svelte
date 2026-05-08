@@ -166,15 +166,15 @@
 	<meta name="og:description" content="Flugsimulation auf VATSIM, zu viel Kaffee und ein Homesetup, das langsam außer Kontrolle gerät. Streame auf Twitch." />
 	<meta
 		name="description"
-		content="Flugsimulation, VATSIM und zu viel Kaffee — elmoradar auf Twitch."
+		content="Flugsimulation, VATSIM und zu viel Kaffee - elmoradar auf Twitch."
 	/>
 </svelte:head>
 
 <BasicPage>
-	<div class="px-1 sm:px-0">
+	<div>
 
 		<!-- ── HERO ──────────────────────────────────────────────────── -->
-		<section class="pt-2 pb-10 border-b border-white/6">
+		<section class="pt-8 pb-12 border-b border-white/6">
 
 			<!-- Twitch live banner -->
 			{#if twitchLive}
@@ -203,7 +203,7 @@
 					<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4">elmoradar</h1>
 
 					<p class="text-white/60 text-[15px] leading-relaxed max-w-xl mb-3">
-						Flugsimulation auf einem Level, bei dem Kaffee kein Genuss mehr ist - er ist eine
+						Flugsimulation auf einem Level, bei dem Kaffee kein Genuss mehr ist. Er ist eine
 						Notwendigkeit. Ich fliege täglich auf VATSIM, lotse gelegentlich als Controller und
 						versuche, meine RTX 5090 nicht zu langweilen.
 					</p>
@@ -334,7 +334,7 @@
 					<div>
 						<div class="mb-3">
 							<p class="text-sm font-semibold text-white/70">elmoradarVODS</p>
-							<p class="text-xs text-white/35 mt-0.5">Alle vergangenen Streams ungeschnitten — hier der letzte Stream:</p>
+							<p class="text-xs text-white/35 mt-0.5">Alle vergangenen Streams ungeschnitten. Hier der letzte Stream:</p>
 						</div>
 						{#if vodsVideo}
 							<div class="max-w-xs sm:max-w-none mx-auto sm:mx-0 rounded-xl overflow-hidden border border-white/[0.07] bg-white/2">
@@ -496,7 +496,7 @@
 				<div>
 					<h3 class="text-xs text-white/30 uppercase tracking-widest mb-4">Meine Addons</h3>
 					<p class="text-sm text-white/40 mb-3 leading-relaxed">
-						8 Flieger, 6 Tools — alles täglich im Einsatz.
+						10 Flieger, 6 Tools — alles täglich im Einsatz.
 					</p>
 					<a
 						href="/addons"
@@ -566,7 +566,7 @@
 		<section class="border-t border-white/6 py-10 sm:py-16">
 			<div class="mb-7 sm:mb-10">
 				<h2 class="text-xl sm:text-2xl font-bold text-white mb-1.5 sm:mb-2">Partner & Sponsoren</h2>
-				<p class="text-sm text-white/45 max-w-lg">Diese Unternehmen machen elmoradar möglich — von Navdaten über Airports bis hin zu Spielen.</p>
+				<p class="text-sm text-white/45 max-w-lg">Diese Unternehmen machen elmoradar möglich. Von Navdaten über Airports bis hin zu Spielen.</p>
 			</div>
 			<div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
 				{#each partners as p}

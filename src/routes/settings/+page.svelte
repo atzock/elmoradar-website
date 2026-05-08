@@ -55,14 +55,16 @@
 </svelte:head>
 
 <BasicPage>
-	<div class="px-2 sm:px-6">
+	<div>
 
-		<section class="pt-4 pb-12 border-b border-white/[0.07]">
-			<h1 class="text-3xl font-bold tracking-tight mb-3">MSFS Settings</h1>
-			<p class="text-white/50 text-base max-w-lg">
-				Meine aktuellen Einstellungen — optimiert für VATSIM-Betrieb und Streaming auf der RTX 5090.
-				Nicht für jeden Rechner geeignet, aber als Referenz ganz nützlich.
-			</p>
+		<section class="relative pt-8 pb-12 border-b border-white/[0.07] overflow-hidden">
+			<div class="relative max-w-2xl">
+				<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5">MSFS Settings</h1>
+				<p class="text-white/50 text-base leading-relaxed">
+					Meine aktuellen Einstellungen — optimiert für VATSIM-Betrieb und Streaming auf der RTX 5090.
+					Nicht für jeden Rechner geeignet, aber als Referenz ganz nützlich.
+				</p>
+			</div>
 		</section>
 
 		<div class="py-12 grid gap-12 sm:grid-cols-2">

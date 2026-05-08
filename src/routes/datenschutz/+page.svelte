@@ -49,21 +49,23 @@
 </svelte:head>
 
 <BasicPage>
-	<div class="px-2 sm:px-6 max-w-3xl">
+	<div class="max-w-3xl">
 
 		<!-- HEADER -->
-		<section class="pt-4 pb-10 border-b border-white/[0.07]">
+		<section class="relative pt-8 pb-12 border-b border-white/[0.07] overflow-hidden">
+			<div class="relative">
 			<div class="flex items-center gap-3 mb-4">
 				<div class="p-2.5 rounded-xl bg-white/4 border border-white/8">
 					<Shield size={20} class="text-white/50" />
 				</div>
 				<span class="text-xs text-white/30 uppercase tracking-widest">Rechtliches</span>
 			</div>
-			<h1 class="text-3xl font-bold tracking-tight mb-3">Datenschutzerklärung</h1>
-			<p class="text-white/45 text-base max-w-xl leading-relaxed">
+			<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5">Datenschutzerklärung</h1>
+			<p class="text-white/45 text-base leading-relaxed">
 				Transparenz darüber, welche Daten beim Besuch dieser Website verarbeitet werden und welche Rechte dir dabei zustehen.
 			</p>
 			<p class="text-xs text-white/25 mt-4">Stand: Mai 2026</p>
+			</div>
 		</section>
 
 		<!-- TOC -->

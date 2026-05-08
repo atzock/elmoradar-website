@@ -251,15 +251,15 @@ FlightSim:
 </svelte:head>
 
 <BasicPage>
-	<div class="px-2 sm:px-4">
+	<div>
 
 		<!-- ── HEADER ────────────────────────────────────────────── -->
 		<section class="relative pt-8 pb-12 border-b border-white/[0.07] overflow-hidden">
 			<div class="relative max-w-2xl">
 				<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5">
-					Hardware<span class="text-white/20"> & </span><span class="bg-linear-to-r from-red-500 via-red-400 to-red-300 bg-clip-text text-transparent">Settings</span>
+					Hardware & Settings
 				</h1>
-				<p class="text-white/50 text-base leading-relaxed mb-4">
+				<p class="text-white/50 text-base max-w-xl leading-relaxed mb-4">
 					Das Setup, das sich über Jahre angesammelt hat. Nichts davon war geplant - CPU hier, GPU
 					dort, irgendwann stand ein vierter Monitor auf dem Schreibtisch. Jetzt läuft's.
 				</p>

@@ -7,12 +7,13 @@
 </svelte:head>
 
 <BasicPage>
-	<div class="px-2 sm:px-6 max-w-2xl">
+	<div class="max-w-2xl">
 
-		<section class="pt-4 pb-12 border-b border-white/[0.07]">
-			<h1 class="text-3xl font-bold tracking-tight mb-3">Impressum</h1>
-			<p class="text-white/50 text-sm">Das hier angegebene Impressum gilt für alle Belange der Impressumspflicht nach §5 DDG, § 55 Abs.2 RStV & MStV §18 sowie für alle Social Media Auftritte. Erstellte Seiten können von verantwortlichen Personen bearbeitet werden; wir garantieren daher keine Vollständigkeit.
-Nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+		<section class="relative pt-8 pb-12 border-b border-white/[0.07] overflow-hidden">
+			<div class="relative">
+				<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5">Impressum</h1>
+				<p class="text-white/50 text-sm leading-relaxed">Das hier angegebene Impressum gilt für alle Belange der Impressumspflicht nach §5 DDG, § 55 Abs.2 RStV & MStV §18 sowie für alle Social Media Auftritte. Erstellte Seiten können von verantwortlichen Personen bearbeitet werden; wir garantieren daher keine Vollständigkeit. Nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+			</div>
 		</section>
 
 		<div class="py-10 space-y-10 text-sm text-white/60 leading-relaxed">

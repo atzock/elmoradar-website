@@ -37,7 +37,9 @@
 	const center: Position[] = [
 		{ callsign: 'EDGG_CTR', airport: 'Langen Radar', active: true },
 		{ callsign: 'EDWW_CTR', airport: 'Bremen Radar', active: true },
-		{ callsign: 'EDMM_CTR', airport: 'München Radar', active: true }
+		{ callsign: 'EDMM_CTR', airport: 'München Radar', active: true },
+		{ callsign: 'EDGG_R_CTR', airport: 'Rhein Radar', active: true },
+		{ callsign: 'EDYY_CTR', airport: 'Maastricht', active: true }
 	];
 
 	const sections: Section[] = [
@@ -58,31 +60,32 @@
 </svelte:head>
 
 <BasicPage>
-	<div class="px-2 sm:px-6">
+	<div>
 
 		<!-- HEADER -->
-		<section class="pt-4 pb-12 border-b border-white/[0.07]">
-			<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
-				<div class="flex-1">
-					<h1 class="text-3xl font-bold tracking-tight mb-3">VATSIM</h1>
-
-					<div class="flex flex-wrap gap-x-8 gap-y-2 mt-6">
-						{#each quickStats as s}
-							<div class="text-sm">
-								<span class="text-white/35">{s.label} </span>
-								<span class="font-semibold text-white">{s.value}</span>
-							</div>
-						{/each}
-					</div>
-				</div>
-
+		<section class="relative pt-8 pb-12 border-b border-white/[0.07] overflow-hidden">
+			<div class="relative max-w-2xl mb-8">
+				<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5">VATSIM</h1>
+				<p class="text-white/50 text-base leading-relaxed">
+					Meine aktiven Endorsements im VATSIM-Netzwerk. Die aufgeführten Positionen zeigen, welche Station ich besetzen darf.
+				</p>
+			</div>
+			<div class="flex flex-wrap items-center gap-4">
 				<!-- RATING BADGE -->
-				<div class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/3 px-5 py-4 shrink-0 self-start">
+				<div class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/3 px-5 py-4 shrink-0">
 					<BadgeCheck size={20} class="text-red-400" />
 					<div>
 						<div class="text-xs text-white/30 uppercase tracking-widest">ATC Rating</div>
 						<div class="text-2xl font-bold leading-tight">C1</div>
 					</div>
+				</div>
+				<div class="flex flex-wrap gap-x-8 gap-y-2">
+					{#each quickStats as s}
+						<div class="text-sm">
+							<span class="text-white/35">{s.label} </span>
+							<span class="font-semibold text-white">{s.value}</span>
+						</div>
+					{/each}
 				</div>
 			</div>
 		</section>
@@ -118,7 +121,6 @@
 		<!-- NOTE -->
 		<section class="border-t border-white/[0.07] py-8">
 			<p class="text-sm text-white/30 max-w-lg leading-relaxed">
-				Diese Übersicht basiert auf internen Tier 1 Endorsements und ist nicht öffentlich über VATSIM einsehbar.
 				Stand kann sich durch Trainingsfortschritt ändern.
 			</p>
 		</section>
