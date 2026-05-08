@@ -36,28 +36,28 @@
 			name: 'FSLabs A321neo',
 			dev: 'Flight Sim Labs',
 			type: 'Narrowbody',
-			url: 'https://www.flightsimlabs.com/index.php/msfs-aircraft/',
+			url: 'https://www.flightsimlabs.com/index.php/a321neo/#buy321',
 			img: 'https://www.flightsimlabs.com/wp-content/uploads/slider/cache/10d5c8543459adafa4909bf1a09067c1/img-51.jpg'
 		},
 		{
 			name: 'FBW A380',
 			dev: 'FlyByWire Simulations',
 			type: 'Widebody',
-			url: 'https://flybywiresim.com/a380x/',
+			url: 'https://flybywiresim.com/',
 			img: 'https://flybywiresim.com/img/notam-images/a380x/a380x-a32nx.png'
 		},
 		{
 			name: 'iFly 737-MAX',
 			dev: 'iFly',
 			type: 'Narrowbody',
-			url: 'https://ifly.com.au/msfs',
+			url: 'https://www.flight1.com/products.asp?vid=flt1sf&pid=iflymax8',
 			img: 'https://cruiselevel.de/wp-content/uploads/2024/10/AtariumMAX.png'
 		},
 		{
 			name: 'HPG H145',
 			dev: 'HPG Helicopters',
 			type: 'Helicopter',
-			url: 'https://www.hypeperformancegroup.com/products/hpg-h145',
+			url: 'https://www.hypeperformancegroup.com/products/xxxx',
 			img: 'https://www.hypeperformancegroup.com/cdn/shop/products/yes_1_1296x.jpg?v=1630111353'
 		},
 		{
@@ -66,6 +66,13 @@
 			type: 'Widebody',
 			url: 'https://tfdidesign.com/products/md11',
 			img: 'https://tfdidesign.com/img/md11/1.1/top/1.webp'
+		},
+		{
+			name: 'CRJ V2',
+			dev: 'Aerosoft',
+			type: 'Narrowbody',
+			url: 'https://www.aerosoft.com/de/shop/flight/microsoft-flight-simulator/msfs-2020/msfs-flugzeuge/3303/aerosoft-aircraft-crj-v2',
+			img: 'https://aerosoft-shop.com/shop-rd/bilder/screenshots/msfs/aerosoft-aircraft-crj-v2/01.jpg'
 		}
 	];
 
@@ -120,13 +127,6 @@
 			url: 'https://flightsim.to',
 			accent: 'from-red-500/15 to-red-500/5 border-red-500/20'
 		},
-		{
-			name: 'CRJ',
-			category: 'X',
-			desc: 'X',
-			url: 'X',
-			accent: 'from-pink-500/15 to-pink-500/5 border-pink-500/20' 
-		}
 
 	];
 
@@ -142,15 +142,17 @@
 </svelte:head>
 
 <BasicPage>
-	<div class="px-2 sm:px-4">
+	<div>
 
 		<!-- HEADER -->
-		<section class="pt-8 pb-12 border-b border-white/[0.07]">
-			<h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Meine Addons</h1>
-			<p class="text-white/50 text-base max-w-lg leading-relaxed">
-				Acht Flieger, sechs Tools. Was im Hangar steht und was vor jedem Flug läuft — alles täglich
-				im Einsatz, nichts davon ist Sponsoring.
-			</p>
+		<section class="relative pt-8 pb-12 border-b border-white/[0.07] overflow-hidden">
+			<div class="relative max-w-2xl">
+				<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5">Meine Addons</h1>
+				<p class="text-white/50 text-base leading-relaxed">
+					Acht Flieger, sechs Tools. Was im Hangar steht und was vor jedem Flug läuft — alles täglich
+					im Einsatz, nichts davon ist Sponsoring.
+				</p>
+			</div>
 		</section>
 
 		<!-- FLEET -->
@@ -200,7 +202,7 @@
 		<!-- SOFTWARE ADDONS -->
 		<section class="py-12">
 			<h2 class="text-sm font-semibold text-white/60 mb-1">Software & Tools</h2>
-			<p class="text-xs text-white/30 mb-8">Läuft bei jedem Flug — entweder im Hintergrund oder als erstes vor dem Sim.</p>
+			<p class="text-xs text-white/30 mb-8">Läuft bei jedem Flu, entweder im Hintergrund oder als erstes vor dem Sim.</p>
 
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
 				{#each addons as addon}

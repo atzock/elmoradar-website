@@ -82,14 +82,16 @@
 </svelte:head>
 
 <BasicPage>
-	<div class="px-2 sm:px-6 max-w-2xl">
+	<div class="max-w-2xl">
 
 		<!-- HEADER -->
-		<section class="pt-4 pb-10 border-b border-white/[0.07]">
-			<h1 class="text-3xl font-bold tracking-tight mb-3">Kontakt</h1>
-			<p class="text-white/50 text-base max-w-md">
-				Von der Business-Anfrage bis zur Stream-Idee — schreib einfach. Ich antworte in der Regel innerhalb von 24–48 Stunden.
-			</p>
+		<section class="relative pt-8 pb-12 border-b border-white/[0.07] overflow-hidden">
+			<div class="relative">
+				<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5">Kontakt</h1>
+				<p class="text-white/50 text-base leading-relaxed">
+					Von der Business-Anfrage bis zur Stream-Idee — schreib einfach. Ich antworte in der Regel innerhalb von 24–48 Stunden.
+				</p>
+			</div>
 		</section>
 
 		<div class="py-10">
