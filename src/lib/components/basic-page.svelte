@@ -34,38 +34,6 @@
 		<!-- Layer 2: Fine grid overlay -->
 		<div class="bg-grid"></div>
 
-		<!-- Layer 3: Radar scope — concentric rings + crosshair -->
-		<div class="radar-scope">
-			<svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" fill="none">
-				<!-- Crosshair spokes -->
-				<line x1="0"   y1="500" x2="1000" y2="500" stroke="rgba(239,68,68,0.038)" stroke-width="0.6"/>
-				<line x1="500" y1="0"   x2="500"  y2="1000" stroke="rgba(239,68,68,0.038)" stroke-width="0.6"/>
-				<!-- 45° diagonals — very faint -->
-				<line x1="0" y1="0" x2="1000" y2="1000" stroke="rgba(239,68,68,0.018)" stroke-width="0.5"/>
-				<line x1="1000" y1="0" x2="0" y2="1000" stroke="rgba(239,68,68,0.018)" stroke-width="0.5"/>
-
-				<!-- Range rings — outer rings fade out naturally -->
-				<circle cx="500" cy="500" r="480" stroke="rgba(239,68,68,0.028)" stroke-width="0.4"/>
-				<circle cx="500" cy="500" r="380" stroke="rgba(239,68,68,0.045)" stroke-width="0.45"/>
-				<circle cx="500" cy="500" r="280" stroke="rgba(239,68,68,0.07)"  stroke-width="0.5"/>
-				<circle cx="500" cy="500" r="180" stroke="rgba(239,68,68,0.10)"  stroke-width="0.55"/>
-				<circle cx="500" cy="500" r="80"  stroke="rgba(239,68,68,0.15)"  stroke-width="0.65"/>
-
-				<!-- Soft glow halo on innermost ring -->
-				<circle cx="500" cy="500" r="80"  stroke="rgba(239,68,68,0.05)"  stroke-width="6"/>
-
-				<!-- Cardinal tick marks on r=180 ring -->
-				<line x1="500" y1="320" x2="500" y2="308" stroke="rgba(239,68,68,0.2)" stroke-width="0.8"/>
-				<line x1="500" y1="680" x2="500" y2="692" stroke="rgba(239,68,68,0.2)" stroke-width="0.8"/>
-				<line x1="320" y1="500" x2="308" y2="500" stroke="rgba(239,68,68,0.2)" stroke-width="0.8"/>
-				<line x1="680" y1="500" x2="692" y2="500" stroke="rgba(239,68,68,0.2)" stroke-width="0.8"/>
-
-				<!-- Center reticle -->
-				<circle cx="500" cy="500" r="4"   fill="rgba(239,68,68,0.18)"/>
-				<circle cx="500" cy="500" r="1.8" fill="rgba(239,68,68,0.6)"/>
-			</svg>
-		</div>
-
 		<!-- Layer 4: Radar sweep -->
 		<div class="radar-sweep-origin">
 			<div class="radar-sweep"></div>
@@ -158,7 +126,7 @@
 							href="https://twitch.tv/elmoradar"
 							target="_blank"
 							onclick={() => (mobileMenu = false)}
-							class="flex items-center justify-center gap-2 w-full rounded-xl bg-red-600 py-3 text-sm font-semibold hover:bg-red-500 transition-colors"
+							class="flex items-center justify-center gap-2 w-full rounded-xl bg-purple-600 py-3 text-sm font-semibold hover:bg-purple-500 transition-colors"
 						>
 							<svg viewBox="0 0 24 24" class="w-4 h-4 fill-current shrink-0">
 								<path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/>
@@ -243,21 +211,6 @@
 		background-size: 60px 60px;
 	}
 
-	/* ─── Radar scope ──────────────────────────────────── */
-	/* Square container, centered — preserves circle aspect ratio */
-	.radar-scope {
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		width: 110vmin;
-		height: 110vmin;
-		transform: translate(-50%, -50%);
-	}
-
-	.radar-scope svg {
-		width: 100%;
-		height: 100%;
-	}
 
 	/* ─── Radar sweep ──────────────────────────────────── */
 	/* Oversized square anchored to viewport center for rotation */
