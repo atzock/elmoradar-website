@@ -19,18 +19,35 @@
 	];
 </script>
 
-<div class="min-h-screen bg-[#04070c] text-white overflow-x-hidden selection:bg-red-500/30 relative">
+<div class="min-h-screen bg-[#0a0506] text-white overflow-x-hidden selection:bg-red-500/40 relative">
 
-	<!-- BACKGROUND -->
-	<div class="fixed inset-0 pointer-events-none">
-		<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(239,68,68,0.09),transparent_55%)]"></div>
-		<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(56,189,248,0.04),transparent_50%)]"></div>
+	<!-- ═══════════════════════════════════════════════════
+	     BACKGROUND SYSTEM
+	═══════════════════════════════════════════════════ -->
+	<div class="bg-system" aria-hidden="true">
+
+		<!-- Layer 1: Ambient red glow blobs -->
+		<div class="bg-blob blob-alpha"></div>
+		<div class="bg-blob blob-beta"></div>
+		<div class="bg-blob blob-gamma"></div>
+
+		<!-- Layer 2: Fine grid overlay -->
+		<div class="bg-grid"></div>
+
+		<!-- Layer 4: Radar sweep -->
+		<div class="radar-sweep-origin">
+			<div class="radar-sweep"></div>
+		</div>
+
+		<!-- Layer 5: Edge vignette -->
+		<div class="bg-vignette"></div>
+
 	</div>
 
 	<!-- NAVBAR -->
 	<nav class="fixed inset-x-0 top-0 z-50">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 pt-4">
-			<div class="flex items-center justify-between rounded-2xl border border-white/10 bg-white/3 backdrop-blur-xl px-5 py-3.5 shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
+			<div class="flex items-center justify-between rounded-2xl border border-white/10 bg-white/3 backdrop-blur-xl px-5 py-3.5 shadow-[0_10px_40px_rgba(0,0,0,0.6),0_1px_0_rgba(239,68,68,0.1)]">
 
 				<!-- LOGO -->
 				<a href="/" class="flex items-center gap-3 shrink-0">
@@ -109,7 +126,7 @@
 							href="https://twitch.tv/elmoradar"
 							target="_blank"
 							onclick={() => (mobileMenu = false)}
-							class="flex items-center justify-center gap-2 w-full rounded-xl bg-red-600 py-3 text-sm font-semibold hover:bg-red-500 transition-colors"
+							class="flex items-center justify-center gap-2 w-full rounded-xl bg-purple-600 py-3 text-sm font-semibold hover:bg-purple-500 transition-colors"
 						>
 							<svg viewBox="0 0 24 24" class="w-4 h-4 fill-current shrink-0">
 								<path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/>
@@ -141,3 +158,104 @@
 	</footer>
 
 </div>
+
+<style>
+	/* ─── Background system container ─────────────────── */
+	.bg-system {
+		position: fixed;
+		inset: 0;
+		pointer-events: none;
+		overflow: hidden;
+	}
+
+	/* ─── Ambient red glow blobs ───────────────────────── */
+	.bg-blob {
+		position: absolute;
+		inset: 0;
+	}
+
+	/* Primary: large warm red bloom, top-left */
+	.blob-alpha {
+		background: radial-gradient(
+			ellipse 80% 60% at -8% 5%,
+			rgba(220, 38, 38, 0.16) 0%,
+			transparent 62%
+		);
+	}
+
+	/* Secondary: deep red, bottom-right counter-bloom */
+	.blob-beta {
+		background: radial-gradient(
+			ellipse 65% 50% at 108% 95%,
+			rgba(185, 28, 28, 0.11) 0%,
+			transparent 58%
+		);
+	}
+
+	/* Tertiary: faint top-center atmospheric halo */
+	.blob-gamma {
+		background: radial-gradient(
+			ellipse 45% 30% at 50% -4%,
+			rgba(239, 68, 68, 0.06) 0%,
+			transparent 55%
+		);
+	}
+
+	/* ─── Grid overlay ─────────────────────────────────── */
+	.bg-grid {
+		position: absolute;
+		inset: 0;
+		background-image:
+			linear-gradient(rgba(255, 0, 0, 0.022) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 0, 0, 0.022) 1px, transparent 1px);
+		background-size: 60px 60px;
+	}
+
+
+	/* ─── Radar sweep ──────────────────────────────────── */
+	/* Oversized square anchored to viewport center for rotation */
+	.radar-sweep-origin {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		width: 300vmax;
+		height: 300vmax;
+		transform: translate(-50%, -50%);
+	}
+
+	.radar-sweep {
+		position: absolute;
+		inset: 0;
+		background: conic-gradient(
+			from 0deg at 50% 50%,
+			transparent 0deg,
+			rgba(239, 68, 68, 0.065) 8deg,
+			rgba(239, 68, 68, 0.038) 22deg,
+			rgba(239, 68, 68, 0.012) 44deg,
+			transparent 64deg
+		);
+		animation: radarSweep 12s linear infinite;
+		will-change: transform;
+		transform-origin: center center;
+	}
+
+	@keyframes radarSweep {
+		from { transform: rotate(0deg); }
+		to   { transform: rotate(360deg); }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.radar-sweep { animation: none; }
+	}
+
+	/* ─── Edge vignette ────────────────────────────────── */
+	.bg-vignette {
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(
+			ellipse 140% 120% at 50% 50%,
+			transparent 28%,
+			rgba(2, 4, 8, 0.78) 100%
+		);
+	}
+</style>

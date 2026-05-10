@@ -204,7 +204,7 @@
 
 					<p class="text-white/60 text-[15px] leading-relaxed max-w-xl mb-3">
 						Flugsimulation auf einem Level, bei dem Kaffee kein Genuss mehr ist. Er ist eine
-						Notwendigkeit. Ich fliege täglich auf VATSIM, lotse gelegentlich als Controller und
+						Notwendigkeit. Ich fliege fast täglich auf VATSIM, lotse gelegentlich als Controller und
 						versuche, meine RTX 5090 nicht zu langweilen.
 					</p>
 					<p class="text-white/35 text-sm leading-relaxed max-w-xl mb-7">

@@ -38,7 +38,7 @@
 		{ callsign: 'EDGG_CTR', airport: 'Langen Radar', active: true },
 		{ callsign: 'EDWW_CTR', airport: 'Bremen Radar', active: true },
 		{ callsign: 'EDMM_CTR', airport: 'München Radar', active: true },
-		{ callsign: 'EDGG_R_CTR', airport: 'Rhein Radar', active: true },
+		{ callsign: 'EDUU_CTR', airport: 'Rhein Radar', active: true },
 		{ callsign: 'EDYY_CTR', airport: 'Maastricht', active: true }
 	];
 

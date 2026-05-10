@@ -288,20 +288,20 @@
 							<AlertTriangle size={14} class="text-white/40" />
 						</div>
 						<p class="text-sm text-white/50 leading-relaxed">
-							Im Falle datenschutzrechtlicher Verstöße steht Ihnen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu. Zuständig in Baden-Württemberg:
+							Im Falle datenschutzrechtlicher Verstöße steht Ihnen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu. Zuständig in Berlin:
 						</p>
 					</div>
 					<div class="pl-1">
 						<p class="text-sm text-white/60 font-medium mb-1">
-							Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg
+							Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Berlin
 						</p>
 						<a
-							href="https://www.baden-wuerttemberg.datenschutz.de"
+							href="https://www.datenschutz-berlin.de"
 							target="_blank"
 							rel="noopener noreferrer"
 							class="inline-flex items-center gap-1.5 text-xs text-white/40 hover:text-white/70 transition-colors"
 						>
-							www.baden-wuerttemberg.datenschutz.de →
+							www.datenschutz-berlin.de →
 						</a>
 					</div>
 				</div>
