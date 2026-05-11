@@ -135,27 +135,19 @@
 							<Server size={14} class="text-white/40" />
 						</div>
 						<div class="text-sm">
-							<p class="text-white/60 font-medium mb-1">Netlify</p>
+							<p class="text-white/60 font-medium mb-1">Eigenes Hosting</p>
 							<p class="text-white/35 text-xs leading-relaxed">
-								2325 3rd Street · Suite 215 · San Francisco, CA 94107 · USA
+								Server-Standort: Deutschland
 							</p>
 						</div>
 					</div>
 					<div class="h-px bg-white/6"></div>
 					<p class="text-sm text-white/50 leading-relaxed">
-						Beim Besuch dieser Website verarbeitet Netlify technische Daten wie IP-Adressen, Browserinformationen oder Zugriffszeiten, um die Website bereitzustellen und die Sicherheit zu gewährleisten.
+						Diese Website wird auf einem eigenen Server in Deutschland betrieben und verwaltet. Beim Besuch werden technische Daten wie IP-Adressen, Browserinformationen und Zugriffszeiten durch den Server erfasst, um die Website bereitzustellen und die Sicherheit zu gewährleisten. Eine Weitergabe dieser Daten an Dritte findet nicht statt.
 					</p>
 					<p class="text-xs text-white/30 leading-relaxed">
-						Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer sicheren und stabilen Bereitstellung).
+						Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer sicheren und stabilen Bereitstellung). Da der Server in Deutschland betrieben wird, findet keine Übermittlung personenbezogener Daten in Drittländer statt.
 					</p>
-					<a
-						href="https://www.netlify.com/privacy/"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="inline-flex items-center gap-1.5 text-xs text-white/40 hover:text-white/70 transition-colors"
-					>
-						Netlify Privacy Policy →
-					</a>
 				</div>
 			</section>
 

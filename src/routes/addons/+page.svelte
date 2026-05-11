@@ -131,9 +131,9 @@
 	];
 
 	const typeColors: Record<string, string> = {
-		Narrowbody: 'text-sky-300 border-sky-400/60 bg-sky-500/25',
-		Widebody:   'text-violet-300 border-violet-400/60 bg-violet-500/25',
-		Helicopter: 'text-amber-300 border-amber-400/60 bg-amber-500/25'
+		Narrowbody: 'text-sky-200 border-sky-400/50 bg-sky-900/80',
+		Widebody:   'text-violet-200 border-violet-400/50 bg-violet-900/80',
+		Helicopter: 'text-amber-200 border-amber-400/50 bg-amber-900/80'
 	};
 </script>
 

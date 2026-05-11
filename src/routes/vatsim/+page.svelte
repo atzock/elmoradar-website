@@ -91,7 +91,9 @@
 		</section>
 
 		<!-- ENDORSEMENT SECTIONS -->
-		<div class="py-12 grid gap-12 lg:grid-cols-3">
+		<div class="py-12">
+		<h2 class="text-xl font-semibold text-white/70 mb-8">Meine Freigaben</h2>
+		<div class="grid gap-12 lg:grid-cols-3">
 			{#each sections as section}
 				<div>
 					<div class="flex items-center gap-2 mb-7">
@@ -116,6 +118,7 @@
 					{/if}
 				</div>
 			{/each}
+		</div>
 		</div>
 
 		<!-- NOTE -->

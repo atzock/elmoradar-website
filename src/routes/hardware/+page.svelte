@@ -1,14 +1,3 @@
-<!--
-PC:
-    AMD Ryzen 7 7800X3D · MSI B650 Gaming Plus · NVIDIA RTX 5090 Zotac
-    64 GB DDR5 · Lexar 2 TB M.2 · Samsung 2 TB SSD · Thermalright Phantom Spirit 120SE
-Desk:
-    4× Monitor · Elgato Stream Deck XL · Razer Siren V3 Chroma
-    Roccat Horde AIMO · Roccat Kone AIMO · Roccat Syn Pro Air · Elgato Wave Mic Arm LP
-FlightSim:
-    WinWing URSA Minor Airline L · WinCTRL Throttle Pack · Logitech G Saitek Rudder Pedals
--->
-
 <script lang="ts">
 	import BasicPage from '$lib/components/basic-page.svelte';
 	import { glow } from '$lib/glow.js';
@@ -64,7 +53,7 @@ FlightSim:
 			icon: Cpu,
 			gradient: 'from-[#9147ff]/20 via-violet-500/10 to-transparent border-[#9147ff]/20',
 			iconColor: 'text-[#b580ff] bg-[#9147ff]/15 border-[#9147ff]/20',
-			url: amzn('B0BTZB7F88')
+			url: 'https://amzn.to/3WRNbuf'
 		},
 		{
 			label: 'GPU',
@@ -73,7 +62,7 @@ FlightSim:
 			icon: Gpu,
 			gradient: 'from-green-500/20 via-emerald-500/10 to-transparent border-green-500/20',
 			iconColor: 'text-green-400 bg-green-500/15 border-green-500/20',
-			url: amznSearch('Zotac RTX 5090')
+			url: 'https://amzn.to/4lKR2n7'
 		}
 	];
 
@@ -84,35 +73,35 @@ FlightSim:
 			iconColor: 'text-blue-400',
 			label: 'RAM',
 			value: '64 GB DDR5 (4×16 GB)',
-			url: amznSearch('64GB DDR5 Kit')
+			url: 'https://amzn.to/3yN339b'
 		},
 		{
 			icon: CircuitBoard,
 			iconColor: 'text-violet-400',
 			label: 'Mainboard',
 			value: 'MSI B650 Gaming Plus',
-			url: amzn('B0BG7D96MW')
+			url: 'https://amzn.to/3TiG9xJ'
 		},
 		{
 			icon: HardDrive,
 			iconColor: 'text-cyan-400',
 			label: 'NVMe',
 			value: '2 x Lexar 2 TB M.2',
-			url: amznSearch('Lexar 2TB NVMe M.2')
+			url: 'https://amzn.to/4cr09EU'
 		},
 		{
 			icon: HardDrive,
 			iconColor: 'text-sky-400',
 			label: 'SSD',
 			value: 'Samsung 2 TB',
-			url: amznSearch('Samsung 870 EVO 2TB')
+			url: 'https://amzn.to/4fEInAM'
 		},
 		{
 			icon: Fan,
 			iconColor: 'text-teal-400',
 			label: 'Kühler',
 			value: 'Thermalright Phantom Spirit 120SE',
-			url: amznSearch('Thermalright Phantom Spirit 120 SE')
+			url: 'https://amzn.to/4qrU1TI'
 		}
 	];
 
@@ -269,8 +258,26 @@ FlightSim:
 			</div>
 		</section>
 
+		<!-- ── SUBCHAPTER NAV ───────────────────────────────────── -->
+		<nav class="py-5 border-b border-white/[0.07] flex flex-wrap gap-2">
+			{#each [
+				{ id: 'rechner',        label: 'Rechner' },
+				{ id: 'schreibtisch',   label: 'Schreibtisch' },
+				{ id: 'peiker',         label: 'Peiker-Mikrofon' },
+				{ id: 'flugsimulation', label: 'Flugsimulation' },
+				{ id: 'msfs',           label: 'MSFS Settings' }
+			] as item}
+				<a
+					href="#{item.id}"
+					class="px-3 py-1.5 rounded-lg text-xs text-white/40 bg-white/3 border border-white/6 hover:bg-white/6 hover:text-white/70 hover:border-white/12 transition-all"
+				>
+					{item.label}
+				</a>
+			{/each}
+		</nav>
+
 		<!-- ── RECHNER ───────────────────────────────────────────── -->
-		<section class="py-12 border-b border-white/[0.07]">
+		<section id="rechner" class="py-12 border-b border-white/[0.07]">
 			<h2 class="text-sm font-semibold text-white/60 mb-1">Rechner</h2>
 			<p class="text-xs text-white/30 mb-8">Der Kern von allem.</p>
 
@@ -341,7 +348,7 @@ FlightSim:
 		</section>
 
 		<!-- ── SCHREIBTISCH ──────────────────────────────────────── -->
-		<section class="py-12 border-b border-white/[0.07]">
+		<section id="schreibtisch" class="py-12 border-b border-white/[0.07]">
 			<h2 class="text-sm font-semibold text-white/60 mb-1">Schreibtisch</h2>
 			<p class="text-xs text-white/30 mb-8">Was sonst noch so auf dem Tisch und drumherum steht.</p>
 
@@ -384,7 +391,7 @@ FlightSim:
 		</section>
 
 		<!-- ── PEIKER MIKROFON ───────────────────────────────────── -->
-		<section class="py-12 border-b border-white/[0.07]">
+		<section id="peiker" class="py-12 border-b border-white/[0.07]">
 			<div class="flex items-center gap-2 mb-1">
 				<Mic size={13} class="text-red-400/70" />
 				<h2 class="text-sm font-semibold text-white/60">Peiker-Mikrofon</h2>
@@ -447,7 +454,7 @@ FlightSim:
 		</section>
 
 		<!-- ── FLUGSIMULATION ────────────────────────────────────── -->
-		<section class="py-12 border-b border-white/[0.07]">
+		<section id="flugsimulation" class="py-12 border-b border-white/[0.07]">
 			<h2 class="text-sm font-semibold text-white/60 mb-1">Flugsimulation</h2>
 			<p class="text-xs text-white/30 mb-8">Die Hardware zwischen mir und dem Himmel.</p>
 
@@ -483,7 +490,7 @@ FlightSim:
 		</section>
 
 		<!-- ── MSFS SETTINGS ─────────────────────────────────────── -->
-		<section class="py-12">
+		<section id="msfs" class="py-12">
 			<div class="flex items-start justify-between gap-4 mb-8">
 				<div>
 					<div class="flex items-center gap-2 mb-1">

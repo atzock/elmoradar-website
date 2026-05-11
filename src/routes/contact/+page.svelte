@@ -18,6 +18,7 @@
 	let name       = $state('');
 	let email      = $state('');
 	let category   = $state('');
+	let subject    = $state('');
 	let message    = $state('');
 	// Honeypot — never touched by real users
 	let _gotcha    = $state('');
@@ -43,7 +44,7 @@
 	async function submit(e: SubmitEvent) {
 		e.preventDefault();
 
-		if (!name.trim() || !email.trim() || !category || !message.trim()) return;
+		if (!name.trim() || !email.trim() || !category || !subject.trim() || !message.trim()) return;
 
 		status = 'loading';
 		errorMsg = '';
@@ -55,7 +56,7 @@
 				body: JSON.stringify({
 					name: name.trim(),
 					email: email.trim(),
-					subject: `${subjectLine} ${name.trim()}`,
+					subject: `${subjectLine} ${subject.trim()}`,
 					message: message.trim(),
 					_gotcha,
 					_renderTime
@@ -111,7 +112,7 @@
 					<button
 						onclick={() => {
 							status = 'idle';
-							name = ''; email = ''; category = ''; message = '';
+							name = ''; email = ''; category = ''; subject = ''; message = '';
 						}}
 						class="mt-2 text-sm text-white/40 hover:text-white/70 transition-colors"
 					>
@@ -184,6 +185,22 @@
 						</div>
 					</div>
 
+					<!-- Subject -->
+					<div>
+						<label class="block text-xs text-white/35 uppercase tracking-widest mb-2" for="subject">
+							Betreff <span class="text-red-500/60">*</span>
+						</label>
+						<input
+							id="subject"
+							type="text"
+							placeholder="Worum geht es kurz gesagt?"
+							maxlength="200"
+							required
+							bind:value={subject}
+							class="w-full rounded-xl border border-white/10 bg-white/4 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-white/20 focus:bg-white/6 transition-all"
+						/>
+					</div>
+
 					<!-- Message -->
 					<div>
 						<label class="block text-xs text-white/35 uppercase tracking-widest mb-2" for="message">
@@ -219,7 +236,7 @@
 						</p>
 						<button
 							type="submit"
-							disabled={status === 'loading' || !name.trim() || !email.trim() || !category || !message.trim()}
+							disabled={status === 'loading' || !name.trim() || !email.trim() || !category || !subject.trim() || !message.trim()}
 							class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-sm font-semibold text-white shadow-[0_0_20px_rgba(239,68,68,0.25)] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none shrink-0"
 						>
 							{#if status === 'loading'}
