@@ -106,7 +106,7 @@ export const GET: RequestHandler = async ({ url }) => {
 		const payload = await fetchJson<VatsimCoreFlightplansResponse>(endpoint);
 		const allItems = extractFlightplans(payload);
 		const items = allItems
-			.slice(0, 10)
+			.slice(0, 1)
 			.map((entry, index) => normalizeFlightplan(entry, index));
 
 		return json({

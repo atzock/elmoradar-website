@@ -9,9 +9,10 @@
 	} from '$lib/assets/index.js';
 	import BasicPage from '$lib/components/basic-page.svelte';
 	import { glow } from '$lib/glow.js';
-	import { consent } from '$lib/stores/consent';
+	import { consent } from '$lib/stores/consent.js';
 	import { onMount } from 'svelte';
 	import Plane from 'lucide-svelte/icons/plane';
+	import Headphones from 'lucide-svelte/icons/headphones';
 	import Users from 'lucide-svelte/icons/users';
 	import Clock from 'lucide-svelte/icons/clock';
 	import Award from 'lucide-svelte/icons/award';
@@ -51,7 +52,16 @@
 		altitude?: string;
 	};
 
+	type AtcSession = {
+		callsign: string;
+		type?: string;
+		start?: string;
+		end?: string;
+		minutes: number;
+	};
+
 	let recentFlightplans = $state<FlightplanItem[]>([]);
+	let lastAtcSession = $state<AtcSession | null>(null);
 	const HARDCODED_VATSIM_MEMBER_ID = 1411028;
 
 	const stats = [
@@ -106,6 +116,14 @@
 		}
 	];
 
+	async function loadAtcSession() {
+		const res = await fetch(`/api/vatsim/member/atc?memberId=${HARDCODED_VATSIM_MEMBER_ID}`);
+		if (res.ok) {
+			const data = await res.json();
+			lastAtcSession = data.session ?? null;
+		}
+	}
+
 	async function loadStatus() {
 		const [twitchRes, vatsimRes, youtubeVodsRes, youtubeMainRes] = await Promise.allSettled([
 			fetch('/api/twitch/status'),
@@ -129,18 +147,14 @@
 			vatsimAltitude = data.altitude;
 			onlinePilots = data.onlinePilots ?? 0;
 			onlineControllers = data.onlineControllers ?? 0;
+		}
 
-			if (HARDCODED_VATSIM_MEMBER_ID) {
-				const flightplanRes = await fetch(
-					`/api/vatsim/member/flightplans?memberId=${HARDCODED_VATSIM_MEMBER_ID}`
-				);
-				if (flightplanRes.ok) {
-					const flightplanData = await flightplanRes.json();
-					recentFlightplans = flightplanData.items ?? [];
-				}
-			} else {
-				recentFlightplans = [];
-			}
+		const flightplanRes = await fetch(
+			`/api/vatsim/member/flightplans?memberId=${HARDCODED_VATSIM_MEMBER_ID}`
+		);
+		if (flightplanRes.ok) {
+			const flightplanData = await flightplanRes.json();
+			recentFlightplans = flightplanData.items ?? [];
 		}
 
 		if (youtubeVodsRes.status === 'fulfilled' && youtubeVodsRes.value.ok) {
@@ -152,10 +166,12 @@
 			const data = await youtubeMainRes.value.json();
 			mainVideo = Array.isArray(data.items) && data.items.length > 0 ? data.items[0] : null;
 		}
+
 	}
 
 	onMount(() => {
 		loadStatus();
+		loadAtcSession();
 		setInterval(loadStatus, 30000);
 	});
 </script>
@@ -474,12 +490,12 @@
 					</div>
 				{/if}
 
-				<!-- RECENT FLIGHTS -->
+				<!-- RECENT FLIGHT -->
 				{#if recentFlightplans.length > 0}
 					<div>
-						<h3 class="text-xs text-white/30 uppercase tracking-widest mb-4">Letzte Flüge</h3>
+						<h3 class="text-xs text-white/30 uppercase tracking-widest mb-4">Letzter Flug</h3>
 						<div class="space-y-1">
-							{#each recentFlightplans.slice(0, 5) as fp}
+							{#each recentFlightplans as fp}
 								<div class="flex items-center gap-2 px-2 py-2.5 rounded-lg hover:bg-white/3 transition-colors text-xs group">
 									<Plane size={11} class="text-white/15 shrink-0 group-hover:text-white/30 transition-colors" />
 									<span class="font-mono text-white/55 shrink-0 w-20 truncate">{fp.callsign}</span>
@@ -488,6 +504,30 @@
 									{/if}
 								</div>
 							{/each}
+						</div>
+					</div>
+				{/if}
+
+				<!-- LAST ATC SESSION -->
+				{#if lastAtcSession}
+					<div>
+						<h3 class="text-xs text-white/30 uppercase tracking-widest mb-4">Letzte ATC Session</h3>
+						<div class="px-2 py-2.5 rounded-lg hover:bg-white/3 transition-colors text-xs group">
+							<div class="flex items-center gap-2 mb-1.5">
+								<Headphones size={11} class="text-white/15 shrink-0 group-hover:text-white/30 transition-colors" />
+								<span class="font-mono text-white/55 font-medium">{lastAtcSession.callsign}</span>
+								{#if lastAtcSession.minutes > 0}
+									<span class="ml-auto text-white/25">{Math.round(lastAtcSession.minutes)} min</span>
+								{/if}
+							</div>
+							{#if lastAtcSession.start}
+								<p class="text-white/20 pl-4.75">
+									{new Date(lastAtcSession.start).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+									{#if lastAtcSession.end}
+										· {new Date(lastAtcSession.start).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} – {new Date(lastAtcSession.end).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} UTC
+									{/if}
+								</p>
+							{/if}
 						</div>
 					</div>
 				{/if}

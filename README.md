@@ -2,6 +2,11 @@
 
 Official website for elmoradar on Twitch.
 
+# Für Dennis
+Bitte gucken in die example.env
+(ist alles erklärt)
+
+
 ## Features
 
 - 🎮 Real-time Twitch status monitoring
