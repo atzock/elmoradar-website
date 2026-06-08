@@ -13,7 +13,8 @@ const YOUTUBE_REQUEST_HEADERS = {
 };
 
 const KNOWN_CHANNEL_IDS: Record<string, string> = {
-	elmoradarvods: 'UCMMd1JGWgaufBcXZ6bIVrBw'
+	elmoradarvods: 'UCMMd1JGWgaufBcXZ6bIVrBw',
+	elmoradar: 'UCNml1dmg1_goWYae9Hc53uA'
 };
 
 type YoutubeVideo = {
