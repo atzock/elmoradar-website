@@ -1,5 +1,6 @@
 <script lang="ts">
 	import BasicPage from '$lib/components/basic-page.svelte';
+	import { reveal } from '$lib/reveal.js';
 	import Send from 'lucide-svelte/icons/send';
 	import CheckCircle from 'lucide-svelte/icons/check-circle';
 	import AlertCircle from 'lucide-svelte/icons/alert-circle';
@@ -86,16 +87,16 @@
 	<div class="max-w-2xl">
 
 		<!-- HEADER -->
-		<section class="relative pt-8 pb-12 border-b border-white/[0.07] overflow-hidden">
+		<section class="relative pt-8 pb-12 border-b border-signal-500/10 overflow-hidden">
 			<div class="relative">
-				<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5">Kontakt</h1>
+				<h1 class="font-display text-4xl sm:text-5xl font-bold tracking-tight mb-5">Kontakt</h1>
 				<p class="text-white/50 text-base leading-relaxed">
 					Von der Business-Anfrage bis zur Stream-Idee — schreib einfach. Ich antworte in der Regel innerhalb von 24–48 Stunden.
 				</p>
 			</div>
 		</section>
 
-		<div class="py-10">
+		<div class="reveal py-10" use:reveal>
 
 			{#if status === 'success'}
 				<!-- SUCCESS STATE -->
@@ -104,7 +105,7 @@
 						<CheckCircle size={32} class="text-green-400" />
 					</div>
 					<div>
-						<h2 class="text-xl font-semibold text-white mb-2">Nachricht gesendet</h2>
+						<h2 class="font-display text-xl font-semibold text-white mb-2">Nachricht gesendet</h2>
 						<p class="text-white/45 text-sm max-w-sm">
 							Ich hab's bekommen und melde mich bald. Danke!
 						</p>
@@ -133,17 +134,17 @@
 
 					<!-- Kategorie (first — sets tone) -->
 					<div>
-						<label class="block text-xs text-white/35 uppercase tracking-widest mb-3" for="category">
-							Worum geht's? <span class="text-red-500/60">*</span>
+						<label class="block text-xs font-mono text-signal-500/60 uppercase tracking-widest mb-3" for="category">
+							Worum geht's? <span class="text-signal-500/60">*</span>
 						</label>
 						<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
 							{#each categories as cat}
 								<button
 									type="button"
 									onclick={() => (category = cat.value)}
-									class="flex flex-col items-start gap-0.5 px-4 py-3 rounded-xl border text-left transition-all {category === cat.value
-										? 'bg-red-600/10 border-red-500/30 text-white'
-										: 'bg-white/2 border-white/8 text-white/50 hover:bg-white/5 hover:text-white/70 hover:border-white/15'}"
+									class="hud-panel-sm flex flex-col items-start gap-0.5 px-4 py-3 border text-left transition-all {category === cat.value
+										? 'bg-signal-600/10 border-signal-500/30 text-white'
+										: 'bg-white/2 border-signal-500/10 text-white/50 hover:bg-white/5 hover:text-white/70 hover:border-signal-500/20'}"
 								>
 									<span class="text-sm font-medium leading-tight">{cat.label}</span>
 									<span class="text-[11px] leading-tight {category === cat.value ? 'text-white/40' : 'text-white/25'}">{cat.hint}</span>
@@ -155,8 +156,8 @@
 					<!-- Name + Email row -->
 					<div class="grid sm:grid-cols-2 gap-4">
 						<div>
-							<label class="block text-xs text-white/35 uppercase tracking-widest mb-2" for="name">
-								Name <span class="text-red-500/60">*</span>
+							<label class="block text-xs font-mono text-signal-500/60 uppercase tracking-widest mb-2" for="name">
+								Name <span class="text-signal-500/60">*</span>
 							</label>
 							<input
 								id="name"
@@ -166,12 +167,12 @@
 								maxlength="100"
 								required
 								bind:value={name}
-								class="w-full rounded-xl border border-white/10 bg-white/4 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-white/20 focus:bg-white/6 transition-all"
+								class="hud-panel-sm w-full border border-signal-500/15 bg-white/4 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-signal-500/40 focus:bg-white/6 transition-all"
 							/>
 						</div>
 						<div>
-							<label class="block text-xs text-white/35 uppercase tracking-widest mb-2" for="email">
-								E-Mail <span class="text-red-500/60">*</span>
+							<label class="block text-xs font-mono text-signal-500/60 uppercase tracking-widest mb-2" for="email">
+								E-Mail <span class="text-signal-500/60">*</span>
 							</label>
 							<input
 								id="email"
@@ -180,15 +181,15 @@
 								placeholder="deine@mail.de"
 								required
 								bind:value={email}
-								class="w-full rounded-xl border border-white/10 bg-white/4 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-white/20 focus:bg-white/6 transition-all"
+								class="hud-panel-sm w-full border border-signal-500/15 bg-white/4 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-signal-500/40 focus:bg-white/6 transition-all"
 							/>
 						</div>
 					</div>
 
 					<!-- Subject -->
 					<div>
-						<label class="block text-xs text-white/35 uppercase tracking-widest mb-2" for="subject">
-							Betreff <span class="text-red-500/60">*</span>
+						<label class="block text-xs font-mono text-signal-500/60 uppercase tracking-widest mb-2" for="subject">
+							Betreff <span class="text-signal-500/60">*</span>
 						</label>
 						<input
 							id="subject"
@@ -203,8 +204,8 @@
 
 					<!-- Message -->
 					<div>
-						<label class="block text-xs text-white/35 uppercase tracking-widest mb-2" for="message">
-							Nachricht <span class="text-red-500/60">*</span>
+						<label class="block text-xs font-mono text-signal-500/60 uppercase tracking-widest mb-2" for="message">
+							Nachricht <span class="text-signal-500/60">*</span>
 						</label>
 						<textarea
 							id="message"
@@ -213,7 +214,7 @@
 							placeholder="Was liegt an?"
 							required
 							bind:value={message}
-							class="w-full rounded-xl border border-white/10 bg-white/4 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-white/20 focus:bg-white/6 transition-all resize-none leading-relaxed"
+							class="hud-panel-sm w-full border border-signal-500/15 bg-white/4 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-signal-500/40 focus:bg-white/6 transition-all resize-none leading-relaxed"
 						></textarea>
 						<div class="flex justify-between mt-1.5">
 							<p class="text-xs text-white/20">Mindestens ein paar Sätze helfen mir weiter.</p>
@@ -223,7 +224,7 @@
 
 					<!-- Error -->
 					{#if status === 'error'}
-						<div class="flex items-start gap-3 px-4 py-3 rounded-xl bg-red-500/8 border border-red-500/20 text-sm text-red-400">
+						<div class="hud-panel-sm flex items-start gap-3 px-4 py-3 bg-signal-500/8 border border-signal-500/20 text-sm text-signal-400">
 							<AlertCircle size={16} class="shrink-0 mt-0.5" />
 							<span>{errorMsg}</span>
 						</div>
@@ -237,7 +238,7 @@
 						<button
 							type="submit"
 							disabled={status === 'loading' || !name.trim() || !email.trim() || !category || !subject.trim() || !message.trim()}
-							class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-sm font-semibold text-white shadow-[0_0_20px_rgba(239,68,68,0.25)] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none shrink-0"
+							class="hud-panel flex items-center gap-2 px-5 py-2.5 bg-signal-600 hover:bg-signal-500 text-sm font-display font-semibold text-white shadow-[0_0_20px_rgba(255,33,56,0.3)] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none shrink-0"
 						>
 							{#if status === 'loading'}
 								<Loader size={15} class="animate-spin" />
@@ -252,15 +253,15 @@
 				</form>
 
 				<!-- ALTERNATIVE CONTACT -->
-				<div class="mt-12 pt-8 border-t border-white/6 grid sm:grid-cols-2 gap-6">
+				<div class="mt-12 pt-8 border-t border-signal-500/10 grid sm:grid-cols-2 gap-6">
 					<div>
-						<p class="text-xs text-white/25 uppercase tracking-widest mb-2">Direkte Mail</p>
+						<p class="text-xs font-mono text-signal-500/50 uppercase tracking-widest mb-2">Direkte Mail</p>
 						<a href="mailto:elmoradar@gmail.com" class="text-sm text-white/55 hover:text-white transition-colors">
 							elmoradar@gmail.com
 						</a>
 					</div>
 					<div>
-						<p class="text-xs text-white/25 uppercase tracking-widest mb-2">Discord</p>
+						<p class="text-xs font-mono text-signal-500/50 uppercase tracking-widest mb-2">Discord</p>
 						<a href="https://discord.gg/elmoradar" target="_blank" rel="noopener noreferrer" class="text-sm text-white/55 hover:text-white transition-colors">
 							discord.gg/elmoradar
 						</a>

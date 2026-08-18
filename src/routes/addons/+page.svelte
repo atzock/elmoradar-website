@@ -1,6 +1,7 @@
 <script lang="ts">
 	import BasicPage from '$lib/components/basic-page.svelte';
 	import { glow } from '$lib/glow.js';
+	import { reveal } from '$lib/reveal.js';
 	import ExternalLink from 'lucide-svelte/icons/external-link';
 
 	const fleet = [
@@ -145,9 +146,9 @@
 	<div>
 
 		<!-- HEADER -->
-		<section class="relative pt-8 pb-12 border-b border-white/[0.07] overflow-hidden">
+		<section class="relative pt-8 pb-12 border-b border-signal-500/10 overflow-hidden">
 			<div class="relative max-w-2xl">
-				<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5">Meine Addons</h1>
+				<h1 class="font-display text-4xl sm:text-5xl font-bold tracking-tight mb-5">Meine Addons</h1>
 				<p class="text-white/50 text-base leading-relaxed">
 					Acht Flieger, sechs Tools. Was im Hangar steht und was vor jedem Flug läuft — alles täglich
 					im Einsatz, nichts davon ist Sponsoring.
@@ -156,11 +157,11 @@
 		</section>
 
 		<!-- FLEET -->
-		<section class="py-12 border-b border-white/[0.07]">
+		<section class="reveal py-12 border-b border-signal-500/10" use:reveal>
 			<div class="flex items-baseline justify-between gap-4 mb-8">
 				<div>
-					<h2 class="text-sm font-semibold text-white/60 mb-1">Flieger im Hangar</h2>
-					<p class="text-xs text-white/30">Klick auf einen Flieger öffnet die Produktseite des Entwicklers.</p>
+					<h2 class="text-sm font-display font-semibold text-white/60 mb-1">Flieger im Hangar</h2>
+					<p class="text-xs font-mono text-signal-500/50">Klick auf einen Flieger öffnet die Produktseite des Entwicklers.</p>
 				</div>
 			</div>
 
@@ -170,11 +171,11 @@
 						href={plane.url}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="glow-card group relative rounded-xl block"
+						class="glow-card group relative hud-panel-sm block"
 						use:glow
 					>
 						<span class="glow-border" aria-hidden="true"></span>
-						<div class="rounded-xl overflow-hidden border border-white/8 bg-white/2 h-full flex flex-col">
+						<div class="hud-panel-sm overflow-hidden border border-signal-500/10 bg-white/2 h-full flex flex-col">
 							<div class="aspect-video overflow-hidden bg-white/5 relative shrink-0">
 								<img
 									src={plane.img}
@@ -182,7 +183,7 @@
 									loading="lazy"
 									class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
 								/>
-								<span class="absolute top-2 right-2 text-[10px] uppercase tracking-widest border rounded px-2 py-0.5 backdrop-blur-sm {typeColors[plane.type] ?? 'text-white/30 border-white/10 bg-black/40'}">
+								<span class="absolute top-2 right-2 text-[10px] font-mono uppercase tracking-widest border rounded px-2 py-0.5 backdrop-blur-sm {typeColors[plane.type] ?? 'text-white/30 border-white/10 bg-black/40'}">
 									{plane.type}
 								</span>
 							</div>
@@ -191,7 +192,7 @@
 									<div class="text-sm font-medium text-white/90 leading-snug">{plane.name}</div>
 									<div class="text-xs text-white/35 mt-0.5">{plane.dev}</div>
 								</div>
-								<ExternalLink size={12} class="shrink-0 text-white/15 group-hover:text-white/45 transition-colors mb-0.5" />
+								<ExternalLink size={12} class="shrink-0 text-signal-500/30 group-hover:text-signal-400 transition-colors mb-0.5" />
 							</div>
 						</div>
 					</a>
@@ -200,9 +201,9 @@
 		</section>
 
 		<!-- SOFTWARE ADDONS -->
-		<section class="py-12">
-			<h2 class="text-sm font-semibold text-white/60 mb-1">Software & Tools</h2>
-			<p class="text-xs text-white/30 mb-8">Läuft bei jedem Flu, entweder im Hintergrund oder als erstes vor dem Sim.</p>
+		<section class="reveal py-12" use:reveal>
+			<h2 class="text-sm font-display font-semibold text-white/60 mb-1">Software & Tools</h2>
+			<p class="text-xs font-mono text-signal-500/50 mb-8">Läuft bei jedem Flu, entweder im Hintergrund oder als erstes vor dem Sim.</p>
 
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
 				{#each addons as addon}
@@ -210,15 +211,15 @@
 						href={addon.url}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="glow-card group relative rounded-2xl block hover:scale-[1.01] transition-transform"
+						class="glow-card group relative hud-panel block hover:scale-[1.01] transition-transform"
 						use:glow
 					>
 						<span class="glow-border" aria-hidden="true"></span>
-						<div class="flex flex-col rounded-2xl border bg-linear-to-br p-5 h-full {addon.accent}">
+						<div class="hud-panel flex flex-col border bg-linear-to-br p-5 h-full {addon.accent}">
 							<div class="flex items-start justify-between gap-2 mb-3">
 								<div>
-									<p class="font-semibold text-white/90 group-hover:text-white transition-colors">{addon.name}</p>
-									<p class="text-[11px] uppercase tracking-widest text-white/30 mt-0.5">{addon.category}</p>
+									<p class="font-display font-semibold text-white/90 group-hover:text-white transition-colors">{addon.name}</p>
+									<p class="text-[11px] font-mono uppercase tracking-widest text-white/30 mt-0.5">{addon.category}</p>
 								</div>
 								<ExternalLink size={14} class="shrink-0 text-white/20 group-hover:text-white/50 transition-colors mt-0.5" />
 							</div>
