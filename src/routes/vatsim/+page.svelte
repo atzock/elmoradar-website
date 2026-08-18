@@ -1,5 +1,6 @@
 <script lang="ts">
 	import BasicPage from '$lib/components/basic-page.svelte';
+	import { reveal } from '$lib/reveal.js';
 
 	import TowerControl from 'lucide-svelte/icons/tower-control';
 	import Radar from 'lucide-svelte/icons/radar';
@@ -63,27 +64,27 @@
 	<div>
 
 		<!-- HEADER -->
-		<section class="relative pt-8 pb-12 border-b border-white/[0.07] overflow-hidden">
+		<section class="relative pt-8 pb-12 border-b border-signal-500/10 overflow-hidden">
 			<div class="relative max-w-2xl mb-8">
-				<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5">VATSIM</h1>
+				<h1 class="font-display text-4xl sm:text-5xl font-bold tracking-tight mb-5">VATSIM</h1>
 				<p class="text-white/50 text-base leading-relaxed">
 					Meine aktiven Endorsements im VATSIM-Netzwerk. Die aufgeführten Positionen zeigen, welche Station ich besetzen darf.
 				</p>
 			</div>
 			<div class="flex flex-wrap items-center gap-4">
 				<!-- RATING BADGE -->
-				<div class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/3 px-5 py-4 shrink-0">
-					<BadgeCheck size={20} class="text-red-400" />
+				<div class="hud-panel flex items-center gap-3 border border-signal-500/20 bg-white/3 px-5 py-4 shrink-0">
+					<BadgeCheck size={20} class="text-signal-400" />
 					<div>
-						<div class="text-xs text-white/30 uppercase tracking-widest">ATC Rating</div>
-						<div class="text-2xl font-bold leading-tight">C1</div>
+						<div class="text-xs font-mono text-signal-500/60 uppercase tracking-widest">ATC Rating</div>
+						<div class="font-display text-2xl font-bold leading-tight">C1</div>
 					</div>
 				</div>
 				<div class="flex flex-wrap gap-x-8 gap-y-2">
 					{#each quickStats as s}
 						<div class="text-sm">
 							<span class="text-white/35">{s.label} </span>
-							<span class="font-semibold text-white">{s.value}</span>
+							<span class="font-display font-semibold text-white">{s.value}</span>
 						</div>
 					{/each}
 				</div>
@@ -91,19 +92,19 @@
 		</section>
 
 		<!-- ENDORSEMENT SECTIONS -->
-		<div class="py-12">
-		<h2 class="text-xl font-semibold text-white/70 mb-8">Meine Freigaben</h2>
+		<div class="reveal py-12" use:reveal>
+		<h2 class="font-display text-xl font-semibold text-white/70 mb-8">Meine Freigaben</h2>
 		<div class="grid gap-12 lg:grid-cols-3">
 			{#each sections as section}
 				<div>
 					<div class="flex items-center gap-2 mb-7">
-						<section.icon size={14} class="text-white/35" />
-						<h2 class="text-xs text-white/30 uppercase tracking-widest">{section.title}</h2>
+						<section.icon size={14} class="text-signal-500/50" />
+						<h2 class="text-xs font-mono text-signal-500/60 uppercase tracking-widest">{section.title}</h2>
 					</div>
 
 					<div>
 						{#each section.positions as pos}
-							<div class="flex items-center justify-between py-3 border-b border-white/[0.07] text-sm">
+							<div class="flex items-center justify-between py-3 border-b border-signal-500/10 text-sm">
 								<div class="flex items-center gap-2.5">
 									<span class="h-1.5 w-1.5 rounded-full shrink-0 {pos.active ? 'bg-green-500' : 'bg-white/15'}"></span>
 									<span class="font-mono {pos.active ? 'text-white/80' : 'text-white/25 line-through decoration-white/15'}">{pos.callsign}</span>
@@ -122,7 +123,7 @@
 		</div>
 
 		<!-- NOTE -->
-		<section class="border-t border-white/[0.07] py-8">
+		<section class="border-t border-signal-500/10 py-8">
 			<p class="text-sm text-white/30 max-w-lg leading-relaxed">
 				Stand kann sich durch Trainingsfortschritt ändern.
 			</p>

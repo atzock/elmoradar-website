@@ -1,5 +1,87 @@
 @import 'tailwindcss';
 
+/* ── Design tokens ─────────────────────────────────────────────────────────
+ * "ATC Radar HUD" identity: signal red as the single accent color, a
+ * technical display face for headings/labels, monospace for data readouts.
+ */
+@theme {
+	--font-display: 'Chakra Petch', ui-sans-serif, system-ui, sans-serif;
+	--font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+	--color-signal-50: #fff0f1;
+	--color-signal-100: #ffdde0;
+	--color-signal-200: #ffb8bf;
+	--color-signal-300: #ff8b96;
+	--color-signal-400: #ff5468;
+	--color-signal-500: #ff2138;
+	--color-signal-600: #e01029;
+	--color-signal-700: #b60c22;
+	--color-signal-800: #8a0c1c;
+	--color-signal-900: #5c0a15;
+	--color-signal-950: #2e0509;
+}
+
+html {
+	font-family: theme(--font-sans, ui-sans-serif), system-ui, sans-serif;
+}
+
+/* ── HUD panel: angular notched corners instead of soft rounded cards ────── */
+/* Usage: class="hud-panel" on the outer element. Content sits directly
+ * inside — no wrapper needed. Combine with hud-panel-sm for tighter notches
+ * on small elements (buttons, badges). */
+.hud-panel {
+	--notch: 14px;
+	clip-path: polygon(
+		0 0,
+		calc(100% - var(--notch)) 0,
+		100% var(--notch),
+		100% 100%,
+		var(--notch) 100%,
+		0 calc(100% - var(--notch))
+	);
+}
+
+.hud-panel-sm {
+	--notch: 8px;
+	clip-path: polygon(
+		0 0,
+		calc(100% - var(--notch)) 0,
+		100% var(--notch),
+		100% 100%,
+		var(--notch) 100%,
+		0 calc(100% - var(--notch))
+	);
+}
+
+/* Corner bracket decoration — four small L-shaped ticks pinned to a
+ * position:relative ancestor. Use on hero frames / featured panels. */
+.hud-corners {
+	position: relative;
+}
+.hud-corners::before,
+.hud-corners::after {
+	content: '';
+	position: absolute;
+	width: 18px;
+	height: 18px;
+	pointer-events: none;
+	z-index: 3;
+}
+.hud-corners::before {
+	top: -1px;
+	left: -1px;
+	border-top: 2px solid var(--color-signal-500);
+	border-left: 2px solid var(--color-signal-500);
+	opacity: 0.8;
+}
+.hud-corners::after {
+	bottom: -1px;
+	right: -1px;
+	border-bottom: 2px solid var(--color-signal-500);
+	border-right: 2px solid var(--color-signal-500);
+	opacity: 0.8;
+}
+
 /* ── Glow card effect ─────────────────────────────────────────────────────── */
 /*
  * Usage: add class="glow-card" to the wrapper element (no overflow-hidden!),
@@ -23,8 +105,8 @@
 	background: conic-gradient(
 		from calc(var(--start) * 1deg),
 		transparent 0%,
-		rgba(170, 175, 180, calc(var(--active) * 0.65)) 12%,
-		rgba(190, 195, 200, calc(var(--active) * 0.25)) 20%,
+		rgba(255, 60, 80, calc(var(--active) * 0.75)) 12%,
+		rgba(255, 90, 100, calc(var(--active) * 0.3)) 20%,
 		transparent 35%
 	);
 	pointer-events: none;
@@ -34,4 +116,49 @@
 	-webkit-mask-composite: xor;
 	mask-composite: exclude;
 	padding: 1px;
+}
+
+/* ── Scroll reveal ─────────────────────────────────────────────────────────
+ * Usage: class="reveal" use:reveal on any section-level element. Starts
+ * hidden/offset, animates in once scrolled into view (see $lib/reveal.ts).
+ */
+.reveal {
+	opacity: 0;
+	transform: translateY(28px);
+	transition:
+		opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+		transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+	will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reveal {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+}
+
+/* ── Scanline texture — subtle horizontal lines over HUD panels ──────────── */
+.hud-scanlines {
+	position: relative;
+}
+.hud-scanlines::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	z-index: 1;
+	background: repeating-linear-gradient(
+		to bottom,
+		rgba(255, 33, 56, 0.035) 0px,
+		rgba(255, 33, 56, 0.035) 1px,
+		transparent 1px,
+		transparent 3px
+	);
 }
