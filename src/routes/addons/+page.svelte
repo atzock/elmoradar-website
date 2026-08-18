@@ -245,7 +245,7 @@
 		<!-- SOFTWARE ADDONS -->
 		<section class="reveal py-12" use:reveal>
 			<h2 class="text-sm font-display font-semibold text-white/60 mb-1">Software & Tools</h2>
-			<p class="text-xs font-mono text-signal-500/50 mb-8">Läuft bei jedem Flu, entweder im Hintergrund oder als erstes vor dem Sim.</p>
+			<p class="text-xs font-mono text-signal-500/50 mb-8">Läuft bei jedem Flug, entweder im Hintergrund oder als erstes vor dem Sim.</p>
 
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
 				{#each addons as addon}

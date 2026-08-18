@@ -142,16 +142,6 @@
 	// Flight sim hardware — the stars of the show
 	const flightsim = [
 		{
-			label: 'Sidestick',
-			value: 'WinCTRL URSA Minor L',
-			note: 'Side-Stick-Format, spezifisch für Airliner gebaut. Kein Kompromiss.',
-			icon: Joystick,
-			gradient: 'from-sky-500/20 via-blue-500/10 to-transparent border-sky-500/25',
-			iconColor: 'text-sky-300 bg-sky-500/20 border-sky-500/25',
-			badge: 'bg-sky-500/15 text-sky-300 border-sky-500/25',
-			url: 'https://eu.winctrl.com/view/goods-details.html?id=556'
-		},
-		{
 			label: 'Throttle',
 			value: 'WinCTRL Throttle Pack',
 			note: 'Throttle & Flap-Lever in einem, passt perfekt zum URSA Minor.',
