@@ -89,13 +89,13 @@
 	const todayIdx = (new Date().getDay() + 6) % 7;
 
 	const partners = [
-		{ name: 'Navigraph', url: 'https://navigraph.com', logo: navigraph },
-		{ name: 'Aerosoft', url: 'https://aerosoft.com', logo: aerosoft },
-		{ name: 'Orbx', url: 'https://orbxdirect.com', logo: orbx },
-		{ name: 'iniBuilds', url: 'https://inibuilds.com/?ref=elmoradar', logo: inibuilds },
-		{ name: 'GamesPlanet', url: 'https://de.gamesplanet.com/?ref=elmo', logo: gamesPlanet },
-		{ name: 'MOZA Racing', url: 'https://mozaracing.com/elmoradar', logo: moza },
-		{ name: 'Tobii Gaming', url: 'https://tobii.gg/elmoradar', logo: tobii }
+		{ name: 'Navigraph', url: 'https://navigraph.com', logo: navigraph, blurb: 'Charts & AIRAC-Daten' },
+		{ name: 'Aerosoft', url: 'https://aerosoft.com', logo: aerosoft, blurb: 'Flugzeuge & Addons' },
+		{ name: 'Orbx', url: 'https://orbxdirect.com', logo: orbx, blurb: 'Szenerien & Flughäfen' },
+		{ name: 'iniBuilds', url: 'https://inibuilds.com/?ref=elmoradar', logo: inibuilds, blurb: 'Flugzeuge & Szenerien' },
+		{ name: 'GamesPlanet', url: 'https://de.gamesplanet.com/?ref=elmo', logo: gamesPlanet, blurb: 'Spiele & Keys' },
+		{ name: 'MOZA Racing', url: 'https://mozaracing.com/elmoradar', logo: moza, blurb: 'Sim-Racing- & Flight-Hardware' },
+		{ name: 'Tobii Gaming', url: 'https://tobii.gg/elmoradar', logo: tobii, blurb: 'Eye-Tracking-Hardware' }
 	];
 
 	const fleetTeaser = [
@@ -630,7 +630,7 @@
 						</div>
 						<div class="min-w-0">
 							<p class="text-xs sm:text-sm font-semibold text-white/80 group-hover:text-white transition-colors leading-tight">{p.name}</p>
-							<p class="text-[10px] sm:text-xs text-signal-500/50 mt-0.5 group-hover:text-signal-400/70 transition-colors hidden sm:block">Partner →</p>
+							<p class="text-[10px] sm:text-xs text-signal-500/50 mt-0.5 group-hover:text-signal-400/70 transition-colors hidden sm:block">{p.blurb}</p>
 						</div>
 					</a>
 				{/each}

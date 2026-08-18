@@ -15,6 +15,7 @@
 		{ name: 'Hardware & Settings', href: '/hardware' },
 		{ name: 'Meine Addons', href: '/addons' },
 		{ name: 'VATSIM', href: '/vatsim' },
+		{ name: 'Videos', href: '/videos' },
 		{ name: 'Kontakt', href: '/contact' }
 	];
 
