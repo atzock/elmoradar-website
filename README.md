@@ -2,7 +2,7 @@
 
 Official website for elmoradar on Twitch.
 
-# Für Dennis
+# Für Liz
 Bitte gucken in die example.env
 (ist alles erklärt)
 
