@@ -91,7 +91,7 @@
 			<div class="relative">
 				<h1 class="font-display text-4xl sm:text-5xl font-bold tracking-tight mb-5">Kontakt</h1>
 				<p class="text-white/50 text-base leading-relaxed">
-					Von der Business-Anfrage bis zur Stream-Idee — schreib einfach. Ich antworte in der Regel innerhalb von 24–48 Stunden.
+					Egal ob Business-Anfrage oder Stream-Idee, schreib einfach. Ich antworte in der Regel innerhalb von 24–48 Stunden.
 				</p>
 			</div>
 		</section>

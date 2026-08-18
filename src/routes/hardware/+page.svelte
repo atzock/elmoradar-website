@@ -8,6 +8,8 @@
 		peiker2,
 		pc1,
 		pc2,
+		stick1,
+		stick2,
 	} from '$lib/assets/index.js';
 
 	import Cpu          from 'lucide-svelte/icons/cpu';
@@ -152,7 +154,7 @@
 		{
 			label: 'Throttle',
 			value: 'WinCTRL Throttle Pack',
-			note: 'Throttle & Flap-Lever in einem — passt perfekt zum URSA Minor.',
+			note: 'Throttle & Flap-Lever in einem, passt perfekt zum URSA Minor.',
 			icon: Gauge,
 			gradient: 'from-orange-500/20 via-amber-500/10 to-transparent border-orange-500/25',
 			iconColor: 'text-orange-300 bg-orange-500/20 border-orange-500/25',
@@ -162,7 +164,7 @@
 		{
 			label: 'Rudder',
 			value: 'Logitech G Saitek Pro Flight',
-			note: 'Bewährt und günstig. Rudder Pedals mit Bremse — tut was er soll.',
+			note: 'Bewährt und günstig. Rudder Pedals mit Bremse, tut genau was sie soll.',
 			icon: Plane,
 			gradient: 'from-indigo-500/20 via-violet-500/10 to-transparent border-indigo-500/25',
 			iconColor: 'text-indigo-300 bg-indigo-500/20 border-indigo-500/25',
@@ -224,7 +226,7 @@
 		{
 			title: 'AutoFPS',
 			accent: 'border-t-orange-500/50',
-			note: 'AutoFPS passt den Terrain LOD dynamisch je nach Flughöhe an — weniger Detail am Boden für Performance, mehr in der Luft für Optik.',
+			note: 'AutoFPS passt den Terrain LOD dynamisch je nach Flughöhe an. Weniger Detail am Boden für Performance, mehr in der Luft für Optik.',
 			items: [
 				{ label: 'Modus',              value: 'Auto TLOD' },
 				{ label: 'TLOD am Boden',      value: '170' },
@@ -433,7 +435,7 @@
 								<Info size={13} class="text-signal-500/40 shrink-0 mt-0.5" />
 								<p class="text-xs text-white/40 leading-relaxed">
 									Das originale Peiker-Mikrofon ist ein professionelles ATC-Headset aus dem echten
-									Luftfahrtbetrieb. Diese Modifikation ist ein Einzelstück — nicht käuflich.
+									Luftfahrtbetrieb. Diese Modifikation ist ein Einzelstück und nicht käuflich.
 								</p>
 							</div>
 						</div>
@@ -487,6 +489,56 @@
 						</div>
 					</a>
 				{/each}
+			</div>
+
+			<!-- MOZA AB6 showcase -->
+			<div class="glow-card hud-panel relative mt-5" use:glow>
+				<span class="glow-border" aria-hidden="true"></span>
+				<a
+					href="https://eu.mozaracing.com/products/ab6-bundle/?ref=elmoradar"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="hud-panel block border border-signal-500/20 bg-linear-to-br from-signal-500/10 via-signal-500/5 to-transparent overflow-hidden group"
+				>
+					<div class="flex flex-col lg:flex-row">
+						<!-- Text content -->
+						<div class="flex-1 p-6 sm:p-8">
+							<div class="flex items-start gap-3 mb-5">
+								<div class="hud-panel-sm p-3 border border-signal-500/25 bg-signal-500/15 shrink-0">
+									<Joystick size={20} class="text-signal-300" />
+								</div>
+								<div>
+									<div class="flex items-center gap-2 flex-wrap">
+										<h3 class="font-display text-lg font-bold text-white leading-tight">MOZA AB6 Flight Simulator Bundle</h3>
+										<span class="hud-panel-sm text-[10px] font-mono uppercase tracking-widest border px-2 py-0.5 bg-signal-500/10 text-signal-300 border-signal-500/25">Neu</span>
+									</div>
+									<p class="text-xs font-mono text-signal-300/70 mt-0.5 uppercase tracking-widest">
+										Mein neuer Sidestick
+									</p>
+								</div>
+							</div>
+							<p class="text-white/60 text-sm leading-relaxed mb-4">
+								Direct-Drive-Basis statt klassischem Joystick, mit deutlich feinerem, kraftrückmeldendem
+								Force-Feedback. Löst den bisherigen Sidestick als mein Haupt-Eingabegerät für Airliner ab.
+							</p>
+							<div class="flex items-center gap-1.5 text-[11px] text-signal-500/40 group-hover:text-signal-400 transition-colors">
+								<ExternalLink size={11} />
+								Zum Shop
+							</div>
+						</div>
+						<!-- Gallery -->
+						<div class="lg:w-96 shrink-0 p-4 lg:p-6">
+							<div class="grid grid-cols-2 gap-2 h-full">
+								<div class="hud-panel-sm overflow-hidden border border-signal-500/10 min-h-44 lg:min-h-0">
+									<img src={stick1} alt="MOZA AB6 – Ansicht 1" class="w-full h-full object-cover" />
+								</div>
+								<div class="hud-panel-sm overflow-hidden border border-signal-500/10 min-h-44 lg:min-h-0">
+									<img src={stick2} alt="MOZA AB6 – Ansicht 2" class="w-full h-full object-cover" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</a>
 			</div>
 		</section>
 
