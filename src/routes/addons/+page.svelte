@@ -74,6 +74,34 @@
 			type: 'Narrowbody',
 			url: 'https://www.aerosoft.com/de/shop/flight/microsoft-flight-simulator/msfs-2020/msfs-flugzeuge/3303/aerosoft-aircraft-crj-v2',
 			img: 'https://aerosoft-shop.com/shop-rd/bilder/screenshots/msfs/aerosoft-aircraft-crj-v2/01.jpg'
+		},
+		{
+			name: 'Synaptic A220',
+			dev: 'Synaptic Simulations / iniBuilds',
+			type: 'Narrowbody',
+			url: 'https://inibuilds.com/products/synaptic-a220-msfs',
+			img: 'https://inibuilds.com/cdn/shop/files/FlightSimulator2024_zllMj6h3tq_4472x.png?v=1784834581'
+		},
+		{
+			name: 'Citation Sovereign+',
+			dev: 'Skyward Simulations',
+			type: 'Business Jet',
+			url: 'https://orbxdirect.com/product/skyward-citation-msfs2024',
+			img: 'https://cdn.orbxdirect.com/products/2372/6a189e7271914-400x225.jpg'
+		},
+		{
+			name: 'A340-600',
+			dev: 'Aerosoft / ToLiss',
+			type: 'Widebody',
+			url: 'https://www.aerosoft.com/de/shop/flight/microsoft-flight-simulator/msfs-2020/msfs-flugzeuge/4763/aerosoft-aircraft-a340-600-pro',
+			img: 'https://aerosoft-shop.com/shop-rd/bilder/screenshots/msfs/aerosoft-aircraft-a340-600-pro/01.jpg'
+		},
+		{
+			name: 'Phenom E55P',
+			dev: 'FS Reborn',
+			type: 'Business Jet',
+			url: 'https://www.fsreborn.com/fsr300e-for-microsoft-flight-simulator',
+			img: 'https://le-cdn.website-editor.net/s/5f77168fbe45490ab26dbeb4dc6a3e54/dms3rep/multi/opt/CR45-1920w.PNG?Expires=1789532680&Signature=mghb1OWdCpJsreUwgwlxRgPF1T1s4U6OM1U2Hw3psPKELwDtvWb6qrhLVTmPnrtStHsmCgfvZf58ypqOWo7kMvwN~Wt9d8H4b3sWi2vWXpeCfMd9uMEJW5DglzYWy-8Vym-WftCOUoDSRM1KxYdweq4jURJ9RGFzBFKaUp-iY4kHiokVboY96ODyL-jA5uimZDP5fGpUE88kyPTe0WouH~MSWovO3t6mCqYwvIoCQalxWDNURjRIJ5rgmZM3wk9jtX3vZ7qhckrT~m~m2CNp3kVoLWmS1jXaR-FaVFIHKKwk~9H69i2NWGAhckITZ0NToPD5ButBRZqS6GJs1uJO2Q__&Key-Pair-Id=K2NXBXLF010TJW'
 		}
 	];
 
@@ -89,7 +117,7 @@
 		{
 			name: 'GSX Pro',
 			category: 'Ground Services',
-			desc: 'Realistische Bodenabfertigung, Boarding, Catering und Pushback — auf VATSIM unverzichtbar.',
+			desc: 'Realistische Bodenabfertigung, Boarding, Catering und Pushback. Auf VATSIM unverzichtbar.',
 			url: 'https://www.fsdreamteam.com/products_gsxpro.html',
 			accent: 'from-orange-500/15 to-orange-500/5 border-orange-500/20'
 		},
@@ -103,7 +131,7 @@
 		{
 			name: 'AutoFPS',
 			category: 'Performance',
-			desc: 'Dynamischer LOD je nach Höhe — mehr Detail im Reiseflug, mehr FPS am Boden. Open Source.',
+			desc: 'Dynamischer LOD je nach Höhe: mehr Detail im Reiseflug, mehr FPS am Boden. Open Source.',
 			url: 'https://github.com/ResetXPDR/MSFS2020_AutoFPS',
 			accent: 'from-green-500/15 to-green-500/5 border-green-500/20'
 		},
@@ -124,17 +152,31 @@
 		{
 			name: 'flightsim.to',
 			category: 'Freeware',
-			desc: 'Liveries, GSX-Profile, Freeware-Sceneries — die wichtigste Community-Plattform überhaupt.',
+			desc: 'Liveries, GSX-Profile, Freeware-Sceneries: die wichtigste Community-Plattform überhaupt.',
 			url: 'https://flightsim.to',
 			accent: 'from-red-500/15 to-red-500/5 border-red-500/20'
 		},
-
+		{
+			name: 'Any2GSX',
+			category: 'GSX-Automation',
+			desc: 'Löst GSX-Bodenabfertigung automatisch an jedem Airport aus, kein manuelles Anfordern mehr nötig. Open Source.',
+			url: 'https://github.com/Fragtality/Any2GSX-Plugins',
+			accent: 'from-lime-500/15 to-lime-500/5 border-lime-500/20'
+		},
+		{
+			name: 'SkyTrails',
+			category: 'Kondensstreifen',
+			desc: 'Dynamische, wetterabhängige Kondensstreifen, sieht im Reiseflug einfach deutlich echter aus.',
+			url: 'https://parallel42.com/products/skytrails',
+			accent: 'from-indigo-500/15 to-indigo-500/5 border-indigo-500/20'
+		}
 	];
 
 	const typeColors: Record<string, string> = {
 		Narrowbody: 'text-sky-200 border-sky-400/50 bg-sky-900/80',
 		Widebody:   'text-violet-200 border-violet-400/50 bg-violet-900/80',
-		Helicopter: 'text-amber-200 border-amber-400/50 bg-amber-900/80'
+		Helicopter: 'text-amber-200 border-amber-400/50 bg-amber-900/80',
+		'Business Jet': 'text-teal-200 border-teal-400/50 bg-teal-900/80'
 	};
 </script>
 
@@ -150,8 +192,8 @@
 			<div class="relative max-w-2xl">
 				<h1 class="font-display text-4xl sm:text-5xl font-bold tracking-tight mb-5">Meine Addons</h1>
 				<p class="text-white/50 text-base leading-relaxed">
-					Acht Flieger, sechs Tools. Was im Hangar steht und was vor jedem Flug läuft — alles täglich
-					im Einsatz, nichts davon ist Sponsoring.
+					14 Flieger, acht Tools. Was im Hangar steht und was vor jedem Flug läuft, ist
+					alles täglich im Einsatz, nichts davon ist Sponsoring.
 				</p>
 			</div>
 		</section>

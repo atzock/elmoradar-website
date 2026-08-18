@@ -5,6 +5,8 @@
 		orbx,
 		inibuilds,
 		gamesPlanet,
+		moza,
+		tobii,
 		streamerImage,
 	} from '$lib/assets/index.js';
 	import BasicPage from '$lib/components/basic-page.svelte';
@@ -91,7 +93,9 @@
 		{ name: 'Aerosoft', url: 'https://aerosoft.com', logo: aerosoft },
 		{ name: 'Orbx', url: 'https://orbxdirect.com', logo: orbx },
 		{ name: 'iniBuilds', url: 'https://inibuilds.com/?ref=elmoradar', logo: inibuilds },
-		{ name: 'GamesPlanet', url: 'https://de.gamesplanet.com/?ref=elmo', logo: gamesPlanet }
+		{ name: 'GamesPlanet', url: 'https://de.gamesplanet.com/?ref=elmo', logo: gamesPlanet },
+		{ name: 'MOZA Racing', url: 'https://mozaracing.com/elmoradar', logo: moza },
+		{ name: 'Tobii Gaming', url: 'https://tobii.gg/elmoradar', logo: tobii }
 	];
 
 	const fleetTeaser = [
@@ -206,7 +210,7 @@
 						<span class="text-sm font-mono text-white/40 shrink-0">· {twitchViewers}</span>
 					{/if}
 					{#if twitchTitle}
-						<span class="text-sm text-white/30 truncate hidden sm:block">— {twitchTitle}</span>
+						<span class="text-sm text-white/30 truncate hidden sm:block">· {twitchTitle}</span>
 					{/if}
 					<span class="ml-auto text-signal-500/70 text-xs group-hover:text-signal-400 transition-colors shrink-0">Ansehen →</span>
 				</a>
@@ -372,7 +376,7 @@
 											<path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
 										</svg>
 										<p class="text-xs text-white/25 text-center leading-relaxed">
-											Einbettung deaktiviert —<br />Cookies müssen akzeptiert werden.
+											Einbettung deaktiviert.<br />Cookies müssen akzeptiert werden.
 										</p>
 										<div class="flex flex-col items-center gap-2">
 											<button
@@ -404,7 +408,7 @@
 					<div>
 						<div class="mb-3">
 							<p class="text-sm font-display font-semibold text-white/70">elmoradar Hauptkanal</p>
-							<p class="text-xs text-white/35 mt-0.5">Highlights aus den Streams — hier das neueste Video:</p>
+							<p class="text-xs text-white/35 mt-0.5">Highlights aus den Streams. Hier das neueste Video:</p>
 						</div>
 						{#if mainVideo}
 							<div class="hud-panel max-w-xs sm:max-w-none mx-auto sm:mx-0 overflow-hidden border border-signal-500/10 bg-white/2">
@@ -421,7 +425,7 @@
 											<path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
 										</svg>
 										<p class="text-xs text-white/25 text-center leading-relaxed">
-											Einbettung deaktiviert —<br />Cookies müssen akzeptiert werden.
+											Einbettung deaktiviert.<br />Cookies müssen akzeptiert werden.
 										</p>
 										<div class="flex flex-col items-center gap-2">
 											<button
@@ -541,7 +545,7 @@
 				<div>
 					<h3 class="text-xs font-mono text-signal-500/60 uppercase tracking-widest mb-4">Meine Addons</h3>
 					<p class="text-sm text-white/40 mb-3 leading-relaxed">
-						10 Flieger, 6 Tools — alles täglich im Einsatz.
+						14 Flieger, 8 Tools. Alles täglich im Einsatz.
 					</p>
 					<a
 						href="/addons"

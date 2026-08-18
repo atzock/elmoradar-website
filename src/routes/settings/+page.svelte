@@ -44,7 +44,7 @@
 		{ title: 'Grafik', items: graphics },
 		{
 			title: 'AutoFPS',
-			note: 'AutoFPS passt den Terrain LOD dynamisch je nach Flughöhe an — weniger Detail am Boden für Performance, mehr in der Luft für Optik.',
+			note: 'AutoFPS passt den Terrain LOD dynamisch je nach Flughöhe an. Weniger Detail am Boden für Performance, mehr in der Luft für Optik.',
 			items: autofps
 		}
 	];
@@ -61,7 +61,7 @@
 			<div class="relative max-w-2xl">
 				<h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5">MSFS Settings</h1>
 				<p class="text-white/50 text-base leading-relaxed">
-					Meine aktuellen Einstellungen — optimiert für VATSIM-Betrieb und Streaming auf der RTX 5090.
+					Meine aktuellen Einstellungen, optimiert für VATSIM-Betrieb und Streaming auf der RTX 5090.
 					Nicht für jeden Rechner geeignet, aber als Referenz ganz nützlich.
 				</p>
 			</div>
