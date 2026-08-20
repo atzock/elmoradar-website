@@ -25,6 +25,13 @@ html {
 	font-family: theme(--font-sans, ui-sans-serif), system-ui, sans-serif;
 }
 
+/* iOS Safari reveals the native html/body background during rubber-band
+ * overscroll — without this it flashes white at the top/bottom edges. */
+html,
+body {
+	background-color: #060202;
+}
+
 /* ── HUD panel: angular notched corners instead of soft rounded cards ────── */
 /* Usage: class="hud-panel" on the outer element. Content sits directly
  * inside — no wrapper needed. Combine with hud-panel-sm for tighter notches
