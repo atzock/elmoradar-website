@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
-	import { consent } from '$lib/stores/consent';
+	import { consent } from '$lib/stores/consent.js';
 	import logo from '$lib/assets/logo.webp?url';
 	import Cookie from 'lucide-svelte/icons/cookie';
+	import { i18n } from '$lib/i18n/index.js';
 </script>
 
 {#if $consent === 'pending'}
@@ -16,32 +17,30 @@
 				src={logo}
 				alt=""
 				aria-hidden="true"
-				class="w-22 h-22 rounded-2xl elmo-peek"
+				class="w-22 h-22 rounded-xl elmo-peek"
 			/>
 		</div>
 
-		<!-- Hairline glow at banner top edge -->
-		<div class="h-px bg-linear-to-r from-transparent via-signal-500/30 to-transparent"></div>
 
 		<!-- Banner body -->
-		<div class="bg-[#0a0303]/97 backdrop-blur-2xl border-t border-signal-500/10">
+		<div class="bg-raised border-t border-line">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 py-4 sm:py-5">
 				<div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8">
 
 					<!-- Icon + Text -->
 					<div class="flex items-start gap-3 flex-1 min-w-0">
-						<div class="hud-panel-sm p-2 bg-white/4 border border-signal-500/15 shrink-0 mt-0.5">
-							<Cookie size={14} class="text-signal-500/50" />
+						<div class="rounded-md p-2 bg-white/4 border border-line shrink-0 mt-0.5">
+							<Cookie size={14} class="text-fg-subtle" />
 						</div>
 						<div>
-							<p class="text-sm font-display font-semibold text-white/70 mb-1">Cookies & externe Inhalte</p>
+							<p class="text-sm font-display font-semibold text-white/70 mb-1">{i18n.t.cookie.title}</p>
 							<p class="text-xs text-white/35 leading-relaxed max-w-lg">
-								YouTube-Embeds laden externe Inhalte und setzen Cookies erst nach deiner Zustimmung.
+								{i18n.t.cookie.text}
 								<a
-									href="/datenschutz"
+									href={i18n.href('/datenschutz')}
 									class="text-white/45 hover:text-white/80 underline underline-offset-2 transition-colors ml-1"
 								>
-									Datenschutzerklärung
+									{i18n.t.cookie.privacy}
 								</a>
 							</p>
 						</div>
@@ -51,15 +50,15 @@
 					<div class="flex items-center gap-2 shrink-0 pl-9.5 sm:pl-0">
 						<button
 							onclick={() => consent.decline()}
-							class="hud-panel-sm px-4 py-2 text-xs font-display text-white/38 hover:text-white/65 bg-white/2 hover:bg-white/5 border border-signal-500/10 hover:border-signal-500/25 transition-all"
+							class="rounded-md px-4 py-2 text-xs font-display text-white/38 hover:text-white/65 bg-white/2 hover:bg-white/5 border border-line hover:border-line-strong transition-all"
 						>
-							Nur notwendige
+							{i18n.t.cookie.decline}
 						</button>
 						<button
 							onclick={() => consent.accept()}
-							class="hud-panel-sm px-5 py-2 text-xs font-display font-semibold text-white bg-signal-600 hover:bg-signal-500 shadow-[0_0_20px_rgba(255,33,56,0.32)] hover:shadow-[0_0_28px_rgba(255,33,56,0.52)] transition-all"
+							class="rounded-md px-5 py-2 text-xs font-display font-semibold text-white bg-accent hover:bg-accent-hover hover:shadow-[0_0_28px_rgba(255,33,56,0.52)] transition-all"
 						>
-							Akzeptieren
+							{i18n.t.cookie.accept}
 						</button>
 					</div>
 

@@ -1,18 +1,19 @@
 <script lang="ts">
 	import BasicPage from '$lib/components/basic-page.svelte';
 	import { reveal } from '$lib/reveal.js';
+	import { i18n } from '$lib/i18n/index.js';
 
 	import TowerControl from 'lucide-svelte/icons/tower-control';
 	import Radar from 'lucide-svelte/icons/radar';
 	import Globe from 'lucide-svelte/icons/globe';
 	import BadgeCheck from 'lucide-svelte/icons/badge-check';
 
-	import type { Component } from 'svelte';
+	const t = $derived(i18n.t);
 
 	type Position = { callsign: string; airport: string; active: boolean };
 	type Section = {
 		title: string;
-		icon: Component<{ size?: number; class?: string }>;
+		icon: typeof TowerControl;
 		note?: string;
 		positions: Position[];
 	};
@@ -43,40 +44,39 @@
 		{ callsign: 'EDYY_CTR', airport: 'Maastricht', active: true }
 	];
 
-	const sections: Section[] = [
-		{ title: 'Tower', icon: TowerControl, positions: tower },
-		{ title: 'Approach', icon: Radar, positions: approach },
-		{ title: 'Center', icon: Globe, note: 'München: einzelne Sektoren eingeschränkt', positions: center }
-	];
+	const sections: Section[] = $derived([
+		{ title: t.vatsim.tower, icon: TowerControl, positions: tower },
+		{ title: t.vatsim.approach, icon: Radar, positions: approach },
+		{ title: t.vatsim.center, icon: Globe, note: t.vatsim.munichNote, positions: center }
+	]);
 
-	const quickStats = [
-		{ label: 'Flüge', value: '450+' },
-		{ label: 'Flugstunden', value: '1.800+' },
-		{ label: 'Airports', value: '75+' }
-	];
+	const quickStats = $derived([
+		{ label: t.vatsim.flights, value: '450+' },
+		{ label: t.vatsim.hours, value: '1.800+' },
+		{ label: t.vatsim.airports, value: '75+' }
+	]);
 </script>
 
 <svelte:head>
-	<title>VATSIM – elmoradar</title>
+	<title>{t.vatsim.title}</title>
 </svelte:head>
 
 <BasicPage>
 	<div>
 
 		<!-- HEADER -->
-		<section class="relative pt-8 pb-12 border-b border-signal-500/10 overflow-hidden">
+		<section class="page-hero">
 			<div class="relative max-w-2xl mb-8">
-				<h1 class="font-display text-4xl sm:text-5xl font-bold tracking-tight mb-5">VATSIM</h1>
-				<p class="text-white/50 text-base leading-relaxed">
-					Meine aktiven Endorsements im VATSIM-Netzwerk. Die aufgeführten Positionen zeigen, welche Station ich besetzen darf.
-				</p>
+				<p class="eyebrow eyebrow-rule mb-4">{t.vatsim.eyebrow}</p>
+				<h1 class="page-title mb-5"><em>VATSIM</em></h1>
+				<p class="text-white/50 text-base leading-relaxed">{t.vatsim.intro}</p>
 			</div>
 			<div class="flex flex-wrap items-center gap-4">
 				<!-- RATING BADGE -->
-				<div class="hud-panel flex items-center gap-3 border border-signal-500/20 bg-white/3 px-5 py-4 shrink-0">
-					<BadgeCheck size={20} class="text-signal-400" />
+				<div class="rounded-lg flex items-center gap-3 border border-accent-deep bg-accent-soft px-5 py-4 shrink-0">
+					<BadgeCheck size={20} class="text-accent" />
 					<div>
-						<div class="text-xs font-mono text-signal-500/60 uppercase tracking-widest">ATC Rating</div>
+						<div class="text-xs font-mono text-fg-subtle uppercase tracking-wider">{t.vatsim.rating}</div>
 						<div class="font-display text-2xl font-bold leading-tight">C1</div>
 					</div>
 				</div>
@@ -93,23 +93,23 @@
 
 		<!-- ENDORSEMENT SECTIONS -->
 		<div class="reveal py-12" use:reveal>
-		<h2 class="font-display text-xl font-semibold text-white/70 mb-8">Meine Freigaben</h2>
+		<h2 class="section-title mb-8">{t.vatsim.heading}</h2>
 		<div class="grid gap-12 lg:grid-cols-3">
 			{#each sections as section}
 				<div>
 					<div class="flex items-center gap-2 mb-7">
-						<section.icon size={14} class="text-signal-500/50" />
-						<h2 class="text-xs font-mono text-signal-500/60 uppercase tracking-widest">{section.title}</h2>
+						<section.icon size={14} class="text-fg-subtle" />
+						<h2 class="text-xs font-mono text-fg-subtle uppercase tracking-wider">{section.title}</h2>
 					</div>
 
 					<div>
 						{#each section.positions as pos}
-							<div class="flex items-center justify-between py-3 border-b border-signal-500/10 text-sm">
+							<div class="flex items-center justify-between py-3 border-b border-line text-sm">
 								<div class="flex items-center gap-2.5">
 									<span class="h-1.5 w-1.5 rounded-full shrink-0 {pos.active ? 'bg-green-500' : 'bg-white/15'}"></span>
 									<span class="font-mono {pos.active ? 'text-white/80' : 'text-white/25 line-through decoration-white/15'}">{pos.callsign}</span>
 								</div>
-								<span class="text-white/35 text-xs">{pos.airport}</span>
+								<span class="text-white/35 text-xs">{t.vatsim.places[pos.airport] ?? pos.airport}</span>
 							</div>
 						{/each}
 					</div>
@@ -123,9 +123,9 @@
 		</div>
 
 		<!-- NOTE -->
-		<section class="border-t border-signal-500/10 py-8">
+		<section class="border-t border-line py-8">
 			<p class="text-sm text-white/30 max-w-lg leading-relaxed">
-				Stand kann sich durch Trainingsfortschritt ändern.
+				{t.vatsim.footnote}
 			</p>
 		</section>
 

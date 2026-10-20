@@ -126,7 +126,7 @@ function parseVideoEntries(feedXml: string): YoutubeVideo[] {
 
 			return {
 				videoId: id,
-				title,
+				title: title.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'"),
 				publishedAt,
 				url: `https://www.youtube.com/watch?v=${id}`,
 				embedUrl: `https://www.youtube.com/embed/${id}`
@@ -142,7 +142,12 @@ export const GET: RequestHandler = async ({ url }) => {
 		const channelId = await resolveChannelIdFromHandle(handle);
 		const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${encodeURIComponent(channelId)}`;
 		const feedXml = await fetchText(feedUrl);
-		const items = parseVideoEntries(feedXml).slice(0, 2);
+		const limit = Math.min(Math.max(Number(url.searchParams.get('limit')) || 2, 1), 15);
+		const seen = new Set<string>();
+		const items = parseVideoEntries(feedXml)
+			.filter((v) => !seen.has(v.videoId) && seen.add(v.videoId))
+			.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
+			.slice(0, limit);
 
 		return json({
 			handle,
