@@ -1,171 +1,258 @@
 @import 'tailwindcss';
 
 /* ── Design tokens ─────────────────────────────────────────────────────────
- * "ATC Radar HUD" identity: signal red as the single accent color, a
- * technical display face for headings/labels, monospace for data readouts.
+ * Dark neutral charcoal surfaces with a single red accent. Red is reserved
+ * for primary actions, active navigation and key links. Everything else is
+ * neutral. Use these tokens (bg-surface, border-line, text-accent …) instead
+ * of raw colour values.
  */
 @theme {
-	--font-display: 'Chakra Petch', ui-sans-serif, system-ui, sans-serif;
-	--font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+	--font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+	--font-display: 'Geist', ui-sans-serif, system-ui, sans-serif;
+	--font-mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
 
-	--color-signal-50: #fff0f1;
-	--color-signal-100: #ffdde0;
-	--color-signal-200: #ffb8bf;
-	--color-signal-300: #ff8b96;
-	--color-signal-400: #ff5468;
-	--color-signal-500: #ff2138;
-	--color-signal-600: #e01029;
-	--color-signal-700: #b60c22;
-	--color-signal-800: #8a0c1c;
-	--color-signal-900: #5c0a15;
-	--color-signal-950: #2e0509;
+	--color-bg: #171719;
+	--color-bg-2: #1d1d20;
+	--color-surface: #242428;
+	--color-raised: #2b2b30;
+	--color-line: #35353b;
+	--color-line-strong: #4a4a52;
+
+	--color-fg: #f4f4f5;
+	--color-fg-muted: #a1a1aa;
+	--color-fg-subtle: #7c7c86;
+
+	--color-accent: #e5484d;
+	--color-accent-hover: #f05a60;
+	--color-accent-soft: #351f22;
+	--color-accent-deep: #8f252d;
+	--color-accent-press: #c93a3f;
+
+	--color-ok: #4cc38a;
+
+	--radius-sm: 6px;
+	--radius-md: 8px;
+	--radius-lg: 12px;
 }
 
 html {
-	font-family: theme(--font-sans, ui-sans-serif), system-ui, sans-serif;
+	background-color: var(--color-bg); /* iOS rubber-band overscroll */
+	color: var(--color-fg);
+	-webkit-font-smoothing: antialiased;
 }
-
-/* iOS Safari reveals the native html/body background during rubber-band
- * overscroll — without this it flashes white at the top/bottom edges. */
-html,
 body {
-	background-color: #060202;
+	background-color: var(--color-bg);
+	font-feature-settings: 'ss01', 'cv11';
 }
 
-/* ── HUD panel: angular notched corners instead of soft rounded cards ────── */
-/* Usage: class="hud-panel" on the outer element. Content sits directly
- * inside — no wrapper needed. Combine with hud-panel-sm for tighter notches
- * on small elements (buttons, badges). */
-.hud-panel {
-	--notch: 14px;
-	clip-path: polygon(
-		0 0,
-		calc(100% - var(--notch)) 0,
-		100% var(--notch),
-		100% 100%,
-		var(--notch) 100%,
-		0 calc(100% - var(--notch))
-	);
+h1,
+h2,
+h3 {
+	letter-spacing: -0.02em;
+	text-wrap: balance;
 }
 
-.hud-panel-sm {
-	--notch: 8px;
-	clip-path: polygon(
-		0 0,
-		calc(100% - var(--notch)) 0,
-		100% var(--notch),
-		100% 100%,
-		var(--notch) 100%,
-		0 calc(100% - var(--notch))
-	);
+:focus-visible {
+	outline: 2px solid var(--color-accent-hover);
+	outline-offset: 2px;
+	border-radius: var(--radius-sm);
 }
 
-/* Corner bracket decoration — four small L-shaped ticks pinned to a
- * position:relative ancestor. Use on hero frames / featured panels. */
-.hud-corners {
+/* ── Shared components ───────────────────────────────────────────────────── */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	border-radius: var(--radius-md);
+	padding: 0.5rem 1rem;
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 1.25rem;
+	border: 1px solid transparent;
+	transition:
+		background-color 0.15s,
+		border-color 0.15s,
+		color 0.15s;
+}
+.btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+.btn-primary {
+	background: var(--color-accent);
+	color: #fff;
+}
+.btn-primary:hover {
+	background: var(--color-accent-hover);
+}
+.btn-primary:active {
+	background: var(--color-accent-press);
+}
+.btn-secondary {
+	background: var(--color-surface);
+	border-color: var(--color-line);
+	color: var(--color-fg);
+}
+.btn-secondary:hover {
+	background: var(--color-raised);
+	border-color: var(--color-line-strong);
+}
+
+/* ── Headings ──────────────────────────────────────────────────────────────
+ * .eyebrow       small mono label, optionally with a red rule (.eyebrow-rule)
+ * .page-title    h1 for page intros; <em> inside = red gradient highlight
+ * .display-title oversized home title
+ * .section-title h2 with a short red tick
+ * .page-hero     intro section with a red-tinted full-bleed gradient
+ * .band          full-bleed secondary-background section
+ */
+.eyebrow {
+	font-family: var(--font-mono);
+	font-size: 0.6875rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--color-fg-subtle);
+}
+.eyebrow-rule {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	color: var(--color-accent-hover);
+}
+.eyebrow-rule::before {
+	content: '';
+	width: 1.75rem;
+	height: 2px;
+	background: var(--color-accent);
+}
+
+.page-title {
+	font-size: clamp(2.25rem, 5vw + 0.5rem, 4rem);
+	font-weight: 600;
+	line-height: 1.04;
+	letter-spacing: -0.035em;
+}
+.display-title {
+	font-size: clamp(3rem, 8vw, 5.75rem);
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: -0.04em;
+	color: var(--color-fg);
+}
+.page-title em {
+	font-style: normal;
+	background: linear-gradient(100deg, var(--color-accent-hover) 10%, var(--color-accent) 60%, var(--color-accent-deep) 120%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+/* Home hero: solid accent word, no gradient */
+.display-title em {
+	font-style: normal;
+	color: var(--color-accent);
+}
+
+.section-title {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	font-size: 1.25rem;
+	font-weight: 600;
+	letter-spacing: -0.02em;
+	color: var(--color-fg);
+}
+.section-title::before {
+	content: '';
+	width: 3px;
+	height: 1.1em;
+	border-radius: 2px;
+	background: var(--color-accent);
+}
+
+.page-hero,
+.band {
 	position: relative;
+	isolation: isolate;
 }
-.hud-corners::before,
-.hud-corners::after {
+.page-hero::before,
+.band::before {
 	content: '';
 	position: absolute;
-	width: 18px;
-	height: 18px;
-	pointer-events: none;
-	z-index: 3;
+	inset: 0 calc(50% - 50vw);
+	z-index: -1;
+	border-bottom: 1px solid var(--color-line);
 }
-.hud-corners::before {
-	top: -1px;
-	left: -1px;
-	border-top: 2px solid var(--color-signal-500);
-	border-left: 2px solid var(--color-signal-500);
-	opacity: 0.8;
+.page-hero::before {
+	background:
+		radial-gradient(ellipse 60% 90% at 0% 0%, rgb(229 72 77 / 0.16), transparent 70%),
+		linear-gradient(to bottom, var(--color-bg-2), var(--color-bg));
 }
-.hud-corners::after {
-	bottom: -1px;
-	right: -1px;
-	border-bottom: 2px solid var(--color-signal-500);
-	border-right: 2px solid var(--color-signal-500);
-	opacity: 0.8;
+.band::before {
+	background: var(--color-bg-2);
+	border-block: 1px solid var(--color-line);
+}
+.page-hero {
+	padding-block: 3.5rem 3rem;
+}
+.page-hero > * {
+	animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.page-hero > *:nth-child(2) {
+	animation-delay: 0.08s;
+}
+.page-hero > *:nth-child(3) {
+	animation-delay: 0.16s;
+}
+@keyframes rise {
+	from {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.page-hero > * {
+		animation: none;
+	}
 }
 
-/* ── Glow card effect ─────────────────────────────────────────────────────── */
-/*
- * Usage: add class="glow-card" to the wrapper element (no overflow-hidden!),
- * then place <span class="glow-border" aria-hidden="true"></span> as the
- * first child. Apply use:glow from $lib/glow.ts to wire up the CSS vars.
- *
- * The inner content card can still have overflow-hidden, rounded corners, etc.
- * The border glow sits on the outer wrapper.
- */
-
-.glow-card {
-	--start: 0;
-	--active: 0;
-	position: relative;
+/* Image hover: slow zoom inside an overflow-hidden frame */
+.zoom-img {
+	transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-
-.glow-border {
-	position: absolute;
-	inset: -1px;
-	border-radius: inherit;
-	background: conic-gradient(
-		from calc(var(--start) * 1deg),
-		transparent 0%,
-		rgba(255, 60, 80, calc(var(--active) * 0.75)) 12%,
-		rgba(255, 90, 100, calc(var(--active) * 0.3)) 20%,
-		transparent 35%
-	);
-	pointer-events: none;
-	z-index: 2;
-	/* mask trick: only show the 1px border ring */
-	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-	-webkit-mask-composite: xor;
-	mask-composite: exclude;
-	padding: 1px;
+a:hover .zoom-img,
+.group:hover .zoom-img {
+	transform: scale(1.04);
+}
+@media (prefers-reduced-motion: reduce) {
+	.zoom-img {
+		transition: none;
+	}
+	a:hover .zoom-img,
+	.group:hover .zoom-img {
+		transform: none;
+	}
 }
 
 /* ── Scroll reveal ─────────────────────────────────────────────────────────
- * Usage: class="reveal" use:reveal on any section-level element. Starts
- * hidden/offset, animates in once scrolled into view (see $lib/reveal.ts).
+ * class="reveal" use:reveal — fades in once scrolled into view.
  */
 .reveal {
 	opacity: 0;
-	transform: translateY(28px);
+	transform: translateY(12px);
 	transition:
-		opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-		transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-	will-change: opacity, transform;
+		opacity 0.45s ease-out,
+		transform 0.45s ease-out;
 }
-
 .reveal.is-visible {
 	opacity: 1;
-	transform: translateY(0);
+	transform: none;
 }
-
 @media (prefers-reduced-motion: reduce) {
 	.reveal {
 		opacity: 1;
 		transform: none;
 		transition: none;
 	}
-}
-
-/* ── Scanline texture — subtle horizontal lines over HUD panels ──────────── */
-.hud-scanlines {
-	position: relative;
-}
-.hud-scanlines::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	pointer-events: none;
-	z-index: 1;
-	background: repeating-linear-gradient(
-		to bottom,
-		rgba(255, 33, 56, 0.035) 0px,
-		rgba(255, 33, 56, 0.035) 1px,
-		transparent 1px,
-		transparent 3px
-	);
 }

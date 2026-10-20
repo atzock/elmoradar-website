@@ -2,6 +2,8 @@ import { json } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 import nodemailer from 'nodemailer';
 import type { RequestHandler } from './$types.js';
+import { de } from '$lib/i18n/de.js';
+import { en } from '$lib/i18n/en.js';
 
 // ── Rate limiting ────────────────────────────────────────────────────────────
 const RATE_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
@@ -37,20 +39,23 @@ function escapeHtml(s: string): string {
 // ── Handler ──────────────────────────────────────────────────────────────────
 export const POST: RequestHandler = async ({ request }) => {
 	const ip = getIp(request);
+	// Error messages are localised once the body (with its `lang`) is parsed; before that, default to German.
+	let msg = de.api;
 
 	// Rate limit check
 	if (isRateLimited(ip)) {
-		return json({ error: 'Zu viele Anfragen. Bitte warte ein paar Minuten.' }, { status: 429 });
+		return json({ error: msg.contactTooMany }, { status: 429 });
 	}
 
 	let body: Record<string, string>;
 	try {
 		body = await request.json();
 	} catch {
-		return json({ error: 'Ungültige Anfrage.' }, { status: 400 });
+		return json({ error: msg.contactInvalid }, { status: 400 });
 	}
 
 	const { name, email, subject, message, _gotcha, _renderTime } = body;
+	msg = body.lang === 'en' ? en.api : de.api;
 
 	// Honeypot check — must be empty
 	if (_gotcha) {
@@ -61,18 +66,18 @@ export const POST: RequestHandler = async ({ request }) => {
 	// Timing check — form must have been open for at least 3 seconds
 	const renderTime = parseInt(_renderTime ?? '0', 10);
 	if (!renderTime || Date.now() - renderTime < 3000) {
-		return json({ error: 'Formular zu schnell ausgefüllt. Bitte nochmal versuchen.' }, { status: 400 });
+		return json({ error: msg.contactTooFast }, { status: 400 });
 	}
 
 	// Input validation
 	if (!name?.trim() || !email?.trim() || !subject?.trim() || !message?.trim()) {
-		return json({ error: 'Bitte alle Felder ausfüllen.' }, { status: 400 });
+		return json({ error: msg.contactMissing }, { status: 400 });
 	}
 	if (name.length > 100 || subject.length > 200 || message.length > 5000) {
-		return json({ error: 'Eingabe zu lang.' }, { status: 400 });
+		return json({ error: msg.contactTooLong }, { status: 400 });
 	}
 	if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-		return json({ error: 'Ungültige E-Mail-Adresse.' }, { status: 400 });
+		return json({ error: msg.contactBadEmail }, { status: 400 });
 	}
 
 	// Email config check
@@ -84,7 +89,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	if (!smtpUser || !smtpPass) {
 		console.error('[contact] SMTP_USER or SMTP_PASS not configured');
-		return json({ error: 'Mailversand nicht konfiguriert. Bitte direkt per Mail schreiben.' }, { status: 503 });
+		return json({ error: msg.contactNotConfigured }, { status: 503 });
 	}
 
 	const transporter = nodemailer.createTransport({
@@ -125,6 +130,6 @@ export const POST: RequestHandler = async ({ request }) => {
 		return json({ ok: true });
 	} catch (err) {
 		console.error('[contact] Mail send failed:', err);
-		return json({ error: 'E-Mail konnte nicht gesendet werden. Bitte direkt per Mail schreiben.' }, { status: 500 });
+		return json({ error: msg.contactSendFailed }, { status: 500 });
 	}
 };

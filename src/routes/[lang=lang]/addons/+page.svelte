@@ -1,8 +1,13 @@
 <script lang="ts">
 	import BasicPage from '$lib/components/basic-page.svelte';
-	import { glow } from '$lib/glow.js';
 	import { reveal } from '$lib/reveal.js';
+	import { i18n } from '$lib/i18n/index.js';
 	import ExternalLink from 'lucide-svelte/icons/external-link';
+	import Plane from 'lucide-svelte/icons/plane';
+
+	const t = $derived(i18n.t);
+
+	let failedImgs = $state(new Set<string>());
 
 	const fleet = [
 		{
@@ -101,14 +106,12 @@
 			dev: 'FS Reborn',
 			type: 'Business Jet',
 			url: 'https://www.fsreborn.com/fsr300e-for-microsoft-flight-simulator',
-			img: 'https://le-cdn.website-editor.net/s/5f77168fbe45490ab26dbeb4dc6a3e54/dms3rep/multi/opt/CR45-1920w.PNG?Expires=1789532680&Signature=mghb1OWdCpJsreUwgwlxRgPF1T1s4U6OM1U2Hw3psPKELwDtvWb6qrhLVTmPnrtStHsmCgfvZf58ypqOWo7kMvwN~Wt9d8H4b3sWi2vWXpeCfMd9uMEJW5DglzYWy-8Vym-WftCOUoDSRM1KxYdweq4jURJ9RGFzBFKaUp-iY4kHiokVboY96ODyL-jA5uimZDP5fGpUE88kyPTe0WouH~MSWovO3t6mCqYwvIoCQalxWDNURjRIJ5rgmZM3wk9jtX3vZ7qhckrT~m~m2CNp3kVoLWmS1jXaR-FaVFIHKKwk~9H69i2NWGAhckITZ0NToPD5ButBRZqS6GJs1uJO2Q__&Key-Pair-Id=K2NXBXLF010TJW'
+			img: 'https://le-cdn.website-editor.net/s/5f77168fbe45490ab26dbeb4dc6a3e54/dms3rep/multi/opt/CR45-1920w.PNG?Expires=1794946380&Signature=HiOUzHIXcYpDPNhvgg0z25EG-2Aa-Ws2ddCCshFYqX0hvT3bXjZv9sZgI3wJ9ZEmv96pOT1cUcTgcdL5XUAlHkhFIs9fmIw5nPtfC0UYNJZBcH~Er~mtuoLAqEEmca31iA-r88TVUICci6so5mGYkEUTTDAtp9WZhVjf9vbcwe1noCHq7ss3oTxVduixTselfenj-07xEZq2ujXQjS9DbMY~wu0AS4aGxrSNrn1zvAfGnNaKMwx95lTouECNJO2Js-29d0n65swQMOugm5OOjH6W8CJ3bcA3Jqh46gbhC5jMmid8~sDh2H0HdvJrSgyD7qekdaag8uP~pYW~GdJzng__&Key-Pair-Id=K2NXBXLF010TJW'
 		}
 	];
 
 	type Addon = {
 		name: string;
-		category: string;
-		desc: string;
 		url: string;
 		accent: string;
 	};
@@ -116,125 +119,111 @@
 	const addons: Addon[] = [
 		{
 			name: 'GSX Pro',
-			category: 'Ground Services',
-			desc: 'Realistische Bodenabfertigung, Boarding, Catering und Pushback. Auf VATSIM unverzichtbar.',
 			url: 'https://www.fsdreamteam.com/products_gsxpro.html',
-			accent: 'from-orange-500/15 to-orange-500/5 border-orange-500/20'
+			accent: 'bg-surface border-line'
 		},
 		{
 			name: 'ChasePlane',
-			category: 'Kamera',
-			desc: 'Cineastische Kamerafahrten, vollständig anpassbar. Replay sieht danach aus wie echte Footage.',
 			url: 'https://parallel42.com/products/chaseplane',
-			accent: 'from-blue-500/15 to-blue-500/5 border-blue-500/20'
+			accent: 'bg-surface border-line'
 		},
 		{
 			name: 'AutoFPS',
-			category: 'Performance',
-			desc: 'Dynamischer LOD je nach Höhe: mehr Detail im Reiseflug, mehr FPS am Boden. Open Source.',
 			url: 'https://github.com/ResetXPDR/MSFS2020_AutoFPS',
-			accent: 'from-green-500/15 to-green-500/5 border-green-500/20'
+			accent: 'bg-surface border-line'
 		},
 		{
 			name: 'Navigraph',
-			category: 'Navigation',
-			desc: 'Aktuelles AIRAC + Charts. Das erste, was ich nach einer MSFS-Installation installiere.',
 			url: 'https://navigraph.com',
-			accent: 'from-cyan-500/15 to-cyan-500/5 border-cyan-500/20'
+			accent: 'bg-surface border-line'
 		},
 		{
 			name: 'Lido Charts',
-			category: 'Charts',
-			desc: 'Professionelle Lido-Flughafenkarten direkt im integrierten MSFS Flight Planner.',
 			url: 'https://planner.flightsimulator.com/',
-			accent: 'from-purple-500/15 to-purple-500/5 border-purple-500/20'
+			accent: 'bg-surface border-line'
 		},
 		{
 			name: 'flightsim.to',
-			category: 'Freeware',
-			desc: 'Liveries, GSX-Profile, Freeware-Sceneries: die wichtigste Community-Plattform überhaupt.',
 			url: 'https://flightsim.to',
-			accent: 'from-red-500/15 to-red-500/5 border-red-500/20'
+			accent: 'bg-surface border-line'
 		},
 		{
 			name: 'Any2GSX',
-			category: 'GSX-Automation',
-			desc: 'Löst GSX-Bodenabfertigung automatisch an jedem Airport aus, kein manuelles Anfordern mehr nötig. Open Source.',
 			url: 'https://github.com/Fragtality/Any2GSX-Plugins',
-			accent: 'from-lime-500/15 to-lime-500/5 border-lime-500/20'
+			accent: 'bg-surface border-line'
 		},
 		{
 			name: 'SkyTrails',
-			category: 'Kondensstreifen',
-			desc: 'Dynamische, wetterabhängige Kondensstreifen, sieht im Reiseflug einfach deutlich echter aus.',
 			url: 'https://parallel42.com/products/skytrails',
-			accent: 'from-indigo-500/15 to-indigo-500/5 border-indigo-500/20'
+			accent: 'bg-surface border-line'
 		}
 	];
 
 	const typeColors: Record<string, string> = {
-		Narrowbody: 'text-sky-200 border-sky-400/50 bg-sky-900/80',
-		Widebody:   'text-violet-200 border-violet-400/50 bg-violet-900/80',
-		Helicopter: 'text-amber-200 border-amber-400/50 bg-amber-900/80',
+		Narrowbody: 'text-fg-muted border-line bg-line',
+		Widebody:   'text-fg-muted border-line bg-line',
+		Helicopter: 'text-fg-muted border-line bg-line',
 		'Business Jet': 'text-teal-200 border-teal-400/50 bg-teal-900/80'
 	};
 </script>
 
 <svelte:head>
-	<title>Meine Addons – elmoradar</title>
+	<title>{t.addons.title}</title>
 </svelte:head>
 
 <BasicPage>
 	<div>
 
 		<!-- HEADER -->
-		<section class="relative pt-8 pb-12 border-b border-signal-500/10 overflow-hidden">
+		<section class="page-hero">
 			<div class="relative max-w-2xl">
-				<h1 class="font-display text-4xl sm:text-5xl font-bold tracking-tight mb-5">Meine Addons</h1>
-				<p class="text-white/50 text-base leading-relaxed">
-					14 Flieger, acht Tools. Was im Hangar steht und was vor jedem Flug läuft, ist
-					alles täglich im Einsatz, nichts davon ist Sponsoring.
-				</p>
+				<p class="eyebrow eyebrow-rule mb-4">{t.addons.eyebrow}</p>
+				<h1 class="page-title mb-5">{t.addons.titleLead} <em>{t.addons.titleEm}</em></h1>
+				<p class="text-white/50 text-base leading-relaxed">{t.addons.intro}</p>
 			</div>
 		</section>
 
 		<!-- FLEET -->
-		<section class="reveal py-12 border-b border-signal-500/10" use:reveal>
+		<section class="reveal py-12 border-b border-line" use:reveal>
 			<div class="flex items-baseline justify-between gap-4 mb-8">
 				<div>
-					<h2 class="text-sm font-display font-semibold text-white/60 mb-1">Flieger im Hangar</h2>
-					<p class="text-xs font-mono text-signal-500/50">Klick auf einen Flieger öffnet die Produktseite des Entwicklers.</p>
+					<h2 class="section-title mb-1">{t.addons.fleetHeading}</h2>
+					<p class="text-xs font-mono text-fg-subtle">{t.addons.fleetHint}</p>
 				</div>
 			</div>
 
-			<div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-				{#each fleet as plane}
+			<div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 grid-flow-dense gap-3 sm:gap-4">
+				{#each fleet as plane, i}
 					<a
 						href={plane.url}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="glow-card group relative hud-panel-sm block"
-						use:glow
+						class="group relative rounded-md block {i === 0 ? 'lg:col-span-2 lg:row-span-2' : ''}"
 					>
-						<span class="glow-border" aria-hidden="true"></span>
-						<div class="hud-panel-sm overflow-hidden border border-signal-500/10 bg-white/2 h-full flex flex-col">
-							<div class="aspect-video overflow-hidden bg-white/5 relative shrink-0">
+						<div class="rounded-md overflow-hidden border bg-surface h-full flex flex-col transition-colors group-hover:border-accent/60 {i === 0 ? 'border-accent-deep' : 'border-line'}">
+							<div class="aspect-video overflow-hidden bg-raised relative {i === 0 ? 'lg:aspect-auto lg:flex-1 lg:min-h-64' : 'shrink-0'}">
+								{#if failedImgs.has(plane.name)}
+									<div class="absolute inset-0 flex flex-col items-center justify-center gap-2 text-fg-subtle"><Plane size={28} /><span class="text-xs">{t.addons.imgMissing}</span></div>
+								{:else}
 								<img
+									onerror={() => (failedImgs = new Set(failedImgs).add(plane.name))}
 									src={plane.img}
 									alt={plane.name}
 									loading="lazy"
-									class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+									class="w-full h-full object-cover zoom-img {i === 0 ? 'lg:absolute lg:inset-0' : ''}"
 								/>
-								<span class="absolute top-2 right-2 text-[10px] font-mono uppercase tracking-widest border rounded px-2 py-0.5 backdrop-blur-sm {typeColors[plane.type] ?? 'text-white/30 border-white/10 bg-black/40'}">
+								{/if}
+								<span class="absolute top-2 right-2 text-[10px] font-mono uppercase tracking-wider border rounded px-2 py-0.5 backdrop-blur-sm {typeColors[plane.type] ?? 'text-white/30 border-white/10 bg-black/40'}">
 									{plane.type}
 								</span>
 							</div>
 							<div class="px-3 py-3 flex items-end justify-between gap-2 flex-1">
 								<div class="min-w-0">
-									<div class="text-sm font-medium text-white/90 leading-snug">{plane.name}</div>
+									{#if i === 0}<div class="eyebrow eyebrow-rule mb-2">{t.addons.main}</div>{/if}
+									<div class="font-medium text-white/90 leading-snug {i === 0 ? 'text-xl tracking-tight' : 'text-sm'}">{plane.name}</div>
 									<div class="text-xs text-white/35 mt-0.5">{plane.dev}</div>
 								</div>
-								<ExternalLink size={12} class="shrink-0 text-signal-500/30 group-hover:text-signal-400 transition-colors mb-0.5" />
+								<ExternalLink size={12} class="shrink-0 text-fg-subtle group-hover:text-accent-hover transition-colors mb-0.5" />
 							</div>
 						</div>
 					</a>
@@ -244,8 +233,8 @@
 
 		<!-- SOFTWARE ADDONS -->
 		<section class="reveal py-12" use:reveal>
-			<h2 class="text-sm font-display font-semibold text-white/60 mb-1">Software & Tools</h2>
-			<p class="text-xs font-mono text-signal-500/50 mb-8">Läuft bei jedem Flug, entweder im Hintergrund oder als erstes vor dem Sim.</p>
+			<h2 class="section-title mb-1">{t.addons.toolsHeading}</h2>
+			<p class="text-xs font-mono text-fg-subtle mb-8">{t.addons.toolsHint}</p>
 
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
 				{#each addons as addon}
@@ -253,19 +242,17 @@
 						href={addon.url}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="glow-card group relative hud-panel block hover:scale-[1.01] transition-transform"
-						use:glow
+						class="group relative rounded-lg block transition-transform"
 					>
-						<span class="glow-border" aria-hidden="true"></span>
-						<div class="hud-panel flex flex-col border bg-linear-to-br p-5 h-full {addon.accent}">
+						<div class="rounded-lg flex flex-col border border-line bg-surface p-5 h-full transition-colors group-hover:border-accent/50 group-hover:bg-raised">
 							<div class="flex items-start justify-between gap-2 mb-3">
 								<div>
 									<p class="font-display font-semibold text-white/90 group-hover:text-white transition-colors">{addon.name}</p>
-									<p class="text-[11px] font-mono uppercase tracking-widest text-white/30 mt-0.5">{addon.category}</p>
+									<p class="text-[11px] font-mono uppercase tracking-wider text-white/30 mt-0.5">{t.addons.tools[addon.name].category}</p>
 								</div>
 								<ExternalLink size={14} class="shrink-0 text-white/20 group-hover:text-white/50 transition-colors mt-0.5" />
 							</div>
-							<p class="text-sm text-white/45 leading-relaxed group-hover:text-white/60 transition-colors">{addon.desc}</p>
+							<p class="text-sm text-white/45 leading-relaxed group-hover:text-white/60 transition-colors">{t.addons.tools[addon.name].desc}</p>
 						</div>
 					</a>
 				{/each}
