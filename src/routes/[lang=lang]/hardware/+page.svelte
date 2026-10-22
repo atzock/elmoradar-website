@@ -121,7 +121,7 @@
 		{
 			heading: t.hardware.desk.audio,
 			items: [
-				{ icon: Mic,      label: t.hardware.desk.microphone, value: 'Razer Siren V3 Chroma',  url: amznSearch('Razer Siren V3 Chroma') },
+				{ icon: Mic,      label: t.hardware.desk.microphone, value: 'Razer Seiren V3 Pro', url: 'https://www.razer.com/de-de/streaming-microphones/razer-seiren-v3-pro' },
 				{ icon: Mic,      label: t.hardware.desk.micArm,     value: 'Elgato Wave Mic Arm LP', url: amznSearch('Elgato Wave Mic Arm LP') },
 				{ icon: Gamepad2, label: t.hardware.desk.streamDeck, value: 'Elgato Stream Deck XL',  url: amzn('B07MFCJYQH') }
 			]
@@ -151,6 +151,22 @@
 			note: t.hardware.flightsim.rudderNote,
 			icon: Plane,
 			url: amznSearch('Logitech Saitek Pro Flight Rudder Pedals')
+		}
+	]);
+
+	// Two sticks, one shared MOZA AB6 base
+	const sticks = $derived([
+		{
+			label: t.hardware.flightsim.mhgLabel,
+			value: 'MOZA MHG Flightstick',
+			note: t.hardware.flightsim.mhgNote,
+			url: 'https://eu.mozaracing.com/products/mhg-flightstick'
+		},
+		{
+			label: t.hardware.flightsim.ma3fLabel,
+			value: 'MOZA MA3F Airbus Captain Sidestick',
+			note: t.hardware.flightsim.ma3fNote,
+			url: 'https://eu.mozaracing.com/products/ma3f-airbus-sidestick?ref=elmoradar'
 		}
 	]);
 
@@ -342,6 +358,23 @@
 					<div class="overflow-hidden min-h-56 bg-surface"><img src={stick2} alt={t.hardware.flightsim.mozaAlt2} class="w-full h-full object-cover zoom-img" /></div>
 				</div>
 			</a>
+
+			<h3 class="eyebrow !text-fg mb-2 pb-3 border-b border-accent-deep">{t.hardware.flightsim.sticksHeading}</h3>
+			<ul class="grid sm:grid-cols-2 gap-x-10 mb-10">
+				{#each sticks as item}
+					<li class="border-b border-line">
+						<a href={item.url} target="_blank" rel="noopener noreferrer" class="group flex items-start gap-4 py-5">
+							<Joystick size={18} class="text-fg-subtle mt-1 shrink-0" />
+							<div class="flex-1 min-w-0">
+								<div class="eyebrow mb-1">{item.label}</div>
+								<div class="font-medium mb-1 group-hover:text-accent-hover transition-colors">{item.value}</div>
+								<p class="text-sm text-fg-muted leading-relaxed">{item.note}</p>
+							</div>
+							<ExternalLink size={13} class="text-fg-subtle group-hover:text-accent-hover transition-colors shrink-0 mt-1" />
+						</a>
+					</li>
+				{/each}
+			</ul>
 
 			<ul class="grid sm:grid-cols-2 gap-x-10">
 				{#each flightsim as item}

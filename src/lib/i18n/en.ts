@@ -171,6 +171,11 @@ export const en: Dict = {
 			mozaBadge: 'New · My new sidestick',
 			mozaText:
 				'A direct-drive base instead of a classic joystick, with much finer force feedback. It replaces my previous sidestick as my main input device for airliners.',
+			sticksHeading: 'Sticks on the AB6 base',
+			mhgLabel: 'Helicopters & versatile flight control',
+			mhgNote: 'My stick for helicopters and other aircraft where it makes sense.',
+			ma3fLabel: 'Airbus & airliners',
+			ma3fNote: 'Airbus flights in Microsoft Flight Simulator.',
 			mozaAlt1: 'MOZA AB6 – view 1',
 			mozaAlt2: 'MOZA AB6 – view 2',
 			throttle: 'Throttle',
@@ -282,6 +287,10 @@ export const en: Dict = {
 			SkyTrails: {
 				category: 'Contrails',
 				desc: 'Dynamic, weather-dependent contrails – cruise simply looks far more realistic.'
+			},
+			'GateStaticInjector for VATSIM': {
+				category: 'Parked traffic',
+				desc: 'Free companion app for MSFS 2024 that fills unused airport stands with parked airliners (FSLTL and/or AIG models) and removes them again when online traffic needs the stand.'
 			}
 		}
 	},
