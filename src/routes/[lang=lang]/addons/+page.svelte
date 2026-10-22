@@ -4,6 +4,7 @@
 	import { i18n } from '$lib/i18n/index.js';
 	import ExternalLink from 'lucide-svelte/icons/external-link';
 	import Plane from 'lucide-svelte/icons/plane';
+	import e55p from '$lib/assets/addons/e55p.webp?url';
 
 	const t = $derived(i18n.t);
 
@@ -106,7 +107,7 @@
 			dev: 'FS Reborn',
 			type: 'Business Jet',
 			url: 'https://www.fsreborn.com/fsr300e-for-microsoft-flight-simulator',
-			img: 'https://le-cdn.website-editor.net/s/5f77168fbe45490ab26dbeb4dc6a3e54/dms3rep/multi/opt/CR45-1920w.PNG?Expires=1794946380&Signature=HiOUzHIXcYpDPNhvgg0z25EG-2Aa-Ws2ddCCshFYqX0hvT3bXjZv9sZgI3wJ9ZEmv96pOT1cUcTgcdL5XUAlHkhFIs9fmIw5nPtfC0UYNJZBcH~Er~mtuoLAqEEmca31iA-r88TVUICci6so5mGYkEUTTDAtp9WZhVjf9vbcwe1noCHq7ss3oTxVduixTselfenj-07xEZq2ujXQjS9DbMY~wu0AS4aGxrSNrn1zvAfGnNaKMwx95lTouECNJO2Js-29d0n65swQMOugm5OOjH6W8CJ3bcA3Jqh46gbhC5jMmid8~sDh2H0HdvJrSgyD7qekdaag8uP~pYW~GdJzng__&Key-Pair-Id=K2NXBXLF010TJW'
+			img: e55p
 		}
 	];
 
@@ -155,8 +156,13 @@
 		{
 			name: 'SkyTrails',
 			url: 'https://parallel42.com/products/skytrails',
-			accent: 'bg-surface border-line'
-		}
+				accent: 'bg-surface border-line'
+			},
+			{
+				name: 'GateStaticInjector for VATSIM',
+				url: 'https://flightsim.to/addon/108678/gatestaticinjector-for-vatsim',
+				accent: 'bg-surface border-line'
+			}
 	];
 
 	const typeColors: Record<string, string> = {

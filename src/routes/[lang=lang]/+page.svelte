@@ -381,10 +381,77 @@
 				</div>
 			</div>
 
-			<!-- RIGHT: SIDEBAR -->
-			<div class="reveal grid gap-x-8 gap-y-9 sm:grid-cols-2 lg:grid-cols-5 border-t border-line pt-10" use:reveal={{ delay: 120 }}>
+<!-- STATUS: flight + ATC first, then addons, then small numbers -->
+			<div class="reveal grid gap-6 sm:gap-8 border-t border-line pt-10" use:reveal={{ delay: 120 }}>
 
-				<!-- STATS (desktop only) -->
+				<div class="grid gap-6 md:grid-cols-2">
+					<!-- RECENT FLIGHT -->
+					<div class="rounded-xl border border-accent-deep bg-accent-soft p-6 sm:p-8">
+						<h3 class="eyebrow !text-accent-hover mb-5 flex items-center gap-2"><Plane size={14} />{t.home.side.lastFlight}</h3>
+						{#if recentFlightplans.length > 0}
+							{@const [first, ...rest] = recentFlightplans}
+							<p class="font-mono text-2xl sm:text-3xl font-semibold tracking-tight text-fg mb-1">{first.callsign}</p>
+							{#if first.dep && first.arr}
+								<p class="text-lg sm:text-xl text-fg-muted mb-1">{first.dep} → {first.arr}</p>
+							{/if}
+							{#if first.aircraft}<p class="text-sm text-fg-subtle">{first.aircraft}</p>{/if}
+							{#if rest.length > 0}
+								<div class="mt-5 pt-4 border-t border-line space-y-1.5">
+									{#each rest as fp}
+										<div class="flex items-center gap-3 text-sm">
+											<span class="font-mono text-fg-muted shrink-0 w-24 truncate">{fp.callsign}</span>
+											{#if fp.dep && fp.arr}<span class="text-fg-subtle truncate">{fp.dep} → {fp.arr}</span>{/if}
+										</div>
+									{/each}
+								</div>
+							{/if}
+						{:else}
+							<p class="text-fg-subtle">–</p>
+						{/if}
+					</div>
+
+					<!-- LAST ATC SESSION -->
+					<div class="rounded-xl border border-line bg-surface p-6 sm:p-8">
+						<h3 class="eyebrow !text-fg mb-5 flex items-center gap-2"><Headphones size={14} />{t.home.side.lastAtc}</h3>
+						{#if lastAtcSession}
+							<div class="flex items-baseline justify-between gap-3 mb-1">
+								<p class="font-mono text-2xl sm:text-3xl font-semibold tracking-tight text-fg">{lastAtcSession.callsign}</p>
+								{#if lastAtcSession.minutes > 0}
+									<span class="text-lg text-fg-muted shrink-0">{Math.round(lastAtcSession.minutes)} {t.home.side.minutes}</span>
+								{/if}
+							</div>
+							{#if lastAtcSession.start}
+								<p class="text-sm text-fg-subtle">
+									{new Date(lastAtcSession.start).toLocaleDateString(i18n.locale, { day: '2-digit', month: '2-digit', year: 'numeric' })}
+									{#if lastAtcSession.end}
+										· {new Date(lastAtcSession.start).toLocaleTimeString(i18n.locale, { hour: '2-digit', minute: '2-digit' })} – {new Date(lastAtcSession.end).toLocaleTimeString(i18n.locale, { hour: '2-digit', minute: '2-digit' })} UTC
+									{/if}
+								</p>
+							{/if}
+						{:else}
+							<p class="text-fg-subtle">–</p>
+						{/if}
+					</div>
+				</div>
+
+				<!-- ADDONS LINK -->
+				<a
+					href={i18n.href('/addons')}
+					class="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-line bg-surface p-6 sm:p-8 hover:border-accent/60 transition-colors"
+				>
+					<div>
+						<h3 class="eyebrow !text-fg mb-2">{t.home.side.addons}</h3>
+						<p class="text-base sm:text-lg text-fg-muted leading-relaxed max-w-2xl">{t.home.side.addonsText}</p>
+					</div>
+					<span class="inline-flex items-center gap-2 text-base text-fg group-hover:text-accent-hover transition-colors shrink-0">
+						{t.home.side.addonsLink}
+						<ArrowRight size={16} />
+					</span>
+				</a>
+
+				<!-- SECONDARY: numbers + network -->
+				<div class="grid gap-x-8 gap-y-9 sm:grid-cols-2 pt-2">
+					<!-- STATS (desktop only) -->
 				<div class="hidden lg:block">
 					<h3 class="eyebrow !text-fg mb-3 pb-2 border-b border-line">{t.home.side.numbers}</h3>
 					<div class="space-y-1">
@@ -401,7 +468,7 @@
 					</div>
 				</div>
 
-				<!-- VATSIM NETWORK -->
+					<!-- VATSIM NETWORK -->
 				{#if onlinePilots > 0}
 					<div>
 						<h3 class="eyebrow !text-fg mb-3 pb-2 border-b border-line">{t.home.side.network}</h3>
@@ -423,64 +490,7 @@
 						</div>
 					</div>
 				{/if}
-
-				<!-- RECENT FLIGHT -->
-				{#if recentFlightplans.length > 0}
-					<div>
-						<h3 class="eyebrow !text-fg mb-3 pb-2 border-b border-line">{t.home.side.lastFlight}</h3>
-						<div class="space-y-1">
-							{#each recentFlightplans as fp}
-								<div class="flex items-center gap-2 px-2 py-2.5 rounded-md hover:bg-raised transition-colors text-xs group">
-									<Plane size={11} class="text-fg-subtle shrink-0 group-hover:text-fg-subtle transition-colors" />
-									<span class="font-mono text-white/55 shrink-0 w-20 truncate">{fp.callsign}</span>
-									{#if fp.dep && fp.arr}
-										<span class="text-white/30 truncate">{fp.dep} → {fp.arr}</span>
-									{/if}
-								</div>
-							{/each}
-						</div>
-					</div>
-				{/if}
-
-				<!-- LAST ATC SESSION -->
-				{#if lastAtcSession}
-					<div>
-						<h3 class="eyebrow !text-fg mb-3 pb-2 border-b border-line">{t.home.side.lastAtc}</h3>
-						<div class="px-2 py-2.5 rounded-md hover:bg-raised transition-colors text-xs group">
-							<div class="flex items-center gap-2 mb-1.5">
-								<Headphones size={11} class="text-fg-subtle shrink-0 group-hover:text-fg-subtle transition-colors" />
-								<span class="font-mono text-white/55 font-medium">{lastAtcSession.callsign}</span>
-								{#if lastAtcSession.minutes > 0}
-									<span class="ml-auto text-white/25">{Math.round(lastAtcSession.minutes)} {t.home.side.minutes}</span>
-								{/if}
-							</div>
-							{#if lastAtcSession.start}
-								<p class="text-white/20 pl-4.75">
-									{new Date(lastAtcSession.start).toLocaleDateString(i18n.locale, { day: '2-digit', month: '2-digit', year: 'numeric' })}
-									{#if lastAtcSession.end}
-										· {new Date(lastAtcSession.start).toLocaleTimeString(i18n.locale, { hour: '2-digit', minute: '2-digit' })} – {new Date(lastAtcSession.end).toLocaleTimeString(i18n.locale, { hour: '2-digit', minute: '2-digit' })} UTC
-									{/if}
-								</p>
-							{/if}
-						</div>
-					</div>
-				{/if}
-
-				<!-- ADDONS LINK -->
-				<div>
-					<h3 class="eyebrow !text-fg mb-3 pb-2 border-b border-line">{t.home.side.addons}</h3>
-					<p class="text-sm text-white/40 mb-3 leading-relaxed">
-						{t.home.side.addonsText}
-					</p>
-					<a
-						href={i18n.href('/addons')}
-						class="inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-accent-hover transition-colors"
-					>
-						{t.home.side.addonsLink}
-						<ArrowRight size={13} class="text-fg-subtle" />
-					</a>
 				</div>
-
 			</div>
 		</div>
 

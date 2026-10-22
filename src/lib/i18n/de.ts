@@ -175,6 +175,11 @@ export const de = {
 			mozaBadge: 'Neu · Mein neuer Sidestick',
 			mozaText:
 				'Direct-Drive-Basis statt klassischem Joystick, mit deutlich feinerem, kraftrückmeldendem Force-Feedback. Löst den bisherigen Sidestick als mein Haupt-Eingabegerät für Airliner ab.',
+			sticksHeading: 'Sticks auf der AB6 Base',
+			mhgLabel: 'Helikopter & vielseitige Flugsteuerung',
+			mhgNote: 'Mein Stick für Helikopter und weitere Fluggeräte, bei denen er sinnvoll ist.',
+			ma3fLabel: 'Airbus & Airliner',
+			ma3fNote: 'Airbus-Flüge im Microsoft Flight Simulator.',
 			mozaAlt1: 'MOZA AB6 – Ansicht 1',
 			mozaAlt2: 'MOZA AB6 – Ansicht 2',
 			throttle: 'Throttle',
@@ -287,6 +292,10 @@ export const de = {
 			SkyTrails: {
 				category: 'Kondensstreifen',
 				desc: 'Dynamische, wetterabhängige Kondensstreifen, sieht im Reiseflug einfach deutlich echter aus.'
+			},
+			'GateStaticInjector for VATSIM': {
+				category: 'Geparkter Verkehr',
+				desc: 'Kostenlose Begleit-App für MSFS 2024, die freie Gates mit geparkten Airlinern (FSLTL- und/oder AIG-Modelle) füllt und sie wieder entfernt, sobald Online-Verkehr den Stand braucht.'
 			}
 		} as Record<string, { category: string; desc: string }>
 	},
