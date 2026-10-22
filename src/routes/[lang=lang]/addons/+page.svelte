@@ -4,7 +4,7 @@
 	import { i18n } from '$lib/i18n/index.js';
 	import ExternalLink from 'lucide-svelte/icons/external-link';
 	import Plane from 'lucide-svelte/icons/plane';
-	import e55p from '$lib/assets/addons/e55p.png?url';
+	import e55p from '$lib/assets/addons/e55p.webp?url';
 
 	const t = $derived(i18n.t);
 
